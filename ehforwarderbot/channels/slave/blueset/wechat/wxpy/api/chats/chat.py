@@ -328,6 +328,8 @@ class Chat(object):
             kwargs = dict(userName=self.user_name, chatroomUserName=self.group.user_name)
         elif isinstance(self, User):
             kwargs = dict(userName=self.user_name, chatroomUserName=None)
+        elif self.user_name:
+            kwargs = dict(userName=self.user_name, chatroomUserName=None)
         else:
             raise TypeError('expected `Chat`, got`{}`'.format(type(self)))
 

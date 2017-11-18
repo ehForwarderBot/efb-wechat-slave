@@ -97,7 +97,10 @@ class ChatManager:
         try:
             if refresh:
                 self.bot.chats(True)
-            chat: wxpy.Chat = wxpy.utils.ensure_one(self.bot.search(puid=uid))
+            if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
+                chat: wxpy.Chat = wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
+            else:
+                chat: wxpy.Chat = wxpy.utils.ensure_one(self.bot.search(puid=uid))
             return self.wxpy_chat_to_efb_chat(chat)
         except ValueError:
             if not refresh:

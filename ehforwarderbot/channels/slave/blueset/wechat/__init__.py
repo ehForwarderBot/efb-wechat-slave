@@ -3,6 +3,7 @@ import io
 import logging
 import mimetypes
 import os
+import tempfile
 import threading
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List
@@ -18,6 +19,7 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
     EFBOperationNotSupported
 from ehforwarderbot.message import EFBMsgTargetMessage
 from ehforwarderbot.utils import extra
+from ehforwarderbot.status import EFBMessageRemoval
 from . import wxpy
 from . import __version__ as version
 from .utils import ExperimentalFlagsManager
@@ -33,12 +35,6 @@ class WeChatChannel(EFBChannel):
 
     Author: Eana Hufwe <https://github.com/blueset>
     """
-
-    def send_status(self, status: EFBStatus):
-        pass
-
-    def get_chat_picture(self, chat: EFBChat) -> IO[bytes]:
-        pass
 
     channel_name = "WeChat Slave"
     channel_emoji = "💬"
@@ -298,6 +294,31 @@ class WeChatChannel(EFBChannel):
         msg.uid = ews_utils.generate_message_uid(r)
         self.logger.debug('WeChat message is assigned with unique ID: %s', msg.uid)
         return msg
+
+    def send_status(self, status: EFBStatus):
+        if isinstance(status, EFBMessageRemoval):
+            if not status.message.author.is_self:
+                raise EFBMessageError('只能撤回自己的消息')
+            try:
+                ews_utils.message_to_dummy_message(status.message.uid, self).recall()
+            except wxpy.ResponseError as e:
+                raise EFBMessageError('撤回失败。%s (%s)' % (e.err_msg, e.err_code))
+        else:
+            raise EFBOperationNotSupported()
+
+    def get_chat_picture(self, chat: EFBChat) -> IO[bytes]:
+        chat = self.chats.search_chat(uid=chat.chat_uid)
+        wxpy_chat: wxpy.Chat = chat.vendor_specific['wxpy_object']
+        f = None
+        try:
+            f = tempfile.NamedTemporaryFile(suffix='.jpg')
+            wxpy_chat.get_avatar(f.name)
+            f.seek(0)
+            return f
+        except TypeError:
+            if hasattr(f, 'close', None):
+                f.close()
+            raise EFBOperationNotSupported()
 
     # Extra functions
 
