@@ -1,0 +1,7 @@
+ehforwarderbot
+itchat
+python-magic
+pillow
+pyqrcode
+xmltodict
+PyYaml
