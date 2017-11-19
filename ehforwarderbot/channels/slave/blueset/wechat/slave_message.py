@@ -8,11 +8,13 @@ import magic
 import os
 import xmltodict
 
+from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
+from ehforwarderbot.status import EFBMessageRemoval
+from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute
 from . import wxpy
 from .wxpy.api import consts
-from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
-from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute
 from . import constants
+
 if TYPE_CHECKING:
     from . import WeChatChannel
 
@@ -41,7 +43,7 @@ class SlaveMessageManager:
 
                 chat: EFBChat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
 
-                author: EFBChat = self.channel.chats.wxpy_chat_to_efb_chat(msg.member)
+                author: EFBChat = self.channel.chats.wxpy_chat_to_efb_chat(msg.sender)
 
                 # Do not override what's defined in the sub-functions
                 efb_msg.chat = efb_msg.chat or chat
@@ -88,8 +90,17 @@ class SlaveMessageManager:
 
     @Decorators.wechat_msg_meta
     def wechat_system_msg(self, msg: wxpy.Message):
+        if msg.recalled_message_id:
+            efb_msg = EFBMsg()
+            efb_msg.chat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
+            efb_msg.author = self.channel.chats.wxpy_chat_to_efb_chat(msg.sender)
+            efb_msg.uid = str(msg.recalled_message_id)
+            coordinator.send_status(EFBMessageRemoval(source_channel=self.channel,
+                                                      destination_channel=coordinator.master,
+                                                      message=efb_msg))
+            return
         efb_msg = EFBMsg()
-        efb_msg.text = "系统消息：%s" % msg.text
+        efb_msg.text = msg.text
         efb_msg.type = MsgType.Text
         efb_msg.author = EFBChat(self).system()
         return efb_msg
@@ -98,8 +109,9 @@ class SlaveMessageManager:
     def wechat_location_msg(self, msg: wxpy.Message):
         efb_msg = EFBMsg()
         efb_msg.text = msg.text.split('\n')[0][:-1]
-        loc = re.search("=-?([0-9.]+),-?([0-9.]+)", msg.url).groups()
-        efb_msg.attributes = EFBMsgLocationAttribute(longitude=float(loc[1]), latitude=float(loc[0]))
+        # loc = re.search("=-?([0-9.]+),-?([0-9.]+)", msg.url).groups()
+        # efb_msg.attributes = EFBMsgLocationAttribute(longitude=float(loc[1]), latitude=float(loc[0]))
+        efb_msg.attributes = EFBMsgLocationAttribute(longitude=msg.location['x'], latitude=msg.location['y'])
         efb_msg.type = MsgType.Location
         return efb_msg
 

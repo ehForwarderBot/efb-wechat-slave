@@ -218,6 +218,7 @@ class WeChatChannel(EFBChannel):
                          msg.uid,
                          msg.chat.chat_uid, chat.user_name, chat.name, msg.type, msg.text)
 
+        self.logger.debug('[%s] Is edited: %s', msg.uid, msg.edit)
         if msg.edit:
             if self.flag('delete_on_edit'):
                 try:

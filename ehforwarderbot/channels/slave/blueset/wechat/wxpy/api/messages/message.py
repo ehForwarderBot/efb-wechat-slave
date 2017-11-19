@@ -21,7 +21,7 @@ from ...api.chats import Chat, Group, Member, User
 from ...compatible.utils import force_encoded_string_output
 from ...utils import wrap_user_name, repr_message
 from .article import Article
-from ..consts import ATTACHMENT, CARD, FRIENDS, MAP, PICTURE, RECORDING, SHARING, TEXT, VIDEO
+from ..consts import ATTACHMENT, CARD, FRIENDS, MAP, PICTURE, RECORDING, SHARING, TEXT, VIDEO, NOTE
 from ...compatible import *
 
 logger = logging.getLogger(__name__)
@@ -299,6 +299,17 @@ class Message(object):
             return ret
         except (TypeError, KeyError, ValueError, ETree.ParseError):
             pass
+
+    @property
+    def recalled_message_id(self):
+        """被撤回消息的消息 ID"""
+        if self.type == NOTE and 'revokemsg' in self.raw['Content']:
+            try:
+                element = ETree.fromstring(self.raw['Content']).find('.//msgid')
+                return int(element.text)
+            except (TypeError, KeyError, ValueError, ETree.ParseError):
+                pass
+
 
     # chats
 

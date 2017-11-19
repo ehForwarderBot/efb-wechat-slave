@@ -76,9 +76,9 @@ WeChat does not provide a stable chat identifier, so hash of the name of a user 
 ## 实验功能
 以下的实验功能可能不稳定，并可能随时更改、删除。使用时请注意。
 
-* `refresh_friends` _(bool)_  [默认值: `False`]  
+* `refresh_friends` _(bool)_  [默认值: `false`]  
   每当请求会话列表时，强制刷新会话列表。
-* `first_link_only` _(bool)_  [默认值: `False`]  
+* `first_link_only` _(bool)_  [默认值: `false`]  
   在收到多链接消息时，仅发送第一条链接。默认多链接会发送多条消息。
 * `max_quote_length` _(int)_  [默认值: `-1`]  
   引用消息中引文的长度限制。设置为 0 关闭引文功能。设置为 -1 则对引文长度
@@ -96,6 +96,8 @@ WeChat does not provide a stable chat identifier, so hash of the name of a user 
     * `"idle"`: 仅通知用户。
     * `"reauth"`: 通知用户，并立即开始重新登录。
     * `"command"`: 通知用户，并等待用户启动重新登录过程。
-* `imgcat_qr` _(bool)_  [默认值: `False`]  
+* `imgcat_qr` _(bool)_  [默认值: `false`]  
   使用 [iTerm2 图像协议](https://www.iterm2.com/documentation-images.html)
   显示二维码。本功能只适用于 iTerm2 用户。
+* `delete_on_edit` _(bool)_ [默认值: `false`]  
+  以撤回并重新发送的方式代替编辑消息。默认禁止编辑消息。
