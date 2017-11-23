@@ -33,7 +33,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 `<当前配置文件夹>/ehforwarderbot.channels.slave.blueset.wechat/config.yaml`。 
 当前配置文件夹的位置会根据用户的设定而改变。
 
-__(EFB 2.0.0a1 中，默认的配置文件夹位于 `~/.ehforwarderbot/defualt`)__
+__(EFB 2.0.0a1 中，默认的配置文件夹位于 `~/.ehforwarderbot/profiles/defualt`)__
 
 ### 配置文件例
 
