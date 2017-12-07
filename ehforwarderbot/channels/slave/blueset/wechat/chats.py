@@ -57,34 +57,40 @@ class ChatManager:
                 return wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
 
     def wxpy_chat_to_efb_chat(self, chat: wxpy.Chat, recursive=True) -> Optional[EFBChat]:
+        self.logger.debug("Converting WXPY chat %r, %sin recursive mode", chat, '' if recursive else 'not ')
+        self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
         if chat is None:
             return self.MISSING_USER
         efb_chat = EFBChat(self.channel)
-        efb_chat.chat_uid = chat.puid
+        efb_chat.chat_uid = chat.puid or "__invalid__"
         efb_chat.chat_name = chat.nick_name
         efb_chat.chat_alias = None
         efb_chat.chat_type = ChatType.System
-        efb_chat.vendor_specific = {'is_mass_platform': False,
+        efb_chat.vendor_specific = {'is_mp': False,
                                     'wxpy_object': chat}
-        if isinstance(chat, wxpy.User):
+        if isinstance(chat, wxpy.Member):
             efb_chat.chat_type = ChatType.User
-            efb_chat.chat_alias = chat.remark_name or efb_chat.chat_alias
-            if chat.raw.get('UserName') == chat.bot.self.user_name:
-                efb_chat.self()
+            efb_chat.is_chat = False
+            efb_chat.chat_alias = chat.display_name or efb_chat.chat_alias
+            self.logger.debug("[WXPY: %s] Display name: %s;", chat.puid, chat.display_name)
+            if recursive:
+                efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
         elif isinstance(chat, wxpy.Group):
             efb_chat.chat_type = ChatType.Group
             for i in chat.members:
                 efb_chat.members.append(self.wxpy_chat_to_efb_chat(i, False))
                 efb_chat.members[-1].group = efb_chat
-        elif isinstance(chat, wxpy.Member):
-            efb_chat.chat_type = ChatType.User
-            efb_chat.is_chat = False
-            efb_chat.chat_alias = chat.display_name or efb_chat.chat_alias
-            if recursive:
-                efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
         elif isinstance(chat, wxpy.MP):
             efb_chat.chat_type = ChatType.User
-            efb_chat.vendor_specific['is_mass_platform'] = True
+            efb_chat.vendor_specific['is_mp'] = True
+        elif isinstance(chat, wxpy.User):
+            efb_chat.chat_type = ChatType.User
+            efb_chat.chat_alias = chat.remark_name or efb_chat.chat_alias
+            self.logger.debug("[WXPY: %s] Remark name: %s;", chat.puid, chat.remark_name)
+        if chat == chat.bot.self:
+            efb_chat.self()
+
+        self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
         return efb_chat
 
     def get_chats(self) -> List[EFBChat]:

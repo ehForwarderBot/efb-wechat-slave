@@ -103,12 +103,17 @@ WeChat does not provide a stable chat identifier, so hash of the name of a user 
   显示二维码。本功能只适用于 iTerm2 用户。
 * `delete_on_edit` _(bool)_ [默认值: `false`]  
   以撤回并重新发送的方式代替编辑消息。默认禁止编辑消息。
+* `app_shared_link_mode` _(str)_ [默认值：`"ignore"`]  
+  在收到第三方合作应用分享给微信的链接时，其附带的预览图以何种形式发送。
+  * `"ignore"`：忽略附带的缩略图
+  * `"upload"`：将缩略图上传到公开图床（https://sm.ms），并在日志中输出图片的删除链接。
+  * `"image"`：将消息以图片形式发送（不推荐）
   
 ## `vendor_specific`
 
 EWS 的 `EFBChat` 提供了以下的 `vendor_specific` 项目：
 
-* `is_mass_platform` _(bool)_  
+* `is_mp` _(bool)_  
   该会话是否为公众号。
 * `wxpy_objet` _(wxpy.Chat)_  
   该会话所对应的 `wxpy.Chat` 对象。 

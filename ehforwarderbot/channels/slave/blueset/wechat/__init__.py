@@ -17,7 +17,7 @@ from ehforwarderbot import EFBChannel, EFBMsg, MsgType, ChannelType, \
 from ehforwarderbot import utils as efb_utils
 from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageError, EFBChatNotFound, \
     EFBOperationNotSupported
-from ehforwarderbot.message import EFBMsgTargetMessage
+from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.utils import extra
 from ehforwarderbot.status import EFBMessageRemoval
 from . import wxpy
@@ -49,7 +49,6 @@ class WeChatChannel(EFBChannel):
     qr_uuid: str = ""
     done_reauth: threading.Event = threading.Event()
     _stop_polling_event: threading.Event = threading.Event()
-    _stop_polling: bool = False
 
     config = dict()
 
@@ -100,10 +99,10 @@ class WeChatChannel(EFBChannel):
         self.qr_uuid = (uuid, status)
         if status == 201:
             qr = '请在手机上确认。'
-            return self.logger.critical(qr)
+            return self.logger.log(99, qr)
         elif status == 200:
             qr = "Successfully authorized."
-            return self.logger.critical(qr)
+            return self.logger.log(99, qr)
         else:
             # 0: First QR code
             # 408: Updated QR code
@@ -122,7 +121,7 @@ class WeChatChannel(EFBChannel):
                 qr += qr_obj.terminal()
             qr += "\n若以上二维码显示不正常，请访问以下网址获取二维码：\n" \
                   "https://login.weixin.qq.com/qrcode/" + uuid
-            return self.logger.critical(qr)
+            return self.logger.log(99, qr)
 
     def master_qr_code(self, uuid, status, qrcode=None):
         status = int(status)
@@ -157,7 +156,8 @@ class WeChatChannel(EFBChannel):
             self.qr_uuid = uuid
 
     def exit_callback(self):
-        if self.stop_polling:
+        self.logger.debug('Calling exit callback...')
+        if self._stop_polling_event.is_set():
             return
         msg = EFBMsg()
         msg.source = ChatType.System
@@ -168,17 +168,12 @@ class WeChatChannel(EFBChannel):
         on_log_out = self.flag("on_log_out")
         on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
         if on_log_out == "command":
-            msg.type = MsgType.Command
-            msg.attributes = {
-                "commands": [
-                    {
-                        "name": "重新登录",
-                        "callable": "reauth",
-                        "args": [],
-                        "kwargs": {"command": True}
-                    }
-                ]
-            }
+            msg.type = MsgType.Text
+            msg.attributes = EFBMsgCommands([EFBMsgCommand(
+                name="重新登录",
+                callable_name="reauth",
+                kwargs={"command": True}
+            )])
         elif on_log_out == "reauth":
             if self.flag("qr_reload") == "console_qr_code":
                 msg.text += "\n请查看您的日志或标准输出 (stdout) 以继续。"
@@ -229,9 +224,9 @@ class WeChatChannel(EFBChannel):
             else:
                 raise EFBOperationNotSupported()
         if msg.type in [MsgType.Text, MsgType.Link]:
-            if isinstance(msg.target, EFBMsgTargetMessage):
+            if isinstance(msg.target, EFBMsg):
                 max_length = self.flag("max_quote_length")
-                qt_txt = "%s" % msg.target.message.text
+                qt_txt = "%s" % msg.target.text
                 if max_length > 0:
                     tgt_text = qt_txt[:max_length]
                     if len(qt_txt) >= max_length:
@@ -241,8 +236,8 @@ class WeChatChannel(EFBChannel):
                     tgt_text = "「%s」" % qt_txt
                 else:
                     tgt_text = ""
-                if isinstance(chat, wxpy.Group) and msg.target.message.member:
-                    tgt_alias = "@%s\u2005 " % msg.target.message.member.chat_alias
+                if isinstance(chat, wxpy.Group) and not msg.target.author.is_self:
+                    tgt_alias = "@%s\u2005 " % msg.target.author.chat_alias
                 else:
                     tgt_alias = ""
                 msg.text = "%s%s\n\n%s" % (tgt_alias, tgt_text, msg.text)
@@ -461,19 +456,11 @@ class WeChatChannel(EFBChannel):
             else:
                 return chat
 
-    @property
     def stop_polling(self):
-        return self._stop_polling
-
-    @stop_polling.setter
-    def stop_polling(self, val):
-        val = bool(val)
-        self._stop_polling = val
-        if val:
-            if self.bot.alive:
-                self._stop_polling_event.set()
-            else:
-                self.done_reauth.set()
+        if self.bot.alive:
+            self._stop_polling_event.set()
+        else:
+            self.done_reauth.set()
 
     @staticmethod
     def _bot_send_msg(chat: wxpy.Chat, message: str) -> wxpy.SentMessage:

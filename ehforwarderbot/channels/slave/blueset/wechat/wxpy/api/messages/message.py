@@ -340,6 +340,15 @@ class Message(object):
         return self._get_chat_by_user_name(self.raw.get('FromUserName'))
 
     @property
+    def author(self):
+        """
+        消息的实际发送者（群成员或私聊）
+
+        :rtype: :class:`wxpy.User`, :class:`wxpy.Member`
+        """
+        return self.member or self.sender
+
+    @property
     def receiver(self):
         """
         消息的接收者

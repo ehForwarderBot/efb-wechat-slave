@@ -19,23 +19,37 @@ class Group(Chat):
     def __init__(self, raw, bot):
         super(Group, self).__init__(raw, bot)
 
+    def raw_member_list(self, update=False):
+        if update:
+            self.update_group()
+        return self.raw.get('MemberList', list())
+
     @property
     def members(self):
         """
         群聊的成员列表
         """
-
-        def raw_member_list(update=False):
-            if update:
-                self.update_group()
-            return self.raw.get('MemberList', list())
-
         ret = Chats(source=self)
         ret.extend(map(
             lambda x: Member(x, self),
-            raw_member_list() or raw_member_list(True)
+            self.raw_member_list() or self.raw_member_list(True)
         ))
         return ret
+
+    @property
+    def nick_name(self):
+        """
+        该聊天对象的昵称 (好友、群员的昵称，或群名称)
+        """
+        if super(Group, self).nick_name:
+            return super(Group, self).nick_name
+        elif self.members:
+            names = sorted(i.nick_name for i in self.members)
+            if len(names) > 5:
+                names = names[:5] + ["..."]
+            return ", ".join(names)
+        else:
+            return
 
     def __contains__(self, user):
         user_name = get_user_name(user)
@@ -103,7 +117,7 @@ class Group(Chat):
         :param members_details: 是否包括群聊成员的详细信息 (地区、性别、签名等)
         """
 
-        logger.info('updating {} (members_details={})'.format(self, members_details))
+        # logger.info('updating {} (members_details={})'.format(self, members_details))
 
         @handle_response()
         def do():
