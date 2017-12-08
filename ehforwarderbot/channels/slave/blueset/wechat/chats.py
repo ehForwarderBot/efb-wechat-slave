@@ -5,6 +5,7 @@ from ehforwarderbot import EFBChat
 from ehforwarderbot.constants import ChatType
 from ehforwarderbot.exceptions import EFBChatNotFound
 from . import wxpy
+from . import utils as ews_utils
 if TYPE_CHECKING:
     from . import WeChatChannel
 
@@ -63,7 +64,7 @@ class ChatManager:
             return self.MISSING_USER
         efb_chat = EFBChat(self.channel)
         efb_chat.chat_uid = chat.puid or "__invalid__"
-        efb_chat.chat_name = chat.nick_name
+        efb_chat.chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
         efb_chat.chat_alias = None
         efb_chat.chat_type = ChatType.System
         efb_chat.vendor_specific = {'is_mp': False,
@@ -89,6 +90,8 @@ class ChatManager:
             self.logger.debug("[WXPY: %s] Remark name: %s;", chat.puid, chat.remark_name)
         if chat == chat.bot.self:
             efb_chat.self()
+
+        efb_chat.chat_alias = efb_chat.chat_alias and ews_utils.wechat_string_unescape(efb_chat.chat_alias)
 
         self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
         return efb_chat

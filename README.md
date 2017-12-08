@@ -13,6 +13,9 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网�
 ## Alpha 版本
 本项目目前仍是 Alpha 版本，仍不稳定，且功能可能随时变更。
 
+## 开发进度减缓
+由于技术原因（见注释），EWS 开发进度将会减缓。恢复时间未定。
+
 ## 使用前须知
 自 2016 年中旬以来，陆续有用户报告其微信网页版登录被腾讯封禁。
 表现为用任何方式登录微信网页版提示「当前登录环境异常。为了你的账号安全，
@@ -35,7 +38,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 `<当前配置文件夹>/ehforwarderbot.channels.slave.blueset.wechat/config.yaml`。 
 当前配置文件夹的位置会根据用户的设定而改变。
 
-__(EFB 2.0.0a1 中，默认的配置文件夹位于 `~/.ehforwarderbot/profiles`/defualt`)__
+__(EFB 2.0.0a1 中，默认的配置文件夹位于 `~/.ehforwarderbot/profiles/defualt`)__
 
 ### 配置文件例
 
@@ -106,7 +109,7 @@ WeChat does not provide a stable chat identifier, so hash of the name of a user 
 * `app_shared_link_mode` _(str)_ [默认值：`"ignore"`]  
   在收到第三方合作应用分享给微信的链接时，其附带的预览图以何种形式发送。
   * `"ignore"`：忽略附带的缩略图
-  * `"upload"`：将缩略图上传到公开图床（https://sm.ms），并在日志中输出图片的删除链接。
+  * `"upload"`：将缩略图上传到公开图床（[https://sm.ms](https://sm.ms)），并在日志中输出图片的删除链接。
   * `"image"`：将消息以图片形式发送（不推荐）
   
 ## `vendor_specific`

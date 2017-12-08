@@ -160,16 +160,18 @@ class WeChatChannel(EFBChannel):
         if self._stop_polling_event.is_set():
             return
         msg = EFBMsg()
-        msg.source = ChatType.System
-        msg.origin = EFBChat(self).system()
-        msg.destination = EFBChat(coordinator.master).self()
-        msg.text = "微信服务器已将该用户登出，请在做好准备后重新登录。"
+        chat = EFBChat(self).system()
+        chat.chat_type = ChatType.System
+        chat.chat_name = "EWS 用户登录"
+        msg.chat = msg.author = chat
+        msg.deliver_to = coordinator.master
+        msg.text = "微信服务器已将您登出，请在做好准备后重新登录。"
         msg.type = MsgType.Text
         on_log_out = self.flag("on_log_out")
         on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
         if on_log_out == "command":
             msg.type = MsgType.Text
-            msg.attributes = EFBMsgCommands([EFBMsgCommand(
+            msg.commands = EFBMsgCommands([EFBMsgCommand(
                 name="重新登录",
                 callable_name="reauth",
                 kwargs={"command": True}
@@ -457,7 +459,7 @@ class WeChatChannel(EFBChannel):
                 return chat
 
     def stop_polling(self):
-        if self.bot.alive:
+        if not self._stop_polling_event.is_set():
             self._stop_polling_event.set()
         else:
             self.done_reauth.set()

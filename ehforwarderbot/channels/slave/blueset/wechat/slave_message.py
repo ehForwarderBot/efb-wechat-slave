@@ -12,10 +12,11 @@ import xmltodict
 
 from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
 from ehforwarderbot.status import EFBMessageRemoval
-from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute
+from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute, EFBMsgCommands, EFBMsgCommand
 from . import wxpy
 from .wxpy.api import consts
 from . import constants
+from . import utils as ews_utils
 
 if TYPE_CHECKING:
     from . import WeChatChannel
@@ -93,7 +94,7 @@ class SlaveMessageManager:
         if msg.text.startswith("http://weixin.qq.com/cgi-bin/redirectforward?args="):
             return self.wechat_location_msg(msg)
         efb_msg = EFBMsg()
-        efb_msg.text = msg.text
+        efb_msg.text = ews_utils.wechat_string_unescape(msg.text)
         efb_msg.type = MsgType.Text
         return efb_msg
 
@@ -290,18 +291,13 @@ class SlaveMessageManager:
         txt = txt.format(user=msg.card)
         efb_msg.text = txt
         efb_msg.type = MsgType.Text
-        efb_msg.attributes = {
-            "commands": [
-                {
-                    "name": "发送好友请求",
-                    "callable": "add_friend",
-                    "args": [],
-                    "kwargs": {
-                        "username": msg.card.user_name
-                    }
-                }
-            ]
-        }
+        efb_msg.commands = EFBMsgCommands([
+            EFBMsgCommand(
+                name="发送好友请求",
+                callable_name="add_friend",
+                kwargs={"username": msg.card.user_name}
+            )
+        ])
         return efb_msg
 
     @Decorators.wechat_msg_meta
@@ -314,18 +310,13 @@ class SlaveMessageManager:
         txt = txt.format(user=msg.card)
         efb_msg.text = txt
         efb_msg.type = MsgType.Text
-        efb_msg.attributes = {
-            "commands": [
-                {
-                    "name": "接受好友请求",
-                    "callable": "accept_friend",
-                    "args": [],
-                    "kwargs": {
-                        "username": msg.card.user_name
-                    }
-                }
-            ]
-        }
+        efb_msg.commands = EFBMsgCommands([
+            EFBMsgCommand(
+                name="接受好友请求",
+                callable_name="accept_friend",
+                kwargs={"username": msg.card.user_name}
+            )
+        ])
         return efb_msg
 
     @staticmethod
