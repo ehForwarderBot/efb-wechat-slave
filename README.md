@@ -3,7 +3,7 @@
 
 ![This project proudly supports #SayNoToWeChat campaign.](https://i.imgur.com/dCZfh14.png)
 
-**Channel ID**: `ehforwarderbot.channels.slave.blueset.wechat`
+**Channel ID**: `ehforwarderbot.channels.slave.blueset.wechat.WeChatChannel`
 
 EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网页版、
 修改版 `wxpy`，`itchat`。
@@ -40,7 +40,7 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网�
 
 ## 可选的配置文件
 EWS 支持使用可选的配置文件来启用实验功能。配置文件存储于 
-`<当前配置文件夹>/ehforwarderbot.channels.slave.blueset.wechat/config.yaml`。 
+`<当前配置文件夹>/ehforwarderbot.channels.slave.blueset.wechat.WeChatChannel/config.yaml`。 
 当前配置文件夹的位置会根据用户的设定而改变。
 
 __(EFB 2.0.0a1 中，默认的配置文件夹位于 `~/.ehforwarderbot/profiles/defualt`)__
