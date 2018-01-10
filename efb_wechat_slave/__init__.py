@@ -38,6 +38,7 @@ class WeChatChannel(EFBChannel):
 
     channel_name = "WeChat Slave"
     channel_emoji = "💬"
+    channel_id = 'blueset.wechat'
     channel_type = ChannelType.Slave
 
     __version__ = version.__version__

@@ -3,7 +3,7 @@
 
 ![This project proudly supports #SayNoToWeChat campaign.](https://i.imgur.com/dCZfh14.png)
 
-**Channel ID**: `ehforwarderbot.channels.slave.blueset.wechat.WeChatChannel`
+**Channel ID**: `blueset.wechat`
 
 EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网页版、
 修改版 `wxpy`，`itchat`。

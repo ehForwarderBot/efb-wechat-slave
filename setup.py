@@ -9,7 +9,7 @@ exec(open('ehforwarderbot/channels/slave/blueset/wechat/__version__.py').read())
 
 setup(
     name='efb-wechat-slave',
-    namespace_package=['ehforwarderbot'],
+    namespace_package=['efb_wechat_slave'],
     version=__version__,
     description='WeChat Slave Channel for EH Forwarder Bot, based on WeChat Web API.',
     author='Eana Hufwe',
@@ -19,7 +19,7 @@ setup(
     download_url='',
     keywords=['', ' '],
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
@@ -38,5 +38,8 @@ setup(
         "pyqrcode",
         "xmltodict",
         "PyYaml"
-    ]
+    ],
+    entry_points={
+        'ehforwarderbot.slave': 'blueset.wechat = efb_wechat_slave.WeChatChannel'
+    }
 )
