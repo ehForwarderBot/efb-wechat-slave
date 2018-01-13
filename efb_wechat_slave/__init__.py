@@ -335,16 +335,17 @@ class WeChatChannel(EFBChannel):
 
         msg = "会话列表：\n"
         for (n, i) in enumerate(l):
-            alias = ews_utils.wechat_string_unescape(i.remark_name)
+            alias = ews_utils.wechat_string_unescape(getattr(i, 'remark_name', '') or
+                                                     getattr(i, 'display_name', ''))
             name = ews_utils.wechat_string_unescape(i.nick_name)
-            display_name = "%s (%s)" % (alias, name) if alias else name
+            display_name = "%s (%s)" % (alias, name) if alias and alias != name else name
             chat_type = "?"
-            if isinstance(i, wxpy.User):
-                chat_type = '友'
+            if isinstance(i, wxpy.MP):
+                chat_type = '公'
             elif isinstance(i, wxpy.Group):
                 chat_type = '群'
-            elif isinstance(i, wxpy.MP):
-                chat_type = '公'
+            elif isinstance(i, wxpy.User):
+                chat_type = '友'
             msg += "\n%s: [%s] %s" % (n, chat_type, display_name)
 
         return msg

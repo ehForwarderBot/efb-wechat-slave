@@ -44,6 +44,6 @@ setup(
         "PyYaml"
     ],
     entry_points={
-        'ehforwarderbot.slave': 'blueset.wechat = efb_wechat_slave.WeChatChannel'
+        'ehforwarderbot.slave': 'blueset.wechat = efb_wechat_slave:WeChatChannel'
     }
 )
