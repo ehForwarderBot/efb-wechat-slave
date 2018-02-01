@@ -32,7 +32,7 @@ Bug 汇报需要包含完整的重现步骤与 Verbose 级别的日志。日志�
 <summary>Verbose 日志</summary>
 
 ```
-请在下面贴出您的 Verbose 日志。如果您对隐私有所顾虑，您可以自行
+请在这里贴出您的 Verbose 日志。如果您对隐私有所顾虑，您可以自行
 隐去隐私信息、或 GPG 加密至 BD6B65EC00638DC9083781D5D4B65BB1A106200A。
 
 
