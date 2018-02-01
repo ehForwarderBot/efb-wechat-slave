@@ -8,6 +8,7 @@ import threading
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List
 
+import time
 import yaml
 from PIL import Image
 from pyqrcode import QRCode
@@ -101,7 +102,7 @@ class WeChatChannel(EFBChannel):
             qr = '请在手机上确认。'
             return self.logger.log(99, qr)
         elif status == 200:
-            qr = "Successfully authorized."
+            qr = "登录成功。"
             return self.logger.log(99, qr)
         else:
             # 0: First QR code
@@ -127,9 +128,9 @@ class WeChatChannel(EFBChannel):
         status = int(status)
         msg = EFBMsg()
         msg.type = MsgType.Text
-        msg.source = ChatType.System
-        msg.origin = EFBChat(self).system()
-        msg.destination = EFBChat(coordinator.master).self()
+        msg.chat = EFBChat(self).system()
+        msg.chat.chat_name = "EWS 用户登录"
+        msg.author = msg.chat
 
         if status == 201:
             msg.type = MsgType.Text
@@ -166,6 +167,7 @@ class WeChatChannel(EFBChannel):
         msg.chat = msg.author = chat
         msg.deliver_to = coordinator.master
         msg.text = "微信服务器已将您登出，请在做好准备后重新登录。"
+        msg.uid = "__reauth__.%s" % int(time.time())
         msg.type = MsgType.Text
         on_log_out = self.flag("on_log_out")
         on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
@@ -409,7 +411,7 @@ class WeChatChannel(EFBChannel):
         if command and qr_reload == "console_qr_code":
             msg += "\n请查看您的日志或标准输出 (stdout) 以继续。"
 
-        threading.Thread(target=self.authenticate, args=(self, qr_reload)).start()
+        threading.Thread(target=self.authenticate, args=(qr_reload,)).start()
         return msg
 
     def authenticate(self, qr_reload):

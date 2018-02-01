@@ -139,14 +139,15 @@ class SlaveMessageManager:
                     source = xml.get('msg').get('appinfo').get('appname')
                     if type == 2:  # Image
                         return self.wechat_shared_image_msg(msg, source)
-                    elif type in (3, 5):
+                    elif type in ('3', '5'):
                         title = xml.get('msg', {}).get('appmsg', {}).get('title', "")
                         des = xml.get('msg', {}).get('appmsg', {}).get('des', "")
                         url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
                         return self.wechat_shared_link_msg(msg, source, title, des, url)
                     else:
                         # Unidentified message type
-                        self.logger.error("[%s] Identified unsupported sharing message type. Raw message: %s", msg.raw)
+                        self.logger.error("[%s] Identified unsupported sharing message type. Raw message: %s",
+                                          msg.id, msg.raw)
                         raise KeyError()
                 except KeyError:
                     return self.wechat_unsupported_msg(msg)
@@ -284,11 +285,12 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_card_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
-        txt = ("Name card: {user.nick_name}\n"
-               "From: {user.province}, {user.city}\n"
-               "Signature: {user.signature}\n"
-               "Gender: {user.sex}")
-        txt = txt.format(user=msg.card)
+        gender = {1: "男", 2: "女"}.get(msg.card.sex, msg.card.sex)
+        txt = ("名片: {user.nick_name}\n"
+               "来自: {user.province}, {user.city}\n"
+               "签名: {user.signature}\n"
+               "性别: {gender}")
+        txt = txt.format(user=msg.card, gender=gender)
         efb_msg.text = txt
         efb_msg.type = MsgType.Text
         efb_msg.commands = EFBMsgCommands([
