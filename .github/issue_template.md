@@ -5,6 +5,10 @@
 * 请检查此前是否有其他人提交过相关问题。
 * 请查阅 EFB 说明文档及本项目说明是否已针对您的问题进行说明。
 
+提问的智慧: https://github.com/FredWe/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md
+EFB 项目贡献指南: https://github.com/blueset/ehForwarderBot/blob/master/CONTRIBUTING.md
+EFB 说明文档: https://ehforwarderbot.readthedocs.io/
+
 Bug 汇报需要包含完整的重现步骤与 Verbose 级别的日志。日志获取
 方式请参照 EFB 说明文档。
 
