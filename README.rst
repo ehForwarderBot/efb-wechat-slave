@@ -43,7 +43,7 @@ Alpha 版本
 软件依赖
 --------
 
--  Python >= 3.5
+-  Python >= 3.6
 -  EH Forwarder Bot >= 2.0.0
 -  ffmpeg
 -  libmagic
