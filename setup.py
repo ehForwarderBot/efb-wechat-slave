@@ -1,5 +1,5 @@
 import sys
-from setuptools import setup
+from setuptools import setup, find_packages
 
 if sys.version_info < (3, 6):
     raise Exception("Python 3.6 or higher is required. Your version is %s." % sys.version)
@@ -11,7 +11,7 @@ long_description = open('README.rst').read()
 
 setup(
     name='efb-wechat-slave',
-    namespace_package=['efb_wechat_slave'],
+    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     version=__version__,
     description='WeChat Slave Channel for EH Forwarder Bot, based on WeChat Web API.',
     long_description=long_description,
