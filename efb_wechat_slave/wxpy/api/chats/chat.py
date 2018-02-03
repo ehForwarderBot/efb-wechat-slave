@@ -190,7 +190,7 @@ class Chat(object):
         :rtype: :class:`wxpy.SentMessage`
         """
 
-        return dict(fileDir=path, mediaId=media_id, file_=None), locals()
+        return dict(fileDir=path, mediaId=media_id, file_=file), locals()
 
     @wrapped_send(ATTACHMENT)
     def send_file(self, path, file=None, media_id=None):
@@ -203,7 +203,7 @@ class Chat(object):
         :rtype: :class:`wxpy.SentMessage`
         """
 
-        return dict(fileDir=path, mediaId=media_id, file_=None), locals()
+        return dict(fileDir=path, mediaId=media_id, file_=file), locals()
 
     @wrapped_send(VIDEO)
     def send_video(self, path=None, file=None, media_id=None):
@@ -216,7 +216,7 @@ class Chat(object):
         :rtype: :class:`wxpy.SentMessage`
         """
 
-        return dict(fileDir=path, mediaId=media_id, file_=None), locals()
+        return dict(fileDir=path, mediaId=media_id, file_=file), locals()
 
     @wrapped_send(None)
     def send_raw_msg(self, raw_type, raw_content, uri=None, msg_ext=None):
