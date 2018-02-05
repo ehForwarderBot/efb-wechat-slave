@@ -17,7 +17,7 @@ setup(
     long_description=long_description,
     author='Eana Hufwe',
     author_email='ilove@1a23.com',
-    url='https://github.com/blueset/efb-telegram-master',
+    url='https://github.com/blueset/efb-wechat-slave',
     license='GPLv3',
     python_requires='>=3.6',
     keywords=['ehforwarderbot', 'EH Forwarder Bot', 'EH Forwarder Bot Slave Channel',
@@ -34,7 +34,7 @@ setup(
         "Topic :: Utilities"
     ],
     install_requires=[
-        "ehforwarderbot",
+        "ehforwarderbot>=2.0.0b5",
         "itchat",
         "python-magic",
         "pillow",

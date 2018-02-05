@@ -75,8 +75,6 @@ class WeChatChannel(EFBChannel):
         self.slave_message: SlaveMessageManager = SlaveMessageManager(self)
         self.chats: ChatManager = ChatManager(self)
 
-        mimetypes.init(files=["mimetypes"])
-
     def load_config(self):
         """
         Load configuration from path specified by the framework.
