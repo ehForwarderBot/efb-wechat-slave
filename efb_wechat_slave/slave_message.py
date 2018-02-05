@@ -1,5 +1,4 @@
 import logging
-import re
 import tempfile
 import uuid
 from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO
@@ -7,6 +6,7 @@ from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO
 import magic
 import os
 
+import itchat
 import requests
 import xmltodict
 

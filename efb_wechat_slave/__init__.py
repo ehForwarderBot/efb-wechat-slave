@@ -129,6 +129,7 @@ class WeChatChannel(EFBChannel):
         msg.chat = EFBChat(self).system()
         msg.chat.chat_name = "EWS 用户登录"
         msg.author = msg.chat
+        msg.deliver_to = coordinator.master
 
         if status == 201:
             msg.type = MsgType.Text
