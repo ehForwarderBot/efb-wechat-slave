@@ -7,12 +7,14 @@ import magic
 import os
 
 import itchat
+import re
 import requests
 import xmltodict
 
 from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
 from ehforwarderbot.status import EFBMessageRemoval
-from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute, EFBMsgCommands, EFBMsgCommand
+from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute, EFBMsgCommands, EFBMsgCommand, \
+    EFBMsgSubstitutions
 from . import wxpy
 from .wxpy.api import consts
 from . import constants
@@ -96,6 +98,20 @@ class SlaveMessageManager:
         efb_msg = EFBMsg()
         efb_msg.text = ews_utils.wechat_string_unescape(msg.text)
         efb_msg.type = MsgType.Text
+        if msg.is_at:
+            found = False
+            for i in re.finditer("@([^@]*)(?=\u2005)", msg.text):
+                if i.groups()[0] in (self.bot.self.name, msg.chat.self.display_name):
+                    found = True
+                    efb_msg.substitutions = EFBMsgSubstitutions({
+                        i.span(): EFBChat(self.channel).self()
+                    })
+            if not found:
+                append = "@" + self.bot.self.name
+                efb_msg.substitutions = EFBMsgSubstitutions({
+                    (len(msg.text) + 1, len(msg.text) + 1 + len(append)): EFBChat(self.channel).self()
+                })
+                efb_msg.text += " " + append
         return efb_msg
 
     @Decorators.wechat_msg_meta
