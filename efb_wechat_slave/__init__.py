@@ -246,9 +246,9 @@ class WeChatChannel(EFBChannel):
                 msg.text = "%s%s\n\n%s" % (tgt_alias, tgt_text, msg.text)
             r: wxpy.SentMessage = self._bot_send_msg(chat, msg.text)
             self.logger.debug('[%s] Sent as a text message. %s', msg.uid, msg.text)
-        elif msg.type in [MsgType.Image, MsgType.Sticker]:
+        elif msg.type in (MsgType.Image, MsgType.Sticker):
             self.logger.info("[%s] Image/Sticker %s", msg.uid, msg.type)
-            if msg.mime in ["image/gif", "image/jpeg"]:
+            if msg.type != MsgType.Sticker:
                 if os.fstat(msg.file.fileno()).st_size > self.MAX_FILE_SIZE:
                     raise EFBMessageError("图片体积过大。(IS01)")
                 self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
@@ -268,7 +268,7 @@ class WeChatChannel(EFBChannel):
                     msg.path = f.name
                     self.logger.debug('[%s] Image converted from %s to GIF', msg.uid, msg.mime)
                     msg.file.close()
-                    f.seek(0, 2)
+                    f.seek(0)
                     if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
                         raise EFBMessageError("图片体积过大。(IS01)")
                     r: wxpy.SentMessage = self._bot_send_image(chat, f.name, f)
