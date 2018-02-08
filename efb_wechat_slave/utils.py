@@ -106,7 +106,8 @@ class ExperimentalFlagsManager:
         'on_log_out': 'command',
         'imgcat_qr': False,
         'delete_on_edit': False,
-        'app_shared_link_mode': 'ignore'
+        'app_shared_link_mode': 'ignore',
+        'ignore_mp_message': False
     }
 
     def __init__(self, channel: 'WeChatChannel'):
