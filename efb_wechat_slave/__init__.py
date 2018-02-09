@@ -27,6 +27,7 @@ from ehforwarderbot.utils import extra
 from . import __version__ as version
 from . import utils as ews_utils
 from . import wxpy
+from .wxpy.utils import PuidMap
 from .chats import ChatManager
 from .slave_message import SlaveMessageManager
 from .utils import ExperimentalFlagsManager
@@ -109,6 +110,8 @@ class WeChatChannel(EFBChannel):
         """
         super().__init__()
         self.load_config()
+
+        PuidMap.SYSTEM_ACCOUNTS = self.SYSTEM_ACCOUNTS
 
         self.flag: ExperimentalFlagsManager = ExperimentalFlagsManager(self)
 
