@@ -1,0 +1,1 @@
+recursive-include efb_wechat_slave/locale *.mo *.po

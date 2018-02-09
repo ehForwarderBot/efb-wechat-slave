@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import logging
 from typing import Optional, List, TYPE_CHECKING
 
@@ -14,19 +16,20 @@ class ChatManager:
 
     def __init__(self, channel: 'WeChatChannel'):
         self.channel: 'WeChatChannel' = channel
-        # self.itchat: itchat.Core = channel.itchat
         self.bot: wxpy.Bot = channel.bot
         self.logger: logging.Logger = logging.getLogger(__name__)
+
+        self._ = self.channel._
 
         self.MISSING_GROUP: EFBChat = EFBChat(self.channel)
         self.MISSING_GROUP.chat_uid = "__error__"
         self.MISSING_GROUP.chat_type = ChatType.Group
-        self.MISSING_GROUP.chat_name = self.MISSING_GROUP.chat_alias = "会话未找到"
+        self.MISSING_GROUP.chat_name = self.MISSING_GROUP.chat_alias = self._("Chat Missing")
 
         self.MISSING_USER: EFBChat = EFBChat(self.channel)
         self.MISSING_USER.chat_uid = "__error__"
         self.MISSING_USER.chat_type = ChatType.User
-        self.MISSING_USER.chat_name = self.MISSING_USER.chat_alias = "会话未找到"
+        self.MISSING_USER.chat_name = self.MISSING_USER.chat_alias = self._("Chat Missing")
 
     def get_chat_by_puid(self, puid: str) -> EFBChat:
         if puid in wxpy.Chat.SYSTEM_ACCOUNTS:

@@ -1,14 +1,17 @@
+# coding: utf-8
+
 import base64
 import io
 import logging
-import mimetypes
 import os
 import tempfile
 import threading
+import time
+from pkg_resources import resource_filename
+from gettext import translation
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List
 
-import time
 import yaml
 from PIL import Image
 from pyqrcode import QRCode
@@ -19,14 +22,14 @@ from ehforwarderbot import utils as efb_utils
 from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageError, EFBChatNotFound, \
     EFBOperationNotSupported
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
-from ehforwarderbot.utils import extra
 from ehforwarderbot.status import EFBMessageRemoval
-from . import wxpy
+from ehforwarderbot.utils import extra
 from . import __version__ as version
-from .utils import ExperimentalFlagsManager
 from . import utils as ews_utils
+from . import wxpy
 from .chats import ChatManager
 from .slave_message import SlaveMessageManager
+from .utils import ExperimentalFlagsManager
 
 
 class WeChatChannel(EFBChannel):
@@ -52,6 +55,46 @@ class WeChatChannel(EFBChannel):
     _stop_polling_event: threading.Event = threading.Event()
 
     config = dict()
+
+    # Gnu Gettext Translator
+
+    translator = translation("efb_wechat_slave",
+                             resource_filename('efb_wechat_slave', 'locale'),
+                             fallback=True)
+
+    _ = translator.gettext
+    ngettext = translator.ngettext
+
+    SYSTEM_ACCOUNTS = {
+        'filehelper': _('filehelper'),
+        'newsapp': _('newsapp'),
+        'fmessage': _('fmessage'),
+        'weibo': _('weibo'),
+        'qqmail': _('qqmail'),
+        'tmessage': _('tmessage'),
+        'qmessage': _('qmessage'),
+        'qqsync': _('qqsync'),
+        'floatbottle': _('floatbottle'),
+        'lbsapp': _('lbsapp'),
+        'shakeapp': _('shakeapp'),
+        'medianote': _('medianote'),
+        'qqfriend': _('qqfriend'),
+        'readerapp': _('readerapp'),
+        'blogapp': _('blogapp'),
+        'facebookapp': _('facebookapp'),
+        'masssendapp': _('masssendapp'),
+        'meishiapp': _('meishiapp'),
+        'feedsapp': _('feedsapp'),
+        'voip': _('voip'),
+        'blogappweixin': _('blogappweixin'),
+        'weixin': _('weixin'),
+        'brandsessionholder': _('brandsessionholder'),
+        'weixinreminder': _('weixinreminder'),
+        'officialaccounts': _('officialaccounts'),
+        'notification_messages': _('notification_messages'),
+        'wxitil': _('wxitil'),
+        'userexperience_alarm': _('userexperience_alarm'),
+    }
 
     # Constants
     MAX_FILE_SIZE: int = 5 * 2 ** 20
@@ -97,17 +140,18 @@ class WeChatChannel(EFBChannel):
             return
         self.qr_uuid = (uuid, status)
         if status == 201:
-            qr = '请在手机上确认。'
+            qr = self._('Confirm on your phone.')
             return self.logger.log(99, qr)
         elif status == 200:
-            qr = "登录成功。"
+            qr = self._("Successfully logged in.")
             return self.logger.log(99, qr)
         else:
             # 0: First QR code
             # 408: Updated QR code
-            qr = "EWS: 请通过手机摄像头扫描该二维码。请勿使用截图。(%s, %s)\n" % (uuid, status)
+            qr = self._("EWS: Please scan the QR code with your camera, screenshots will not work. ({0}, {1})") \
+                     .format(uuid, status) + "\n"
             if status == 408:
-                qr += "二维码已过期，请扫描新的二维码\n"
+                qr += self._("QR code expired, please scan the new one.") + "\n"
             qr += "\n"
             qr_url = "https://login.weixin.qq.com/l/" + uuid
             qr_obj = QRCode(qr_url)
@@ -118,8 +162,8 @@ class WeChatChannel(EFBChannel):
                 qr += self.imgcat(qr_file, "%s_QR_%s.png" % (self.channel_id, uuid))
             else:
                 qr += qr_obj.terminal()
-            qr += "\n若以上二维码显示不正常，请访问以下网址获取二维码：\n" \
-                  "https://login.weixin.qq.com/qrcode/" + uuid
+            qr += "\n" + self._("If the QR code was not shown correctly, please visit:\n" \
+                                "https://login.weixin.qq.com/qrcode/{0}").format(uuid)
             return self.logger.log(99, qr)
 
     def master_qr_code(self, uuid, status, qrcode=None):
@@ -127,16 +171,16 @@ class WeChatChannel(EFBChannel):
         msg = EFBMsg()
         msg.type = MsgType.Text
         msg.chat = EFBChat(self).system()
-        msg.chat.chat_name = "EWS 用户登录"
+        msg.chat.chat_name = self._("EWS User Auth")
         msg.author = msg.chat
         msg.deliver_to = coordinator.master
 
         if status == 201:
             msg.type = MsgType.Text
-            msg.text = '请在手机上确认。'
+            msg.text = self._('Confirm on your phone.')
         elif status == 200:
             msg.type = MsgType.Text
-            msg.text = "登陆成功。"
+            msg.text = self._("Successfully logged in.")
         elif uuid != self.qr_uuid:
             msg.type = MsgType.Image
             # path = os.path.join("storage", self.channel_id)
@@ -147,7 +191,7 @@ class WeChatChannel(EFBChannel):
             file = NamedTemporaryFile(suffix=".png")
             qr_url = "https://login.weixin.qq.com/l/" + uuid
             QRCode(qr_url).png(file, scale=10)
-            msg.text = '请使用手机摄像头扫描二维码。请勿使用截图。'
+            msg.text = self._("QR code expired, please scan the new one.")
             msg.path = file.name
             msg.file = file
             msg.mime = 'image/png'
@@ -162,10 +206,10 @@ class WeChatChannel(EFBChannel):
         msg = EFBMsg()
         chat = EFBChat(self).system()
         chat.chat_type = ChatType.System
-        chat.chat_name = "EWS 用户登录"
+        chat.chat_name = self._("EWS User Auth")
         msg.chat = msg.author = chat
         msg.deliver_to = coordinator.master
-        msg.text = "微信服务器已将您登出，请在做好准备后重新登录。"
+        msg.text = self._("WeChat server has logged you out. Please log in again when you are ready.")
         msg.uid = "__reauth__.%s" % int(time.time())
         msg.type = MsgType.Text
         on_log_out = self.flag("on_log_out")
@@ -173,13 +217,13 @@ class WeChatChannel(EFBChannel):
         if on_log_out == "command":
             msg.type = MsgType.Text
             msg.commands = EFBMsgCommands([EFBMsgCommand(
-                name="重新登录",
+                name=self._("Log in again"),
                 callable_name="reauth",
                 kwargs={"command": True}
             )])
         elif on_log_out == "reauth":
             if self.flag("qr_reload") == "console_qr_code":
-                msg.text += "\n请查看您的日志或标准输出 (stdout) 以继续。"
+                msg.text += "\n" + self._("Please check your log to continue.")
             self.reauth()
 
         coordinator.send_message(msg)
@@ -223,7 +267,7 @@ class WeChatChannel(EFBChannel):
                     ews_utils.message_to_dummy_message(msg.uid, self).recall()
                 except wxpy.ResponseError as e:
                     self.logger.error("[%s] Trying to recall message but failed: %s", msg.uid, e)
-                    raise EFBMessageError('消息撤回失败。编辑后的消息未发送。')
+                    raise EFBMessageError(self._('Failed to recall message, edited message was not sent.'))
             else:
                 raise EFBOperationNotSupported()
         if msg.type in [MsgType.Text, MsgType.Link]:
@@ -250,7 +294,7 @@ class WeChatChannel(EFBChannel):
             self.logger.info("[%s] Image/Sticker %s", msg.uid, msg.type)
             if msg.type != MsgType.Sticker:
                 if os.fstat(msg.file.fileno()).st_size > self.MAX_FILE_SIZE:
-                    raise EFBMessageError("图片体积过大。(IS01)")
+                    raise EFBMessageError(self._("Image size is too large. (IS01)"))
                 self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
                 r: wxpy.SentMessage = self._bot_send_image(chat, msg.path, msg.file)
                 msg.file.close()
@@ -270,7 +314,7 @@ class WeChatChannel(EFBChannel):
                     msg.file.close()
                     f.seek(0)
                     if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
-                        raise EFBMessageError("图片体积过大。(IS01)")
+                        raise EFBMessageError(self._("Image size is too large. (IS02)"))
                     r: wxpy.SentMessage = self._bot_send_image(chat, f.name, f)
             if msg.text:
                 self._bot_send_msg(chat, msg.text)
@@ -297,11 +341,12 @@ class WeChatChannel(EFBChannel):
     def send_status(self, status: EFBStatus):
         if isinstance(status, EFBMessageRemoval):
             if not status.message.author.is_self:
-                raise EFBMessageError('只能撤回自己的消息')
+                raise EFBMessageError(self._('You can only recall your own messages.'))
             try:
                 ews_utils.message_to_dummy_message(status.message.uid, self).recall()
             except wxpy.ResponseError as e:
-                raise EFBMessageError('撤回失败。%s (%s)' % (e.err_msg, e.err_code))
+                raise EFBMessageError(
+                    self._('Failed to recall the message.') + '{0} ({1})'.format(e.err_msg, e.err_code))
         else:
             raise EFBOperationNotSupported()
 
@@ -321,49 +366,48 @@ class WeChatChannel(EFBChannel):
 
     # Extra functions
 
-    @extra(name="显示会话列表",
-           desc="显示目前所有来自微信的会话列表。\n"
-                "用法:\n    {function_name} [-r]\n"
-                "    -r: 刷新列表")
-    def get_chat_list(self, param: str="") -> str:
+    @extra(name=_("Show chat list"),
+           desc=_("Show a list of chats from WeChat.\n"
+                  "Usage:\n    {function_name} [-r]\n"
+                  "    -r: Refresh list"))
+    def get_chat_list(self, param: str = "") -> str:
         refresh = False
         if param:
             if param == "-r":
                 refresh = True
             else:
-                return "未知参数：%s。" % param
+                return self._("Unknown parameter: {}.").format(param)
         l: List[wxpy.Chat] = self.bot.chats(refresh)
 
-        msg = "会话列表：\n"
-        for (n, i) in enumerate(l):
+        msg = self._("Chat list:") + "\n"
+        for i in l:
             alias = ews_utils.wechat_string_unescape(getattr(i, 'remark_name', '') or
                                                      getattr(i, 'display_name', ''))
             name = ews_utils.wechat_string_unescape(i.nick_name)
             display_name = "%s (%s)" % (alias, name) if alias and alias != name else name
             chat_type = "?"
             if isinstance(i, wxpy.MP):
-                chat_type = '公'
+                # TRANSLATORS: Acronym for MP accounts
+                chat_type = self._('MP')
             elif isinstance(i, wxpy.Group):
-                chat_type = '群'
+                # TRANSLATORS: Acronym for groups
+                chat_type = self._('Gr')
             elif isinstance(i, wxpy.User):
-                chat_type = '友'
-            msg += "\n%s: [%s] %s" % (n, chat_type, display_name)
+                # TRANSLATORS: Acronym for users/friends
+                chat_type = self._('Fr')
+            msg += "\n%s: [%s] %s" % (i.puid, chat_type, display_name)
 
         return msg
 
-    @extra(name="设置备注名称",
-           desc="为微信好友设置备注名称。该操作对公众号和群组无效。\n"
-                "用法:\n"
-                "    {function_name} [-r] id [alias]\n"
-                "    id: 会话编号，可以从「显示会话列表」中获得。\n"
-                "    alias: 备注名称，留空即删除。\n"
-                "    -r: 刷新列表")
-    def set_alias(self, param: str="") -> str:
-        refresh = False
+    @extra(name=_("Set alias"),
+           desc=_("Set an alias (remark name) for friends. Not applicable to "
+                  "groups and MPs.\n"
+                  "Usage:\n"
+                  "    {function_name} id [alias]\n"
+                  "    id: Chat ID, available from \"Show chat list\".\n"
+                  "    alias: Alias. Leave empty to delete alias."))
+    def set_alias(self, param: str = "") -> str:
         if param:
-            if param.startswith("-r "):
-                refresh = True
-                param = param[2:]
             param = param.split(maxsplit=1)
             if len(param) == 1:
                 cid = param[0]
@@ -373,42 +417,36 @@ class WeChatChannel(EFBChannel):
         else:
             return self.set_alias.desc
 
-        if not cid.isdecimal():
-            return "编号必须为数字，您输入的是「%s」。" % cid
-        else:
-            cid = int(cid)
+        chat = self.bot.search(cid)
 
-        l = self.bot.chats(refresh)
+        if not chat:
+            return self._("Chat {0} is not found.").format(cid)
 
-        if cid < 0:
-            return "编号必须大于等于 0 且小于等于 %s。您输入了「%s」。" % (len(l) - 1, cid)
-
-        chat = l[cid]
         if not isinstance(chat, wxpy.User):
-            return "您不能为群组或公众号设置备注名称。"
+            return self._("Remark name is only applicable to friends.")
 
         chat.set_remark_name(alias)
 
         if alias:
-            return "好友「%s」的备注名称已设为「%s」。" % (l[cid]["NickName"], alias)
+            return self._("\"{0}\" now has remark name \"{1}\".").format(chat.nick_name, alias)
         else:
-            return "好友「%s」的备注名称已移除。" % l[cid]["NickName"]
+            return self._("Remark name of \"{0}\" has been removed.").format(chat.nick_name)
 
-    @extra(name="登出",
-           desc="登出当前微信账号。\n"
-                "用法: {function_name}")
-    def force_log_out(self, _: str="") -> str:
+    @extra(name=_("Log out"),
+           desc=_("Log out from WeChat and try to log in again.\n"
+                  "Usage: {function_name}"))
+    def force_log_out(self, _: str = "") -> str:
         self.bot.logout()
         self.exit_callback()
-        return "Done."
+        return self._("Done.")
 
     # Command functions
 
     def reauth(self, command=False):
-        msg = "正在准备登录..."
+        msg = self._("Preparing to log in...")
         qr_reload = self.flag("qr_reload")
         if command and qr_reload == "console_qr_code":
-            msg += "\n请查看您的日志或标准输出 (stdout) 以继续。"
+            msg += "\n" + self._("Please check your log to continue.")
 
         threading.Thread(target=self.authenticate, args=(qr_reload,)).start()
         return msg
@@ -422,23 +460,23 @@ class WeChatChannel(EFBChannel):
             self.bot.enable_puid(os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy_puid.pkl"))
             self.done_reauth.set()
 
-    def add_friend(self, username: str=None, verify_information: str="") -> str:
+    def add_friend(self, username: str = None, verify_information: str = "") -> str:
         if not username:
-            return "用户名为空 (UE02)"
+            return self._("Empty username (UE02).")
         try:
             self.bot.add_friend(user=username, verify_content=verify_information)
         except wxpy.ResponseError as r:
-            return "处理过程中出现问题 (AF01)\n\n%s: %r" % (r.err_code, r.err_msg)
-        return "已发送请求。"
+            return self._("Error occurred while processing (AF01).") + "\n\n{}: {!r}".format(r.err_code, r.err_msg)
+        return self._("Request sent.")
 
-    def accept_friend(self, username: str=None, verify_information: str="") -> str:
+    def accept_friend(self, username: str = None, verify_information: str = "") -> str:
         if not username:
-            return "用户名为空 (UE02)"
+            return self._("Empty username (UE03).")
         try:
             self.bot.accept_friend(user=username, verify_content=verify_information)
         except wxpy.ResponseError as r:
-            return "处理过程中出现问题 (AF01)\n\n%s: %r" % (r.err_code, r.err_msg)
-        return "已接受请求。"
+            return self._("Error occurred while processing (AF02).") + "n\n{}: {!r}".format(r.err_code, r.err_msg)
+        return self._("Request accepted.")
 
     def get_chats(self) -> List[EFBChat]:
         """
@@ -446,7 +484,7 @@ class WeChatChannel(EFBChannel):
         """
         return self.chats.get_chats()
 
-    def get_chat(self, chat_uid: str, member_uid: Optional[str]=None) -> EFBChat:
+    def get_chat(self, chat_uid: str, member_uid: Optional[str] = None) -> EFBChat:
         if member_uid:
             chat = self.chats.search_member(uid=chat_uid, member_id=member_uid)
             if not chat:
@@ -466,33 +504,33 @@ class WeChatChannel(EFBChannel):
         else:
             self.done_reauth.set()
 
-    @staticmethod
-    def _bot_send_msg(chat: wxpy.Chat, message: str) -> wxpy.SentMessage:
+    def _bot_send_msg(self, chat: wxpy.Chat, message: str) -> wxpy.SentMessage:
         try:
             return chat.send_msg(message)
         except wxpy.ResponseError as e:
-            raise EFBMessageError("在发送消息时发生未知错误。错误代号：%s；错误信息：%s；" % (e.err_code, e.err_msg))
+            raise EFBMessageError(self._("Unknown error occurred while delivering the message: [{code}] {message}")
+                                  .format(code=e.err_code, message=e.err_msg))
 
-    @staticmethod
-    def _bot_send_file(chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
+    def _bot_send_file(self, chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
         try:
             return chat.send_file(filename, file=file)
         except wxpy.ResponseError as e:
-            raise EFBMessageError("在发送消息时发生未知错误。错误代号：%s；错误信息：%s；" % (e.err_code, e.err_msg))
+            raise EFBMessageError(self._("Unknown error occurred while delivering the file: [{code}] {message}")
+                                  .format(code=e.err_code, message=e.err_msg))
 
-    @staticmethod
-    def _bot_send_image(chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
+    def _bot_send_image(self, chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
         try:
             return chat.send_image(filename, file=file)
         except wxpy.ResponseError as e:
-            raise EFBMessageError("在发送消息时发生未知错误。错误代号：%s；错误信息：%s；" % (e.err_code, e.err_msg))
+            raise EFBMessageError(self._("Unknown error occurred while delivering the image: [{code}] {message}")
+                                  .format(code=e.err_code, message=e.err_msg))
 
-    @staticmethod
-    def _bot_send_video(chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
+    def _bot_send_video(self, chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
         try:
             return chat.send_video(filename, file=file)
         except wxpy.ResponseError as e:
-            raise EFBMessageError("在发送消息时发生未知错误。错误代号：%s；错误信息：%s；" % (e.err_code, e.err_msg))
+            raise EFBMessageError(self._("Unknown error occurred while delivering the video: [{code}] {message}")
+                                  .format(code=e.err_code, message=e.err_msg))
 
     @staticmethod
     def imgcat(file: io.BytesIO, filename: str) -> str:
@@ -500,6 +538,7 @@ class WeChatChannel(EFBChannel):
         Form a string to print in iTerm 2's ``imgcat`` format
         from a filename and a image file
         """
+
         def print_osc():
             if str(os.environ.get("TERM", "")).startswith("screen"):
                 return "\x1bPtmux;\x1b\x1b]"
@@ -511,6 +550,7 @@ class WeChatChannel(EFBChannel):
                 return "\x07\x1b\\"
             else:
                 return "\x07"
+
         res = print_osc()
         res += "1337;File=name="
         res += base64.b64encode(filename.encode()).decode()

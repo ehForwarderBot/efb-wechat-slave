@@ -15,6 +15,7 @@ setup(
     version=__version__,
     description='WeChat Slave Channel for EH Forwarder Bot, based on WeChat Web API.',
     long_description=long_description,
+    include_package_data=True,
     author='Eana Hufwe',
     author_email='ilove@1a23.com',
     url='https://github.com/blueset/efb-wechat-slave',

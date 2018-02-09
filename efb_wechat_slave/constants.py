@@ -1,3 +1,5 @@
+# coding: utf-8
+
 INVALID_MESSAGE_ID = "__fail__"
 
 

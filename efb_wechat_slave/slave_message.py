@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import logging
 import tempfile
 import uuid
@@ -25,7 +27,6 @@ if TYPE_CHECKING:
 
 
 class SlaveMessageManager:
-
     UNSUPPORTED_MSG_PROMPT = (
         'This type of message is not supported on Web WeChat. View it on your phone.',
         'このタイプのメッセージはWeChatではサポートされていません。あなたの電話で見る。',
@@ -37,6 +38,7 @@ class SlaveMessageManager:
 
     def __init__(self, channel: 'WeChatChannel'):
         self.channel: 'WeChatChannel' = channel
+        self._ = self.channel._
         self.bot: wxpy.Bot = channel.bot
         self.logger: logging.Logger = logging.getLogger(__name__)
         self.wechat_msg_register()
@@ -177,14 +179,14 @@ class SlaveMessageManager:
     def wechat_unsupported_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
         efb_msg.type = MsgType.Unsupported
-        efb_msg.text += "[消息类型不支持，请转到手机微信查看]"
+        efb_msg.text += self._("[Unsupported message, please check your phone.]")
         return efb_msg
 
     @Decorators.wechat_msg_meta
     def wechat_shared_image_msg(self, msg: wxpy.Message, source: str, text: str = "", mode: str = "image") -> EFBMsg:
         efb_msg = EFBMsg()
         efb_msg.type = MsgType.Image
-        efb_msg.text = "来自" + source
+        efb_msg.text = self._("Via ") + source
         if text:
             efb_msg.text = "%s\n%s" % (text, efb_msg.text)
         efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg, app_message=mode)
@@ -216,7 +218,7 @@ class SlaveMessageManager:
 
     @Decorators.wechat_msg_meta
     def wechat_raw_link_msg(self, msg: wxpy.Message, title: str, description: str, image: str,
-                            url: str, suffix: str="") -> EFBMsg:
+                            url: str, suffix: str = "") -> EFBMsg:
         efb_msg = EFBMsg()
         if url:
             efb_msg.type = MsgType.Link
@@ -258,7 +260,7 @@ class SlaveMessageManager:
             efb_msg.text = ""
         except EOFError:
             efb_msg.type = MsgType.Unsupported
-            efb_msg.text += "[图片无法接收，请转到手机微信查看]"
+            efb_msg.text += self._("[Failed to get the picture, please check your phone.]")
         return efb_msg
 
     @Decorators.wechat_msg_meta
@@ -271,7 +273,7 @@ class SlaveMessageManager:
             efb_msg.filename = msg.file_name or ""
         except EOFError:
             efb_msg.type = MsgType.Text
-            efb_msg.text += "[文件无法接收，请转到手机微信查看]"
+            efb_msg.text += self._("[Failed to get the file, please check your phone.]")
         return efb_msg
 
     @Decorators.wechat_msg_meta
@@ -283,7 +285,7 @@ class SlaveMessageManager:
             efb_msg.text = ""
         except EOFError:
             efb_msg.type = MsgType.Text
-            efb_msg.text += "[语音无法接收，请转到手机微信查看]"
+            efb_msg.text += self._("[Failed to get the voice, please check your phone.]")
         return efb_msg
 
     @Decorators.wechat_msg_meta
@@ -295,23 +297,24 @@ class SlaveMessageManager:
             efb_msg.text = ""
         except EOFError:
             efb_msg.type = MsgType.Text
-            efb_msg.text += "[视频无法接收，请转到手机微信查看]"
+            efb_msg.text += self._("[Failed to get the video, please check your phone.]")
         return efb_msg
 
     @Decorators.wechat_msg_meta
     def wechat_card_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
-        gender = {1: "男", 2: "女"}.get(msg.card.sex, msg.card.sex)
-        txt = ("名片: {user.nick_name}\n"
-               "来自: {user.province}, {user.city}\n"
-               "签名: {user.signature}\n"
-               "性别: {gender}")
+        # TRANSLATORS: Gender of contact
+        gender = {1: self._("M"), 2: self._("F")}.get(msg.card.sex, msg.card.sex)
+        txt = (self._("Card: {user.nick_name}\n"
+                      "From: {user.province}, {user.city}\n"
+                      "Bio: {user.signature}\n"
+                      "Gender: {gender}"))
         txt = txt.format(user=msg.card, gender=gender)
         efb_msg.text = txt
         efb_msg.type = MsgType.Text
         efb_msg.commands = EFBMsgCommands([
             EFBMsgCommand(
-                name="发送好友请求",
+                name=self._("Send friend request"),
                 callable_name="add_friend",
                 kwargs={"username": msg.card.user_name}
             )
@@ -321,16 +324,17 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_friend_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
-        txt = ("Name card: {user.nick_name}\n"
-               "From: {user.province}, {user.city}\n"
-               "Signature: {user.signature}\n"
-               "Gender: {user.sex}")
-        txt = txt.format(user=msg.card)
+        gender = {1: self._("M"), 2: self._("F")}.get(msg.card.sex, msg.card.sex)
+        txt = (self._("Card: {user.nick_name}\n"
+                      "From: {user.province}, {user.city}\n"
+                      "Bio: {user.signature}\n"
+                      "Gender: {gender}"))
+        txt = txt.format(user=msg.card, gender=gender)
         efb_msg.text = txt
         efb_msg.type = MsgType.Text
         efb_msg.commands = EFBMsgCommands([
             EFBMsgCommand(
-                name="接受好友请求",
+                name=self._("Accept friend request"),
                 callable_name="accept_friend",
                 kwargs={"username": msg.card.user_name}
             )
@@ -338,7 +342,7 @@ class SlaveMessageManager:
         return efb_msg
 
     @staticmethod
-    def save_file(msg: wxpy.Message, app_message: Optional[str]=None) -> Tuple[str, str, IO[bytes]]:
+    def save_file(msg: wxpy.Message, app_message: Optional[str] = None) -> Tuple[str, str, IO[bytes]]:
         """
         Args:
             msg: the WXPY message object
