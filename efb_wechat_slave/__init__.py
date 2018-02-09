@@ -171,6 +171,10 @@ class WeChatChannel(EFBChannel):
 
     def master_qr_code(self, uuid, status, qrcode=None):
         status = int(status)
+        if self.qr_uuid == (uuid, status):
+            return
+        self.qr_uuid = (uuid, status)
+
         msg = EFBMsg()
         msg.type = MsgType.Text
         msg.chat = EFBChat(self).system()
@@ -186,11 +190,6 @@ class WeChatChannel(EFBChannel):
             msg.text = self._("Successfully logged in.")
         elif uuid != self.qr_uuid:
             msg.type = MsgType.Image
-            # path = os.path.join("storage", self.channel_id)
-            # if not os.path.exists(path):
-            #     os.makedirs(path)
-            # path = os.path.join(path, 'QR-%s.jpg' % int(time.time()))
-            # self.logger.debug("master_qr_code file path: %s", path)
             file = NamedTemporaryFile(suffix=".png")
             qr_url = "https://login.weixin.qq.com/l/" + uuid
             QRCode(qr_url).png(file, scale=10)

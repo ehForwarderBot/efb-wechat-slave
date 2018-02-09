@@ -3,13 +3,13 @@
 import logging
 import tempfile
 import uuid
+import threading
+import os
+import re
 from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO
 
 import magic
-import os
-
 import itchat
-import re
 import requests
 import xmltodict
 
@@ -73,7 +73,11 @@ class SlaveMessageManager:
                 if efb_msg.file:
                     efb_msg.file.close()
 
-            return wrap_func
+            def thread_wrapper(*args, **kwargs):
+                """Run message requests in separate threads to prevent blocking"""
+                threading.Thread(target=wrap_func, args=args, kwargs=kwargs).run()
+
+            return thread_wrapper
 
     def wechat_msg_register(self):
         self.bot.register(except_self=False, msg_types=consts.TEXT)(self.wechat_text_msg)
