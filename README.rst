@@ -4,7 +4,7 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 .. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg
    :alt: PyPI release
    :target: https://pypi.org/project/efb-wechat-slave/
-.. image:: https://img.shields.io/badge/Translate-Crowdin-orange.svg
+.. image:: https://d322cqt584bo4o.cloudfront.net/ehforwarderbot/localized.svg
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 

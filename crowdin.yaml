@@ -1,0 +1,8 @@
+"preserve_hierarchy": true
+
+files: [
+  {
+    "source" : "/EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/*.pot",
+    "translation" : "/EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/%locale_with_underscore%/LC_MESSAGES/%file_name%.po",
+  },
+]
