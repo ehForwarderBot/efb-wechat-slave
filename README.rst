@@ -188,3 +188,13 @@ EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
    该会话是否为公众号。
 -  ``wxpy_objet`` *(wxpy.Chat)*
    该会话所对应的 ``wxpy.Chat`` 对象。
+
+本地化翻译实验
+------------
+
+EWS 启用了实验性的本地化翻译。您可以将语言环境变量 (``LANGUAGE``,
+``LC_ALL``, ``LC_MESSAGES`` 或 ``LANG``) 设为一种 `已支持的语言`_ 。
+同时，您也可以在我们的 `Crowdin 项目`_ 里面将 EWS 翻译为您的语言。
+
+.. _已支持的语言: https://crowdin.com/project/ehforwarderbot/
+.. _Crowdin 项目: https://crowdin.com/project/ehforwarderbot/
