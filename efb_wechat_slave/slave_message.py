@@ -256,9 +256,8 @@ class SlaveMessageManager:
         if news:
             msg = self.wechat_raw_link_msg(msg, news[0]['title'], news[0]['digest'],
                                            news[0]['cover'], news[0]['shorturl'])
-            if self.channel.flag("extra_links_on_message"):
-                for i in news[1:]:
-                    self.wechat_raw_link_msg(msg, i['title'], i['digest'], i['cover'], i['shorturl'])
+            for i in news[1:]:
+                self.wechat_raw_link_msg(msg, i['title'], i['digest'], i['cover'], i['shorturl'])
         return msg
 
     @Decorators.wechat_msg_meta
