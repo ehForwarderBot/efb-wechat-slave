@@ -58,6 +58,10 @@ class SlaveMessageManager:
                 efb_msg.uid = getattr(msg, "id", constants.INVALID_MESSAGE_ID + str(uuid.uuid4()))
 
                 chat: EFBChat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
+                
+                if chat.vendor_specific.get('is_mp', False) and self.channel.flag("ignore_mp_message"):
+                    logger.debug("[%s] Chat: %s, Author: %s is from mp, ignored.", efb_msg.uid, efb_msg.chat, efb_msg.author)
+                    return
 
                 author: EFBChat = self.channel.chats.wxpy_chat_to_efb_chat(msg.author)
 
