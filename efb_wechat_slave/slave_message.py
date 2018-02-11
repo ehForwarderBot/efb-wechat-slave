@@ -383,7 +383,7 @@ class SlaveMessageManager:
                     file.write(block)
             else:
                 raise e
-        if file.tell() <= 0:
+        if file.seek(0, 2) <= 0:
             raise EOFError('File downloaded is Empty')
         file.seek(0)
         mime = magic.from_file(file.name, mime=True)
