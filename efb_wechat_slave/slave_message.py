@@ -199,6 +199,11 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_shared_link_msg(self, msg: wxpy.Message, source: str, title: str, des: str, url: str) -> EFBMsg:
         share_mode = self.channel.flag('app_shared_link_mode')
+        thumb_url = re.search(r"<thumburl>(.*?)</thumburl>", msg.raw['Content'])
+        thumb_url = thumb_url and thumb_url.group(1)
+        via = (source and self._("Via ") + source) or ""
+        if thumb_url:
+            return self.wechat_raw_link_msg(msg, title, des, thumb_url, url)
         if share_mode == "image":
             # Share as image
             text = "%n\n%n\n%n" % (title, des, url)
@@ -206,19 +211,22 @@ class SlaveMessageManager:
         else:
             image = None
             if share_mode == "upload":
-                _, _, file = self.save_file(msg, app_message="thumbnail")
-                r = requests.post("https://sm.ms/api/upload",
-                                  files={"smfile": file},
-                                  data={"ssl": True, "format": "json"}).json()
-                if r.get('code', '') == 'success':
-                    image = r['data']['url']
-                    self.logger.log(99, "Delete link for Message \"%s\" [%s] is %s.",
-                                    msg.id, title, r['data']['delete'])
-                else:
-                    self.logger.error("Failed to upload app link message as thumbnail to sm.ms: %s", r)
+                try:
+                    _, _, file = self.save_file(msg, app_message="thumbnail")
+                    r = requests.post("https://sm.ms/api/upload",
+                                      files={"smfile": file},
+                                      data={"ssl": True, "format": "json"}).json()
+                    if r.get('code', '') == 'success':
+                        image = r['data']['url']
+                        self.logger.log(99, "Delete link for Message \"%s\" [%s] is %s.",
+                                        msg.id, title, r['data']['delete'])
+                    else:
+                        self.logger.error("Failed to upload app link message as thumbnail to sm.ms: %s", r)
+                except EOFError as e:
+                    self.logger.error("Failed to download app link message thumbnail: %r", e)
             elif share_mode != "ignore":
                 self.logger.error('Not identified value for flag "app_shared_link_mode". Defaulted to ignore.')
-            return self.wechat_raw_link_msg(msg, title, des, image, url)
+            return self.wechat_raw_link_msg(msg, title, des, image, url, suffix=via)
 
     @Decorators.wechat_msg_meta
     def wechat_raw_link_msg(self, msg: wxpy.Message, title: str, description: str, image: str,
@@ -376,7 +384,7 @@ class SlaveMessageManager:
                     file.write(block)
             else:
                 raise e
-        if os.fstat(file.fileno()).st_size <= 0:
+        if file.tell() <= 0:
             raise EOFError('File downloaded is Empty')
         file.seek(0)
         mime = magic.from_file(file.name, mime=True)

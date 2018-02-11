@@ -10,7 +10,7 @@ import time
 from pkg_resources import resource_filename
 from gettext import translation
 from tempfile import NamedTemporaryFile
-from typing import IO, Any, Dict, Optional, List
+from typing import IO, Any, Dict, Optional, List, Tuple
 
 import yaml
 from PIL import Image
@@ -51,7 +51,7 @@ class WeChatChannel(EFBChannel):
     supported_message_types = {MsgType.Text, MsgType.Sticker, MsgType.Image,
                                MsgType.File, MsgType.Video, MsgType.Link, MsgType.Audio}
     logger: logging.Logger = logging.getLogger("plugins.%s.WeChatChannel" % channel_id)
-    qr_uuid: str = ""
+    qr_uuid: Tuple[str, int] = None
     done_reauth: threading.Event = threading.Event()
     _stop_polling_event: threading.Event = threading.Event()
 
@@ -199,7 +199,6 @@ class WeChatChannel(EFBChannel):
             msg.mime = 'image/png'
         if status in (200, 201) or uuid != self.qr_uuid:
             coordinator.send_message(msg)
-            self.qr_uuid = uuid
 
     def exit_callback(self):
         self.logger.debug('Calling exit callback...')

@@ -16,7 +16,6 @@ class ChatManager:
 
     def __init__(self, channel: 'WeChatChannel'):
         self.channel: 'WeChatChannel' = channel
-        self.bot: wxpy.Bot = channel.bot
         self.logger: logging.Logger = logging.getLogger(__name__)
 
         self._ = self.channel._
@@ -30,6 +29,10 @@ class ChatManager:
         self.MISSING_USER.chat_uid = "__error__"
         self.MISSING_USER.chat_type = ChatType.User
         self.MISSING_USER.chat_name = self.MISSING_USER.chat_alias = self._("Chat Missing")
+
+    @property
+    def bot(self):
+        return self.channel.bot
 
     def get_chat_by_puid(self, puid: str) -> EFBChat:
         if puid in wxpy.Chat.SYSTEM_ACCOUNTS:
