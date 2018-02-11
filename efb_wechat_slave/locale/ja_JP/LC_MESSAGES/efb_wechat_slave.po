@@ -5,48 +5,48 @@ msgstr ""
 "POT-Creation-Date: 2018-02-11 17:08+0800\n"
 "PO-Revision-Date: 2018-02-11 04:08-0500\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: ehforwarderbot\n"
-"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/efb_wechat_slave.pot\n"
 
 #: efb_wechat_slave/slave_message.py:186
 msgid "[Unsupported message, please check your phone.]"
-msgstr "[消息类型不支持，请转到手机微信查看]"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:193 efb_wechat_slave/slave_message.py:204
 msgid "Via "
-msgstr "来自"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:274
 msgid "[Failed to get the picture, please check your phone.]"
-msgstr "[图片无法接收，请转到手机微信查看]"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:287
 msgid "[Failed to get the file, please check your phone.]"
-msgstr "[文件无法接收，请转到手机微信查看]"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:299
 msgid "[Failed to get the voice, please check your phone.]"
-msgstr "[语音无法接收，请转到手机微信查看]"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:311
 msgid "[Failed to get the video, please check your phone.]"
-msgstr "[视频无法接收，请转到手机微信查看]"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:318 efb_wechat_slave/slave_message.py:338
 msgid "M"
-msgstr "男"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:318 efb_wechat_slave/slave_message.py:338
 msgid "F"
-msgstr "女"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:319 efb_wechat_slave/slave_message.py:339
 #, python-brace-format
@@ -54,26 +54,23 @@ msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
 "Bio: {user.signature}\n"
 "Gender: {gender}"
-msgstr "名片: {user.nick_name}\n"
-"来自: {user.province}, {user.city}\n"
-"签名: {user.signature}\n"
-"性别: {gender}"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:328
 msgid "Send friend request"
-msgstr "发送好友请求"
+msgstr ""
 
 #: efb_wechat_slave/slave_message.py:348
 msgid "Accept friend request"
-msgstr "接受好友请求"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:70
 msgid "filehelper"
-msgstr "文件传输助手"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:71
 msgid "newsapp"
-msgstr "腾讯新闻"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:72
 msgid "fmessage"
@@ -81,11 +78,11 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:73
 msgid "weibo"
-msgstr "微博"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:74
 msgid "qqmail"
-msgstr "qq邮箱"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:75
 msgid "tmessage"
@@ -101,7 +98,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:78
 msgid "floatbottle"
-msgstr "漂流瓶"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:79
 msgid "lbsapp"
@@ -109,11 +106,11 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:80
 msgid "shakeapp"
-msgstr "摇一摇"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:81
 msgid "medianote"
-msgstr "语音记事本"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:82
 msgid "qqfriend"
@@ -129,7 +126,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:85
 msgid "facebookapp"
-msgstr "Facebook"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:86
 msgid "masssendapp"
@@ -153,7 +150,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:91
 msgid "weixin"
-msgstr "微信团队"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:92
 msgid "brandsessionholder"
@@ -181,67 +178,66 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:146 efb_wechat_slave/__init__.py:187
 msgid "Confirm on your phone."
-msgstr "请在手机上确认。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:149 efb_wechat_slave/__init__.py:190
 msgid "Successfully logged in."
-msgstr "登录成功。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:154
 #, python-brace-format
 msgid "EWS: Please scan the QR code with your camera, screenshots will not work. ({0}, {1})"
-msgstr "EWS: 请通过手机摄像头扫描该二维码。请勿使用截图。({0}, {1})"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:157 efb_wechat_slave/__init__.py:196
 msgid "QR code expired, please scan the new one."
-msgstr "二维码已过期，请扫描新的二维码。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:168
 #, python-brace-format
 msgid "If the QR code was not shown correctly, please visit:\n"
 "https://login.weixin.qq.com/qrcode/{0}"
-msgstr "若以上二维码显示不正常，请访问以下网址获取二维码：\n"
-"https://login.weixin.qq.com/qrcode/{0}"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:181 efb_wechat_slave/__init__.py:210
 msgid "EWS User Auth"
-msgstr "EWS 用户登录"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:213
 msgid "WeChat server has logged you out. Please log in again when you are ready."
-msgstr "微信服务器已将您登出，请在做好准备后重新登录。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:221
 msgid "Log in again"
-msgstr "重新登录"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:227 efb_wechat_slave/__init__.py:450
 msgid "Please check your log to continue."
-msgstr "请查看您的日志以继续。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:271
 msgid "Failed to recall message, edited message was not sent."
-msgstr "消息撤回失败。编辑后的消息未发送。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:298
 msgid "Image size is too large. (IS01)"
-msgstr "图片体积过大。(IS01)"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:318
 msgid "Image size is too large. (IS02)"
-msgstr "图片体积过大。(IS02)"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:345
 msgid "You can only recall your own messages."
-msgstr "只能撤回自己的消息。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:350
 msgid "Failed to recall the message."
-msgstr "撤回失败。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:370
 msgid "Show chat list"
-msgstr "显示会话列表"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:371
 #, python-brace-format
@@ -249,34 +245,31 @@ msgid "Show a list of chats from WeChat.\n"
 "Usage:\n"
 "    {function_name} [-r]\n"
 "    -r: Refresh list"
-msgstr "显示目前所有来自微信的会话列表。\n"
-"用法：\n"
-"    {function_name} [-r]\n"
-"    -r: 刷新列表"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:380
 msgid "Unknown parameter: {}."
-msgstr "未知参数：{}。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:383
 msgid "Chat list:"
-msgstr "会话列表："
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:392
 msgid "MP"
-msgstr "公"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:395
 msgid "Gr"
-msgstr "群"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:398
 msgid "Fr"
-msgstr "友"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:403
 msgid "Set alias"
-msgstr "设置备注名称"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:404
 #, python-brace-format
@@ -285,95 +278,90 @@ msgid "Set an alias (remark name) for friends. Not applicable to groups and MPs.
 "    {function_name} id [alias]\n"
 "    id: Chat ID, available from \"Show chat list\".\n"
 "    alias: Alias. Leave empty to delete alias."
-msgstr "为微信好友设置备注名称。该操作对公众号和群组无效。\n"
-"用法：\n"
-"    {function_name} id [alias]\n"
-"    id: 会话 ID，可以从「显示会话列表」中获得。\n"
-"    alias: 备注名称，留空即删除。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:424
 #, python-brace-format
 msgid "Chat {0} is not found."
-msgstr "会话 {0} 不存在。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:427
 msgid "Remark name is only applicable to friends."
-msgstr "您不能为群组或公众号设置备注名称。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:432
 #, python-brace-format
 msgid "\"{0}\" now has remark name \"{1}\"."
-msgstr "好友「{0}」的备注名称已设为「{1}」。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:434
 #, python-brace-format
 msgid "Remark name of \"{0}\" has been removed."
-msgstr "好友「{0}」的备注名称已移除。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:436
 msgid "Log out"
-msgstr "登出"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:437
 #, python-brace-format
 msgid "Log out from WeChat and try to log in again.\n"
 "Usage: {function_name}"
-msgstr "登出当前微信账号。\n"
-"用法：{function_name}"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:442
 msgid "Done."
-msgstr "完成。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:447
 msgid "Preparing to log in..."
-msgstr "正在准备登录…"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:466
 msgid "Empty username (UE02)."
-msgstr "用户名为空 (UE02)。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:470
 msgid "Error occurred while processing (AF01)."
-msgstr "处理过程中出现问题 (AF01)。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:471
 msgid "Request sent."
-msgstr "已发送请求。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:475
 msgid "Empty username (UE03)."
-msgstr "用户名为空 (UE03)。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:479
 msgid "Error occurred while processing (AF02)."
-msgstr "处理过程中出现问题 (AF02)。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:480
 msgid "Request accepted."
-msgstr "已接受请求。"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:512
 #, python-brace-format
 msgid "Unknown error occurred while delivering the message: [{code}] {message}"
-msgstr "在发送消息时发生未知错误。错误代号：{code}；错误信息：{message}；"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:519
 #, python-brace-format
 msgid "Unknown error occurred while delivering the file: [{code}] {message}"
-msgstr "在发送文件时发生未知错误。错误代号：{code}；错误信息：{message}；"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:526
 #, python-brace-format
 msgid "Unknown error occurred while delivering the image: [{code}] {message}"
-msgstr "在发送图片时发生未知错误。错误代号：{code}；错误信息：{message}；"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:533
 #, python-brace-format
 msgid "Unknown error occurred while delivering the video: [{code}] {message}"
-msgstr "在发送视频时发生未知错误。错误代号：{code}；错误信息：{message}；"
+msgstr ""
 
 #: efb_wechat_slave/chats.py:26 efb_wechat_slave/chats.py:31
 msgid "Chat Missing"
-msgstr "会话未找到"
+msgstr ""
 
