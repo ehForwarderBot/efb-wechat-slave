@@ -1,7 +1,7 @@
 PACKAGE = efb_wechat_slave
 
 gettext:
-	find ./$(PACKAGE) -iname "*.py" | xargs xgettext -o ./$(PACKAGE)/locale/$(PACKAGE).pot
+	find ./$(PACKAGE) -iname "*.py" | xargs xgettext --add-comments=TRANSLATORS -o ./$(PACKAGE)/locale/$(PACKAGE).pot
 
 crowdin: gettext
 	find "$(CURDIR)" -iname '*.po' -exec bash -c 'msgfmt "$$0" -o "$${0%.po}.mo"' {} \;
