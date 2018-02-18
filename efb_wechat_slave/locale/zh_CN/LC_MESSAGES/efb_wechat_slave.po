@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-11 17:08+0800\n"
-"PO-Revision-Date: 2018-02-11 04:08-0500\n"
+"PO-Revision-Date: 2018-02-18 02:35-0500\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -77,15 +77,15 @@ msgstr "腾讯新闻"
 
 #: efb_wechat_slave/__init__.py:72
 msgid "fmessage"
-msgstr ""
+msgstr "朋友推介消息"
 
 #: efb_wechat_slave/__init__.py:73
 msgid "weibo"
-msgstr "微博"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:74
 msgid "qqmail"
-msgstr "qq邮箱"
+msgstr "QQ 邮箱"
 
 #: efb_wechat_slave/__init__.py:75
 msgid "tmessage"
@@ -173,7 +173,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:96
 msgid "wxitil"
-msgstr ""
+msgstr "微信小管家"
 
 #: efb_wechat_slave/__init__.py:97
 msgid "userexperience_alarm"

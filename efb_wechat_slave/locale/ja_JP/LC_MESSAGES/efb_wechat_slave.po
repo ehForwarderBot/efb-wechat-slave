@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-11 17:08+0800\n"
-"PO-Revision-Date: 2018-02-11 04:08-0500\n"
+"PO-Revision-Date: 2018-02-18 02:34-0500\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -18,35 +18,35 @@ msgstr ""
 
 #: efb_wechat_slave/slave_message.py:186
 msgid "[Unsupported message, please check your phone.]"
-msgstr ""
+msgstr "[対応されていないメッセージタイプですので、携帯電話でチェックしてください]"
 
 #: efb_wechat_slave/slave_message.py:193 efb_wechat_slave/slave_message.py:204
 msgid "Via "
-msgstr ""
+msgstr "by "
 
 #: efb_wechat_slave/slave_message.py:274
 msgid "[Failed to get the picture, please check your phone.]"
-msgstr ""
+msgstr "[画像がダウンロードできませんので、携帯電話でチェックしてください]"
 
 #: efb_wechat_slave/slave_message.py:287
 msgid "[Failed to get the file, please check your phone.]"
-msgstr ""
+msgstr "[ファイルがダウンロードできませんので、携帯電話でチェックしてください]"
 
 #: efb_wechat_slave/slave_message.py:299
 msgid "[Failed to get the voice, please check your phone.]"
-msgstr ""
+msgstr "[音声がダウンロードできませんので、携帯電話でチェックしてください]"
 
 #: efb_wechat_slave/slave_message.py:311
 msgid "[Failed to get the video, please check your phone.]"
-msgstr ""
+msgstr "[動画がダウンロードできませんので、携帯電話でチェックしてください]"
 
 #: efb_wechat_slave/slave_message.py:318 efb_wechat_slave/slave_message.py:338
 msgid "M"
-msgstr ""
+msgstr "男"
 
 #: efb_wechat_slave/slave_message.py:318 efb_wechat_slave/slave_message.py:338
 msgid "F"
-msgstr ""
+msgstr "女"
 
 #: efb_wechat_slave/slave_message.py:319 efb_wechat_slave/slave_message.py:339
 #, python-brace-format
@@ -54,19 +54,22 @@ msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
 "Bio: {user.signature}\n"
 "Gender: {gender}"
-msgstr ""
+msgstr "連絡先カード: {user.nick_name}\n"
+"住所: {user.province}, {user.city}\n"
+"状況: {user.signature}\n"
+"性別: {gender}"
 
 #: efb_wechat_slave/slave_message.py:328
 msgid "Send friend request"
-msgstr ""
+msgstr "友達リクエストを送信"
 
 #: efb_wechat_slave/slave_message.py:348
 msgid "Accept friend request"
-msgstr ""
+msgstr "友達リクエストを承認する"
 
 #: efb_wechat_slave/__init__.py:70
 msgid "filehelper"
-msgstr ""
+msgstr "ファイル転送"
 
 #: efb_wechat_slave/__init__.py:71
 msgid "newsapp"
@@ -98,7 +101,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:78
 msgid "floatbottle"
-msgstr ""
+msgstr "メッセージボトル"
 
 #: efb_wechat_slave/__init__.py:79
 msgid "lbsapp"
@@ -106,7 +109,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:80
 msgid "shakeapp"
-msgstr ""
+msgstr "シェイク"
 
 #: efb_wechat_slave/__init__.py:81
 msgid "medianote"
@@ -126,7 +129,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:85
 msgid "facebookapp"
-msgstr ""
+msgstr "Facebook"
 
 #: efb_wechat_slave/__init__.py:86
 msgid "masssendapp"
@@ -150,7 +153,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:91
 msgid "weixin"
-msgstr ""
+msgstr "WeChatチーム"
 
 #: efb_wechat_slave/__init__.py:92
 msgid "brandsessionholder"
@@ -178,66 +181,67 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:146 efb_wechat_slave/__init__.py:187
 msgid "Confirm on your phone."
-msgstr ""
+msgstr "携帯電話で確認ボタンを押してください。"
 
 #: efb_wechat_slave/__init__.py:149 efb_wechat_slave/__init__.py:190
 msgid "Successfully logged in."
-msgstr ""
+msgstr "ログイン完了。"
 
 #: efb_wechat_slave/__init__.py:154
 #, python-brace-format
 msgid "EWS: Please scan the QR code with your camera, screenshots will not work. ({0}, {1})"
-msgstr ""
+msgstr "EWS: 携帯カメラでこのQRコードをスキャンしてください。スクリンショットしないでください。 ({0}, {1})"
 
 #: efb_wechat_slave/__init__.py:157 efb_wechat_slave/__init__.py:196
 msgid "QR code expired, please scan the new one."
-msgstr ""
+msgstr "QRコードは更新されました、新しいコードをスキャンしてください。"
 
 #: efb_wechat_slave/__init__.py:168
 #, python-brace-format
 msgid "If the QR code was not shown correctly, please visit:\n"
 "https://login.weixin.qq.com/qrcode/{0}"
-msgstr ""
+msgstr "QR コードが正しく表示されていない場合は、下記のURLをチェックしてください: \n"
+"https://login.weixin.qq.com/qrcode/{0}"
 
 #: efb_wechat_slave/__init__.py:181 efb_wechat_slave/__init__.py:210
 msgid "EWS User Auth"
-msgstr ""
+msgstr "EWS ユーザー認証"
 
 #: efb_wechat_slave/__init__.py:213
 msgid "WeChat server has logged you out. Please log in again when you are ready."
-msgstr ""
+msgstr "WeChat サーバーがあなたをログアウトされました。準備ができたら、もう一度ログインしてください。"
 
 #: efb_wechat_slave/__init__.py:221
 msgid "Log in again"
-msgstr ""
+msgstr "再度ログインする"
 
 #: efb_wechat_slave/__init__.py:227 efb_wechat_slave/__init__.py:450
 msgid "Please check your log to continue."
-msgstr ""
+msgstr "続けるには、ログをチェックしてください。"
 
 #: efb_wechat_slave/__init__.py:271
 msgid "Failed to recall message, edited message was not sent."
-msgstr ""
+msgstr "送信取り消しが失敗しました、編集したメッセージが送信しません。"
 
 #: efb_wechat_slave/__init__.py:298
 msgid "Image size is too large. (IS01)"
-msgstr ""
+msgstr "画像のサイズが大きすぎます。(IS01)"
 
 #: efb_wechat_slave/__init__.py:318
 msgid "Image size is too large. (IS02)"
-msgstr ""
+msgstr "画像のサイズが大きすぎます。(IS02)"
 
 #: efb_wechat_slave/__init__.py:345
 msgid "You can only recall your own messages."
-msgstr ""
+msgstr "自分のメッセージだけを取り消すことができます。"
 
 #: efb_wechat_slave/__init__.py:350
 msgid "Failed to recall the message."
-msgstr ""
+msgstr "メッセージの取り消す失敗しました。"
 
 #: efb_wechat_slave/__init__.py:370
 msgid "Show chat list"
-msgstr ""
+msgstr "全てのチャットを表示する"
 
 #: efb_wechat_slave/__init__.py:371
 #, python-brace-format
@@ -245,31 +249,34 @@ msgid "Show a list of chats from WeChat.\n"
 "Usage:\n"
 "    {function_name} [-r]\n"
 "    -r: Refresh list"
-msgstr ""
+msgstr "WeChat でのチャットリストを表示する。\n"
+"用法:\n"
+"    {function_name} [-r]\n"
+"    -r: リストを更新する"
 
 #: efb_wechat_slave/__init__.py:380
 msgid "Unknown parameter: {}."
-msgstr ""
+msgstr "不明なパラメーター: {}。"
 
 #: efb_wechat_slave/__init__.py:383
 msgid "Chat list:"
-msgstr ""
+msgstr "チャットリスト:"
 
 #: efb_wechat_slave/__init__.py:392
 msgid "MP"
-msgstr ""
+msgstr "公"
 
 #: efb_wechat_slave/__init__.py:395
 msgid "Gr"
-msgstr ""
+msgstr "友"
 
 #: efb_wechat_slave/__init__.py:398
 msgid "Fr"
-msgstr ""
+msgstr "グ"
 
 #: efb_wechat_slave/__init__.py:403
 msgid "Set alias"
-msgstr ""
+msgstr "別名設定"
 
 #: efb_wechat_slave/__init__.py:404
 #, python-brace-format
@@ -278,73 +285,78 @@ msgid "Set an alias (remark name) for friends. Not applicable to groups and MPs.
 "    {function_name} id [alias]\n"
 "    id: Chat ID, available from \"Show chat list\".\n"
 "    alias: Alias. Leave empty to delete alias."
-msgstr ""
+msgstr "友人の別名を設定する。グループと公式アカウントには設定できません。\n"
+"用法：\n"
+"    {function_name} id [alias]\n"
+"    id: チャット ID、「チャットリストを表示する」から選択できます。\n"
+"    alias: 別名、空にすると削除できます。"
 
 #: efb_wechat_slave/__init__.py:424
 #, python-brace-format
 msgid "Chat {0} is not found."
-msgstr ""
+msgstr "チャット {0} が見つかりません。"
 
 #: efb_wechat_slave/__init__.py:427
 msgid "Remark name is only applicable to friends."
-msgstr ""
+msgstr "別名設定は友人のみに設定できます。"
 
 #: efb_wechat_slave/__init__.py:432
 #, python-brace-format
 msgid "\"{0}\" now has remark name \"{1}\"."
-msgstr ""
+msgstr "\"{0}\" の別名は \"{1}\" にしました。"
 
 #: efb_wechat_slave/__init__.py:434
 #, python-brace-format
 msgid "Remark name of \"{0}\" has been removed."
-msgstr ""
+msgstr "\"{0}\" の別名を削除されました。"
 
 #: efb_wechat_slave/__init__.py:436
 msgid "Log out"
-msgstr ""
+msgstr "ログアウト"
 
 #: efb_wechat_slave/__init__.py:437
 #, python-brace-format
 msgid "Log out from WeChat and try to log in again.\n"
 "Usage: {function_name}"
-msgstr ""
+msgstr "WeChat からログアウトし、再度ログインする。\n"
+"使用法: {function_name}"
 
 #: efb_wechat_slave/__init__.py:442
 msgid "Done."
-msgstr ""
+msgstr "完了。"
 
 #: efb_wechat_slave/__init__.py:447
 msgid "Preparing to log in..."
-msgstr ""
+msgstr "ログインの準備をしています…"
 
 #: efb_wechat_slave/__init__.py:466
 msgid "Empty username (UE02)."
-msgstr ""
+msgstr "ユーザーネームなし (UE02)。"
 
 #: efb_wechat_slave/__init__.py:470
 msgid "Error occurred while processing (AF01)."
-msgstr ""
+msgstr "処理中にエラーが発生しました。 (AF01)"
 
 #: efb_wechat_slave/__init__.py:471
 msgid "Request sent."
-msgstr ""
+msgstr "リクエストが送信されました。"
 
 #: efb_wechat_slave/__init__.py:475
 msgid "Empty username (UE03)."
-msgstr ""
+msgstr "ユーザーネームなし (UE03)。"
 
 #: efb_wechat_slave/__init__.py:479
 msgid "Error occurred while processing (AF02)."
-msgstr ""
+msgstr "処理中にエラーが発生しました。 (AF02)"
 
 #: efb_wechat_slave/__init__.py:480
 msgid "Request accepted."
-msgstr ""
+msgstr "リクエストを承認しました。"
 
 #: efb_wechat_slave/__init__.py:512
 #, python-brace-format
 msgid "Unknown error occurred while delivering the message: [{code}] {message}"
-msgstr ""
+msgstr "メッセージの送信中に不明なエラーが発生しました: [{code}] {message}"
 
 #: efb_wechat_slave/__init__.py:519
 #, python-brace-format

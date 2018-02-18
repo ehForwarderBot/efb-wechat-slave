@@ -5,48 +5,48 @@ msgstr ""
 "POT-Creation-Date: 2018-02-11 17:08+0800\n"
 "PO-Revision-Date: 2018-02-18 02:35-0500\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
-"Language-Team: English\n"
-"Language: en_US\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: ehforwarderbot\n"
-"X-Crowdin-Language: en\n"
+"X-Crowdin-Language: id\n"
 "X-Crowdin-File: /EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/efb_wechat_slave.pot\n"
 
 #: efb_wechat_slave/slave_message.py:186
 msgid "[Unsupported message, please check your phone.]"
-msgstr ""
+msgstr "[Pesan tidak didukung, silahkan memeriksa telepon kamu.]"
 
 #: efb_wechat_slave/slave_message.py:193 efb_wechat_slave/slave_message.py:204
 msgid "Via "
-msgstr ""
+msgstr "Melalui"
 
 #: efb_wechat_slave/slave_message.py:274
 msgid "[Failed to get the picture, please check your phone.]"
-msgstr ""
+msgstr "[Gagal mendapatkan fotonya, periksa telepon Anda.]"
 
 #: efb_wechat_slave/slave_message.py:287
 msgid "[Failed to get the file, please check your phone.]"
-msgstr ""
+msgstr "[Gagal mendapatkan file, silahkan periksa telepon Anda]"
 
 #: efb_wechat_slave/slave_message.py:299
 msgid "[Failed to get the voice, please check your phone.]"
-msgstr ""
+msgstr "[Gagal untuk mendapatkan suara, silakan periksa telepon Anda]"
 
 #: efb_wechat_slave/slave_message.py:311
 msgid "[Failed to get the video, please check your phone.]"
-msgstr ""
+msgstr "[Gagal untuk mendapatkan video, silahkan periksa telepon Anda]"
 
 #: efb_wechat_slave/slave_message.py:318 efb_wechat_slave/slave_message.py:338
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: efb_wechat_slave/slave_message.py:318 efb_wechat_slave/slave_message.py:338
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: efb_wechat_slave/slave_message.py:319 efb_wechat_slave/slave_message.py:339
 #, python-brace-format
@@ -54,190 +54,191 @@ msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
 "Bio: {user.signature}\n"
 "Gender: {gender}"
-msgstr ""
+msgstr "Kartu: {user.nick_name}Dari: {user.province}, {user.city}Bio: {user.signature}Gender: {gender}"
 
 #: efb_wechat_slave/slave_message.py:328
 msgid "Send friend request"
-msgstr ""
+msgstr "Mengirim permintaan pertemanan"
 
 #: efb_wechat_slave/slave_message.py:348
 msgid "Accept friend request"
-msgstr ""
+msgstr "Menerima permintaan pertemanan"
 
 #: efb_wechat_slave/__init__.py:70
 msgid "filehelper"
-msgstr "File Helper"
+msgstr "file pembantu"
 
 #: efb_wechat_slave/__init__.py:71
 msgid "newsapp"
-msgstr "Tencent News"
+msgstr "newsapp"
 
 #: efb_wechat_slave/__init__.py:72
 msgid "fmessage"
-msgstr ""
+msgstr "fmessage"
 
 #: efb_wechat_slave/__init__.py:73
 msgid "weibo"
-msgstr ""
+msgstr "weibo"
 
 #: efb_wechat_slave/__init__.py:74
 msgid "qqmail"
-msgstr "QQ Mail"
+msgstr "qqmail"
 
 #: efb_wechat_slave/__init__.py:75
 msgid "tmessage"
-msgstr ""
+msgstr "tmessage"
 
 #: efb_wechat_slave/__init__.py:76
 msgid "qmessage"
-msgstr ""
+msgstr "qmessage"
 
 #: efb_wechat_slave/__init__.py:77
 msgid "qqsync"
-msgstr ""
+msgstr "qqsync"
 
 #: efb_wechat_slave/__init__.py:78
 msgid "floatbottle"
-msgstr ""
+msgstr "floatbottle"
 
 #: efb_wechat_slave/__init__.py:79
 msgid "lbsapp"
-msgstr ""
+msgstr "lbsapp"
 
 #: efb_wechat_slave/__init__.py:80
 msgid "shakeapp"
-msgstr ""
+msgstr "shakeapp"
 
 #: efb_wechat_slave/__init__.py:81
 msgid "medianote"
-msgstr ""
+msgstr "medianote"
 
 #: efb_wechat_slave/__init__.py:82
 msgid "qqfriend"
-msgstr ""
+msgstr "qqfriend"
 
 #: efb_wechat_slave/__init__.py:83
 msgid "readerapp"
-msgstr ""
+msgstr "readerapp"
 
 #: efb_wechat_slave/__init__.py:84
 msgid "blogapp"
-msgstr ""
+msgstr "blogapp"
 
 #: efb_wechat_slave/__init__.py:85
 msgid "facebookapp"
-msgstr "Facebook"
+msgstr "facebookapp"
 
 #: efb_wechat_slave/__init__.py:86
 msgid "masssendapp"
-msgstr ""
+msgstr "masssendapp"
 
 #: efb_wechat_slave/__init__.py:87
 msgid "meishiapp"
-msgstr ""
+msgstr "meishiapp"
 
 #: efb_wechat_slave/__init__.py:88
 msgid "feedsapp"
-msgstr ""
+msgstr "feedsapp"
 
 #: efb_wechat_slave/__init__.py:89
 msgid "voip"
-msgstr ""
+msgstr "voIP"
 
 #: efb_wechat_slave/__init__.py:90
 msgid "blogappweixin"
-msgstr ""
+msgstr "blogappweixin"
 
 #: efb_wechat_slave/__init__.py:91
 msgid "weixin"
-msgstr "WeChat Team"
+msgstr "weixin"
 
 #: efb_wechat_slave/__init__.py:92
 msgid "brandsessionholder"
-msgstr ""
+msgstr "brandsessionholder"
 
 #: efb_wechat_slave/__init__.py:93
 msgid "weixinreminder"
-msgstr ""
+msgstr "weixinreminder"
 
 #: efb_wechat_slave/__init__.py:94
 msgid "officialaccounts"
-msgstr ""
+msgstr "officialaccounts"
 
 #: efb_wechat_slave/__init__.py:95
 msgid "notification_messages"
-msgstr ""
+msgstr "notification_messages"
 
 #: efb_wechat_slave/__init__.py:96
 msgid "wxitil"
-msgstr ""
+msgstr "wxitil"
 
 #: efb_wechat_slave/__init__.py:97
 msgid "userexperience_alarm"
-msgstr ""
+msgstr "userexperience_alarm"
 
 #: efb_wechat_slave/__init__.py:146 efb_wechat_slave/__init__.py:187
 msgid "Confirm on your phone."
-msgstr ""
+msgstr "Mengkonfirmasi pada telepon anda."
 
 #: efb_wechat_slave/__init__.py:149 efb_wechat_slave/__init__.py:190
 msgid "Successfully logged in."
-msgstr ""
+msgstr "Berhasil masuk."
 
 #: efb_wechat_slave/__init__.py:154
 #, python-brace-format
 msgid "EWS: Please scan the QR code with your camera, screenshots will not work. ({0}, {1})"
-msgstr ""
+msgstr "EWS: Harap Pindai kode QR dengan kamera Anda, screenshot tidak akan bekerja. ({0}, {1})"
 
 #: efb_wechat_slave/__init__.py:157 efb_wechat_slave/__init__.py:196
 msgid "QR code expired, please scan the new one."
-msgstr ""
+msgstr "Kode QR kedaluwarsa, harap scan yang baru."
 
 #: efb_wechat_slave/__init__.py:168
 #, python-brace-format
 msgid "If the QR code was not shown correctly, please visit:\n"
 "https://login.weixin.qq.com/qrcode/{0}"
-msgstr ""
+msgstr "Jika kode QR tidak ditunjukkan dengan benar, silahkan mengunjungi:\n"
+"https://login.weixin.qq.com/qrcode/{0}"
 
 #: efb_wechat_slave/__init__.py:181 efb_wechat_slave/__init__.py:210
 msgid "EWS User Auth"
-msgstr ""
+msgstr "Auth pengguna EWS"
 
 #: efb_wechat_slave/__init__.py:213
 msgid "WeChat server has logged you out. Please log in again when you are ready."
-msgstr ""
+msgstr "Server WeChat telah mengeluarkan anda. Harap masuk lagi ketika anda sudah siap."
 
 #: efb_wechat_slave/__init__.py:221
 msgid "Log in again"
-msgstr ""
+msgstr "Masuk lagi"
 
 #: efb_wechat_slave/__init__.py:227 efb_wechat_slave/__init__.py:450
 msgid "Please check your log to continue."
-msgstr ""
+msgstr "Periksa log Anda untuk melanjutkan."
 
 #: efb_wechat_slave/__init__.py:271
 msgid "Failed to recall message, edited message was not sent."
-msgstr ""
+msgstr "Gagal untuk mengingat pesan, pesan yang diedit tidak terkirim."
 
 #: efb_wechat_slave/__init__.py:298
 msgid "Image size is too large. (IS01)"
-msgstr ""
+msgstr "Ukuran gambar terlalu besar. (IS01)"
 
 #: efb_wechat_slave/__init__.py:318
 msgid "Image size is too large. (IS02)"
-msgstr ""
+msgstr "Ukuran gambar terlalu besar. (IS02)"
 
 #: efb_wechat_slave/__init__.py:345
 msgid "You can only recall your own messages."
-msgstr ""
+msgstr "Anda hanya bisa mengingat pesan Anda sendiri."
 
 #: efb_wechat_slave/__init__.py:350
 msgid "Failed to recall the message."
-msgstr ""
+msgstr "Gagal untuk mengingat pesan."
 
 #: efb_wechat_slave/__init__.py:370
 msgid "Show chat list"
-msgstr ""
+msgstr "Tampilkan daftar obrolan"
 
 #: efb_wechat_slave/__init__.py:371
 #, python-brace-format
@@ -245,15 +246,15 @@ msgid "Show a list of chats from WeChat.\n"
 "Usage:\n"
 "    {function_name} [-r]\n"
 "    -r: Refresh list"
-msgstr ""
+msgstr "Tampilkan daftar obrolan dari WeChat. Penggunaan: {function_name} [-r]    -r: Refresh daftar"
 
 #: efb_wechat_slave/__init__.py:380
 msgid "Unknown parameter: {}."
-msgstr ""
+msgstr "Parameter yang tidak dikenal: {}."
 
 #: efb_wechat_slave/__init__.py:383
 msgid "Chat list:"
-msgstr ""
+msgstr "Daftar obrolan:"
 
 #: efb_wechat_slave/__init__.py:392
 msgid "MP"
@@ -283,7 +284,7 @@ msgstr ""
 #: efb_wechat_slave/__init__.py:424
 #, python-brace-format
 msgid "Chat {0} is not found."
-msgstr ""
+msgstr "Obrolan {0} tidak ditemukan."
 
 #: efb_wechat_slave/__init__.py:427
 msgid "Remark name is only applicable to friends."
@@ -311,7 +312,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:442
 msgid "Done."
-msgstr ""
+msgstr "Selesai."
 
 #: efb_wechat_slave/__init__.py:447
 msgid "Preparing to log in..."
@@ -319,49 +320,49 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:466
 msgid "Empty username (UE02)."
-msgstr ""
+msgstr "Nama pengguna kosong (UE02)."
 
 #: efb_wechat_slave/__init__.py:470
 msgid "Error occurred while processing (AF01)."
-msgstr ""
+msgstr "Terjadi kesalahan saat memproses (AF01)."
 
 #: efb_wechat_slave/__init__.py:471
 msgid "Request sent."
-msgstr ""
+msgstr "Permintaan terkirim."
 
 #: efb_wechat_slave/__init__.py:475
 msgid "Empty username (UE03)."
-msgstr ""
+msgstr "Nama pengguna kosong (UE03)."
 
 #: efb_wechat_slave/__init__.py:479
 msgid "Error occurred while processing (AF02)."
-msgstr ""
+msgstr "Terjadi kesalahan saat memproses (AF02)."
 
 #: efb_wechat_slave/__init__.py:480
 msgid "Request accepted."
-msgstr ""
+msgstr "Permintaan diterima."
 
 #: efb_wechat_slave/__init__.py:512
 #, python-brace-format
 msgid "Unknown error occurred while delivering the message: [{code}] {message}"
-msgstr ""
+msgstr "Terjadi kesalahan yang tidak dikenal saat mengantarkan pesan: [{code}] {message}"
 
 #: efb_wechat_slave/__init__.py:519
 #, python-brace-format
 msgid "Unknown error occurred while delivering the file: [{code}] {message}"
-msgstr ""
+msgstr "Terjadi kesalahan yang tidak dikenal saat mengantarkan berkas: [{code}] {message}"
 
 #: efb_wechat_slave/__init__.py:526
 #, python-brace-format
 msgid "Unknown error occurred while delivering the image: [{code}] {message}"
-msgstr ""
+msgstr "Terjadi kesalahan yang tidak dikenal saat mengantarkan gambar: [{code}] {message}"
 
 #: efb_wechat_slave/__init__.py:533
 #, python-brace-format
 msgid "Unknown error occurred while delivering the video: [{code}] {message}"
-msgstr ""
+msgstr "Terjadi kesalahan yang tidak dikenal saat mengantarkan video: [{code}] {message}"
 
 #: efb_wechat_slave/chats.py:26 efb_wechat_slave/chats.py:31
 msgid "Chat Missing"
-msgstr ""
+msgstr "Obrolan Hilang"
 

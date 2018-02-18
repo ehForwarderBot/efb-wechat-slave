@@ -5,15 +5,15 @@ msgstr ""
 "POT-Creation-Date: 2018-02-11 17:08+0800\n"
 "PO-Revision-Date: 2018-02-18 02:35-0500\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
-"Language-Team: English\n"
-"Language: en_US\n"
+"Language-Team: Spanish, Venezuela\n"
+"Language: es_VE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: ehforwarderbot\n"
-"X-Crowdin-Language: en\n"
+"X-Crowdin-Language: es-VE\n"
 "X-Crowdin-File: /EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/efb_wechat_slave.pot\n"
 
 #: efb_wechat_slave/slave_message.py:186
@@ -66,11 +66,11 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:70
 msgid "filehelper"
-msgstr "File Helper"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:71
 msgid "newsapp"
-msgstr "Tencent News"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:72
 msgid "fmessage"
@@ -82,7 +82,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:74
 msgid "qqmail"
-msgstr "QQ Mail"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:75
 msgid "tmessage"
@@ -126,7 +126,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:85
 msgid "facebookapp"
-msgstr "Facebook"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:86
 msgid "masssendapp"
@@ -150,7 +150,7 @@ msgstr ""
 
 #: efb_wechat_slave/__init__.py:91
 msgid "weixin"
-msgstr "WeChat Team"
+msgstr ""
 
 #: efb_wechat_slave/__init__.py:92
 msgid "brandsessionholder"
