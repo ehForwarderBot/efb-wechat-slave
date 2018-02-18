@@ -16,4 +16,4 @@ publish:
 
 pre-release: crowdin crowdin-pull
 	git add \*.po
-	git commit -m 'Sync localization files from Crowdin'
+	git commit -S -m 'Sync localization files from Crowdin'
