@@ -365,7 +365,7 @@ class WeChatChannel(EFBChannel):
                 f.close()
             raise EFBOperationNotSupported()
 
-    # Extra functions
+    # Additional features
 
     @extra(name=_("Show chat list"),
            desc=_("Show a list of chats from WeChat.\n"
