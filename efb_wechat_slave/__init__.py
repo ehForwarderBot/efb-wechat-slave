@@ -156,7 +156,7 @@ class WeChatChannel(EFBChannel):
     # Constants
     MAX_FILE_SIZE: int = 5 * 2 ** 20
 
-    def __init__(self):
+    def __init__(self, instance_id: str = None):
         """
         Initialize the channel
         
@@ -164,7 +164,7 @@ class WeChatChannel(EFBChannel):
             coordinator (:obj:`ehforwarderbot.coordinator.EFBCoordinator`):
                 The EFB framework coordinator
         """
-        super().__init__()
+        super().__init__(instance_id)
         self.load_config()
 
         PuidMap.SYSTEM_ACCOUNTS = self.SYSTEM_ACCOUNTS
