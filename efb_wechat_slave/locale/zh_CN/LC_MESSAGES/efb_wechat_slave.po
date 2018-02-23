@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-18 17:05+0800\n"
-"PO-Revision-Date: 2018-02-18 08:06-0500\n"
+"POT-Creation-Date: 2018-02-22 10:05+1100\n"
+"PO-Revision-Date: 2018-02-23 05:45-0500\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -90,7 +90,7 @@ msgstr "朋友推介消息"
 #. of the WeChat system account. Guessed names are not accepted.
 #: efb_wechat_slave/__init__.py:81
 msgid "weibo"
-msgstr ""
+msgstr "微博"
 
 #. TRANSLATORS: Translate this to the corresponding display name
 #. of the WeChat system account. Guessed names are not accepted.
@@ -272,35 +272,35 @@ msgstr "微信服务器已将您登出，请在做好准备后重新登录。"
 msgid "Log in again"
 msgstr "重新登录"
 
-#: efb_wechat_slave/__init__.py:283 efb_wechat_slave/__init__.py:506
+#: efb_wechat_slave/__init__.py:283 efb_wechat_slave/__init__.py:508
 msgid "Please check your log to continue."
 msgstr "请查看您的日志以继续。"
 
-#: efb_wechat_slave/__init__.py:327
+#: efb_wechat_slave/__init__.py:329
 msgid "Failed to recall message, edited message was not sent."
 msgstr "消息撤回失败。编辑后的消息未发送。"
 
-#: efb_wechat_slave/__init__.py:354
+#: efb_wechat_slave/__init__.py:356
 msgid "Image size is too large. (IS01)"
 msgstr "图片体积过大。(IS01)"
 
-#: efb_wechat_slave/__init__.py:374
+#: efb_wechat_slave/__init__.py:376
 msgid "Image size is too large. (IS02)"
 msgstr "图片体积过大。(IS02)"
 
-#: efb_wechat_slave/__init__.py:401
+#: efb_wechat_slave/__init__.py:403
 msgid "You can only recall your own messages."
 msgstr "只能撤回自己的消息。"
 
-#: efb_wechat_slave/__init__.py:406
+#: efb_wechat_slave/__init__.py:408
 msgid "Failed to recall the message."
 msgstr "撤回失败。"
 
-#: efb_wechat_slave/__init__.py:426
+#: efb_wechat_slave/__init__.py:428
 msgid "Show chat list"
 msgstr "显示会话列表"
 
-#: efb_wechat_slave/__init__.py:427
+#: efb_wechat_slave/__init__.py:429
 #, python-brace-format
 msgid "Show a list of chats from WeChat.\n"
 "Usage:\n"
@@ -311,34 +311,34 @@ msgstr "显示目前所有来自微信的会话列表。\n"
 "    {function_name} [-r]\n"
 "    -r: 刷新列表"
 
-#: efb_wechat_slave/__init__.py:436
+#: efb_wechat_slave/__init__.py:438
 msgid "Unknown parameter: {}."
 msgstr "未知参数：{}。"
 
-#: efb_wechat_slave/__init__.py:439
+#: efb_wechat_slave/__init__.py:441
 msgid "Chat list:"
 msgstr "会话列表："
 
 #. TRANSLATORS: Acronym for MP accounts
-#: efb_wechat_slave/__init__.py:448
+#: efb_wechat_slave/__init__.py:450
 msgid "MP"
 msgstr "公"
 
 #. TRANSLATORS: Acronym for groups
-#: efb_wechat_slave/__init__.py:451
+#: efb_wechat_slave/__init__.py:453
 msgid "Gr"
 msgstr "群"
 
 #. TRANSLATORS: Acronym for users/friends
-#: efb_wechat_slave/__init__.py:454
+#: efb_wechat_slave/__init__.py:456
 msgid "Fr"
 msgstr "友"
 
-#: efb_wechat_slave/__init__.py:459
+#: efb_wechat_slave/__init__.py:461
 msgid "Set alias"
 msgstr "设置备注名称"
 
-#: efb_wechat_slave/__init__.py:460
+#: efb_wechat_slave/__init__.py:462
 #, python-brace-format
 msgid "Set an alias (remark name) for friends. Not applicable to groups and MPs.\n"
 "Usage:\n"
@@ -351,84 +351,84 @@ msgstr "为微信好友设置备注名称。该操作对公众号和群组无效
 "    id: 会话 ID，可以从「显示会话列表」中获得。\n"
 "    alias: 备注名称，留空即删除。"
 
-#: efb_wechat_slave/__init__.py:480
+#: efb_wechat_slave/__init__.py:482
 #, python-brace-format
 msgid "Chat {0} is not found."
 msgstr "会话 {0} 不存在。"
 
-#: efb_wechat_slave/__init__.py:483
+#: efb_wechat_slave/__init__.py:485
 msgid "Remark name is only applicable to friends."
 msgstr "您不能为群组或公众号设置备注名称。"
 
-#: efb_wechat_slave/__init__.py:488
+#: efb_wechat_slave/__init__.py:490
 #, python-brace-format
 msgid "\"{0}\" now has remark name \"{1}\"."
 msgstr "好友「{0}」的备注名称已设为「{1}」。"
 
-#: efb_wechat_slave/__init__.py:490
+#: efb_wechat_slave/__init__.py:492
 #, python-brace-format
 msgid "Remark name of \"{0}\" has been removed."
 msgstr "好友「{0}」的备注名称已移除。"
 
-#: efb_wechat_slave/__init__.py:492
+#: efb_wechat_slave/__init__.py:494
 msgid "Log out"
 msgstr "登出"
 
-#: efb_wechat_slave/__init__.py:493
+#: efb_wechat_slave/__init__.py:495
 #, python-brace-format
 msgid "Log out from WeChat and try to log in again.\n"
 "Usage: {function_name}"
 msgstr "登出当前微信账号。\n"
 "用法：{function_name}"
 
-#: efb_wechat_slave/__init__.py:498
+#: efb_wechat_slave/__init__.py:500
 msgid "Done."
 msgstr "完成。"
 
-#: efb_wechat_slave/__init__.py:503
+#: efb_wechat_slave/__init__.py:505
 msgid "Preparing to log in..."
 msgstr "正在准备登录…"
 
-#: efb_wechat_slave/__init__.py:522
+#: efb_wechat_slave/__init__.py:524
 msgid "Empty username (UE02)."
 msgstr "用户名为空 (UE02)。"
 
-#: efb_wechat_slave/__init__.py:526
+#: efb_wechat_slave/__init__.py:528
 msgid "Error occurred while processing (AF01)."
 msgstr "处理过程中出现问题 (AF01)。"
 
-#: efb_wechat_slave/__init__.py:527
+#: efb_wechat_slave/__init__.py:529
 msgid "Request sent."
 msgstr "已发送请求。"
 
-#: efb_wechat_slave/__init__.py:531
+#: efb_wechat_slave/__init__.py:533
 msgid "Empty username (UE03)."
 msgstr "用户名为空 (UE03)。"
 
-#: efb_wechat_slave/__init__.py:535
+#: efb_wechat_slave/__init__.py:537
 msgid "Error occurred while processing (AF02)."
 msgstr "处理过程中出现问题 (AF02)。"
 
-#: efb_wechat_slave/__init__.py:536
+#: efb_wechat_slave/__init__.py:538
 msgid "Request accepted."
 msgstr "已接受请求。"
 
-#: efb_wechat_slave/__init__.py:568
+#: efb_wechat_slave/__init__.py:570
 #, python-brace-format
 msgid "Unknown error occurred while delivering the message: [{code}] {message}"
 msgstr "在发送消息时发生未知错误。错误代号：{code}；错误信息：{message}；"
 
-#: efb_wechat_slave/__init__.py:575
+#: efb_wechat_slave/__init__.py:577
 #, python-brace-format
 msgid "Unknown error occurred while delivering the file: [{code}] {message}"
 msgstr "在发送文件时发生未知错误。错误代号：{code}；错误信息：{message}；"
 
-#: efb_wechat_slave/__init__.py:582
+#: efb_wechat_slave/__init__.py:584
 #, python-brace-format
 msgid "Unknown error occurred while delivering the image: [{code}] {message}"
 msgstr "在发送图片时发生未知错误。错误代号：{code}；错误信息：{message}；"
 
-#: efb_wechat_slave/__init__.py:589
+#: efb_wechat_slave/__init__.py:591
 #, python-brace-format
 msgid "Unknown error occurred while delivering the video: [{code}] {message}"
 msgstr "在发送视频时发生未知错误。错误代号：{code}；错误信息：{message}；"
