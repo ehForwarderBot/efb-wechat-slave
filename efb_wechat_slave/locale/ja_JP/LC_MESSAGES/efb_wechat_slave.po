@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 10:05+1100\n"
-"PO-Revision-Date: 2018-02-23 05:35-0500\n"
+"PO-Revision-Date: 2018-03-22 07:40-0400\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -327,12 +327,12 @@ msgstr "公"
 #. TRANSLATORS: Acronym for groups
 #: efb_wechat_slave/__init__.py:453
 msgid "Gr"
-msgstr "友"
+msgstr "グ"
 
 #. TRANSLATORS: Acronym for users/friends
 #: efb_wechat_slave/__init__.py:456
 msgid "Fr"
-msgstr "グ"
+msgstr "友"
 
 #: efb_wechat_slave/__init__.py:461
 msgid "Set alias"

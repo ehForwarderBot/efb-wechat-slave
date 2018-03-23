@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 10:05+1100\n"
-"PO-Revision-Date: 2018-02-23 05:45-0500\n"
+"PO-Revision-Date: 2018-03-22 07:40-0400\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -30,7 +30,7 @@ msgstr "[Gagal mendapatkan fotonya, periksa telepon Anda.]"
 
 #: efb_wechat_slave/slave_message.py:287
 msgid "[Failed to get the file, please check your phone.]"
-msgstr "[Gagal mendapatkan file, silahkan periksa telepon Anda]"
+msgstr "[Gagal untuk mendapatkan berkas, silahkan perikas ponsel anda.]"
 
 #: efb_wechat_slave/slave_message.py:299
 msgid "[Failed to get the voice, please check your phone.]"
@@ -244,7 +244,8 @@ msgstr "Berhasil masuk."
 #: efb_wechat_slave/__init__.py:210
 #, python-brace-format
 msgid "EWS: Please scan the QR code with your camera, screenshots will not work. ({0}, {1})"
-msgstr "EWS: Harap Pindai kode QR dengan kamera Anda, screenshot tidak akan bekerja. ({0}, {1})"
+msgstr "EWS: Harap Pindai kode QR dengan kamera Anda, tangkapan layar tidak akan bekerja. ({0},\n"
+" {1})"
 
 #: efb_wechat_slave/__init__.py:213 efb_wechat_slave/__init__.py:252
 msgid "QR code expired, please scan the new one."
@@ -275,7 +276,7 @@ msgstr "Periksa log Anda untuk melanjutkan."
 
 #: efb_wechat_slave/__init__.py:329
 msgid "Failed to recall message, edited message was not sent."
-msgstr "Gagal untuk mengingat pesan, pesan yang diedit tidak terkirim."
+msgstr "Gagal untuk mengingat pesan, pesan yang diterbitkan tidak terkirim."
 
 #: efb_wechat_slave/__init__.py:356
 msgid "Image size is too large. (IS01)"
