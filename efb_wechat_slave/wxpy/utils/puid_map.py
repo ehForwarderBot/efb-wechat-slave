@@ -236,7 +236,7 @@ def get_caption(chat):
 
 
 def match_captions(old, new):
-    if new[0]:
+    if new[0] and old:
         for i in range(4):
             if old[i] and new[i] and old[i] != new[i]:
                 return False
@@ -244,4 +244,7 @@ def match_captions(old, new):
 
 
 def merge_captions(old, new):
-    return tuple(new[i] or old[i] for i in range(4))
+    if not old:
+        return new
+    else:
+        return tuple(new[i] or old[i] for i in range(4))
