@@ -257,6 +257,9 @@ class WeChatChannel(EFBChannel):
             coordinator.send_message(msg)
 
     def exit_callback(self):
+        # Don't send prompt if there's nowhere to send.
+        if not coordinator.master:
+            return
         self.logger.debug('Calling exit callback...')
         if self._stop_polling_event.is_set():
             return
