@@ -277,8 +277,12 @@ class SlaveMessageManager:
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
             efb_msg.text = ""
         except EOFError:
+            if efb_msg.type == MsgType.Image:
+                efb_msg.text += self._("[Failed to download the picture, please check your phone.]")
+            else:
+                efb_msg.text += self._("[Failed to download the sticker, please check your phone.]")
             efb_msg.type = MsgType.Unsupported
-            efb_msg.text += self._("[Failed to download the picture/sticker, please check your phone.]")
+
         return efb_msg
 
     @Decorators.wechat_msg_meta
