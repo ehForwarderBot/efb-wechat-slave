@@ -143,7 +143,8 @@ class SlaveMessageManager:
         efb_msg.text = msg.text.split('\n')[0][:-1]
         # loc = re.search("=-?([0-9.]+),-?([0-9.]+)", msg.url).groups()
         # efb_msg.attributes = EFBMsgLocationAttribute(longitude=float(loc[1]), latitude=float(loc[0]))
-        efb_msg.attributes = EFBMsgLocationAttribute(longitude=msg.location['x'], latitude=msg.location['y'])
+        efb_msg.attributes = EFBMsgLocationAttribute(longitude=float(msg.location['x']),
+                                                     latitude=float(msg.location['y']))
         efb_msg.type = MsgType.Location
         return efb_msg
 
@@ -166,6 +167,12 @@ class SlaveMessageManager:
                         des = xml.get('msg', {}).get('appmsg', {}).get('des', "")
                         url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
                         return self.wechat_shared_link_msg(msg, source, title, des, url)
+                    elif type in ('33', '36'):  # Mini programs (wxapp)
+                        title = xml.get('msg', {}).get('appmsg', {}).get('sourcedisplayname', None) or \
+                                xml.get('msg', {}).get('appmsg', {}).get('title', "")
+                        des = xml.get('msg', {}).get('appmsg', {}).get('title', "")
+                        url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
+                        return self.wechat_shared_link_msg(msg, source, title, des, url)
                     else:
                         # Unidentified message type
                         self.logger.error("[%s] Identified unsupported sharing message type. Raw message: %s",
@@ -176,8 +183,8 @@ class SlaveMessageManager:
         if self.channel.flag("first_link_only"):
             links = links[:1]
         for i in links:
-            msg = self.wechat_raw_link_msg(msg, i.title, i.summary, i.cover, i.url)
-        return msg
+            imsg = self.wechat_raw_link_msg(msg, i.title, i.summary, i.cover, i.url)
+        return imsg
 
     @Decorators.wechat_msg_meta
     def wechat_unsupported_msg(self, msg: wxpy.Message) -> EFBMsg:
