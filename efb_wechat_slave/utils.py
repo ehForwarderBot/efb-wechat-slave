@@ -132,12 +132,12 @@ def wechat_string_unescape(content: str) -> str:
     Returns:
         str: Unescaped string.
     """
-    # print("WECHAT STRING ESCAPE - BEFORE", content)
+    if not content:
+        return ""
     d = {"Content": content}
     itchat.utils.msg_formatter(d, "Content")
     for i in WC_EMOTICON_CONVERSION:
         d['Content'] = d['Content'].replace(i, WC_EMOTICON_CONVERSION[i])
-    # print("WECHAT STRING ESCAPE - AFTER", d['Content'])
     return d['Content']
 
 
