@@ -28,6 +28,7 @@ from ..utils import enhance_connection, enhance_webwx_request, ensure_list, get_
     start_new_thread, wrap_user_name
 
 logger = logging.getLogger(__name__)
+itchat.set_logging(showOnCmd=False, loggingLevel=logging.NOTSET)
 
 
 class Bot(object):
