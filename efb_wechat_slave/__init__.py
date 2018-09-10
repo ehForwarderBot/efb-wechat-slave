@@ -187,7 +187,10 @@ class WeChatChannel(EFBChannel):
         if not os.path.exists(config_path):
             return
         with open(config_path) as f:
-            self.config: Dict[str, Any] = yaml.load(f)
+            d = yaml.load(f)
+            if not d:
+                return
+            self.config: Dict[str, Any] = d
 
     #
     # Utilities
