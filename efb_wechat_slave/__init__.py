@@ -522,6 +522,9 @@ class WeChatChannel(EFBChannel):
                                           logout_callback=self.exit_callback)
             self.bot.enable_puid(os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy_puid.pkl"))
             self.done_reauth.set()
+            if hasattr(self, "slave_message"):
+                self.slave_message.bot = self.bot
+                self.slave_message.wechat_msg_register()
 
     def add_friend(self, username: str = None, verify_information: str = "") -> str:
         if not username:
