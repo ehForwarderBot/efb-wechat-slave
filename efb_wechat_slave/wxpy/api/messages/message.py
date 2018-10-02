@@ -133,6 +133,7 @@ class Message(object):
 
         _text = self.raw.get('Text')
         if callable(_text) and self.type in (PICTURE, RECORDING, ATTACHMENT, VIDEO):
+            logger.debug("[%s] Calling downloader function ID %s", self.text, id(_text))
             return _text(save_path)
         else:
             raise ValueError('download method not found, or invalid message type')
