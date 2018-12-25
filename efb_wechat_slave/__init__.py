@@ -171,7 +171,7 @@ class WeChatChannel(EFBChannel):
 
         self.flag: ExperimentalFlagsManager = ExperimentalFlagsManager(self)
 
-        self.authenticate('console_qr_code')
+        self.authenticate('console_master_qr_code')
 
         # Managers
         self.slave_message: SlaveMessageManager = SlaveMessageManager(self)
@@ -195,6 +195,11 @@ class WeChatChannel(EFBChannel):
     #
     # Utilities
     #
+    def console_master_qr_code(self, uuid, status, qrcode=None):
+        qr_uuid = self.qr_uuid
+        self.console_qr_code(uuid, status, qrcode)
+        self.qr_uuid = qr_uuid
+        self.master_qr_code(uuid, status, qrcode)
 
     def console_qr_code(self, uuid, status, qrcode=None):
         status = int(status)
