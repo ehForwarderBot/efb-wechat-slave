@@ -67,7 +67,6 @@ from .api.consts import ATTACHMENT, CARD, FRIENDS, MAP, NOTE, PICTURE, RECORDING
 from .api.consts import FEMALE, MALE
 from .api.messages import Article, Message, Messages, SentMessage
 from .exceptions import ResponseError
-from .ext import Tuling, WeChatLoggingHandler, XiaoI, get_wechat_logger, sync_message_in_groups
 from .utils import BaseRequest, detect_freq_limit, dont_raise_response_error, embed, ensure_one, mutual_friends
 
 __title__ = 'wxpy'
