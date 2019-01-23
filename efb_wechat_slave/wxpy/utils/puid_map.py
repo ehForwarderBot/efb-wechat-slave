@@ -6,6 +6,8 @@ import os
 import pickle
 
 import threading
+from typing import Optional
+
 from ..compatible import PY2
 if PY2:
     from UserDict import UserDict
@@ -73,6 +75,9 @@ class PuidMap(object):
         'userexperience_alarm': '用户体验 (userexperience_alarm)'
     }
 
+    DUMP_TIMEOUT = 30
+    """Number of seconds before auto dump upon lookups."""
+
     def __init__(self, path):
         """
         用于获取聊天对象的 puid (持续有效，并且稳定唯一的用户ID)，和保存映射关系
@@ -91,6 +96,8 @@ class PuidMap(object):
 
         if os.path.exists(self.path):
             self.load()
+
+        self._dump_task: Optional[threading.Timer] = None
 
         atexit.register(self.dump)
 
@@ -161,7 +168,17 @@ class PuidMap(object):
 
             self.captions[new_caption] = puid
 
+            self.activate_dump()
+
             return puid
+
+    def activate_dump(self):
+        """Activate dump timeout"""
+        if self._dump_task:
+            self._dump_task.cancel()
+
+        self._dump_task = threading.Timer(self.DUMP_TIMEOUT, self.dump)
+        self._dump_task.start()
 
     def dump(self):
         """
@@ -169,6 +186,9 @@ class PuidMap(object):
         """
         with open(self.path, 'wb') as fp:
             pickle.dump((self.user_names, self.wxids, self.remark_names, self.captions), fp)
+
+        if self._dump_task:
+            self._dump_task = None
 
     def load(self):
         """
