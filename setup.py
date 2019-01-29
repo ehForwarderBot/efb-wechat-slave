@@ -36,7 +36,7 @@ setup(
     ],
     install_requires=[
         "ehforwarderbot>=2.0.0b5",
-        "itchat",
+        "itchat>=1.3.10",
         "python-magic",
         "pillow",
         "pyqrcode",
