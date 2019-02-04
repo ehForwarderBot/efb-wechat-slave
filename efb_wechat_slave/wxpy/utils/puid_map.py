@@ -131,21 +131,33 @@ class PuidMap(object):
             if not (chat.user_name and chat.nick_name):
                 return
 
+            # 3 of the stable attributes:
+            # 1. Web WeChat temporary ID
+            # 2. wxid (true permanent ID, almost unavailable)
+            # 3. Remark name defined by user (Does this work?)
             chat_attrs = (
                 chat.user_name,
                 chat.wxid,
                 getattr(chat, 'remark_name', None),
             )
 
+            # 4 common attributes for matching:
+            # 1. Chat base name
+            # 2. Gender (for user)
+            # 3. Province (for user)
+            # 4. City (for user)
             chat_caption = get_caption(chat)
 
             puid = None
 
+            # Match stable attributes first
             for i in range(3):
                 puid = self.attr_dicts[i].get(chat_attrs[i])
                 if puid:
                     break
-            else:
+
+            # If no PUID is matched, try to match by common attributes
+            if not puid:
                 if PY2:
                     captions = self.captions.keys()
                 else:
@@ -155,20 +167,27 @@ class PuidMap(object):
                         puid = self.captions[caption]
                         break
 
+            value_updated = False
+
             if puid:
                 new_caption = merge_captions(self.captions.get_key(puid), chat_caption)
+                value_updated = chat_caption == new_caption
             else:
                 puid = chat.user_name[-8:]
                 new_caption = get_caption(chat)
+                value_updated = True
 
             for i in range(3):
                 chat_attr = chat_attrs[i]
                 if chat_attr:
+                    old_attr = self.attr_dicts[i].get_key(puid)
+                    value_updated |= old_attr != chat_attr
                     self.attr_dicts[i][chat_attr] = puid
 
             self.captions[new_caption] = puid
 
-            self.activate_dump()
+            if value_updated:
+                self.activate_dump()
 
             return puid
 
@@ -256,6 +275,7 @@ def get_caption(chat):
 
 
 def match_captions(old, new):
+    """Full match of a 4-value tuple only when both side has a value"""
     if new[0] and old:
         for i in range(4):
             if old[i] and new[i] and old[i] != new[i]:
@@ -264,6 +284,7 @@ def match_captions(old, new):
 
 
 def merge_captions(old, new):
+    """Merge a 4-value tuple where new values replaces old values"""
     if not old:
         return new
     else:
