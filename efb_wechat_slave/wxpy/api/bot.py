@@ -153,7 +153,7 @@ class Bot(object):
 
     # chats
 
-    def enable_puid(self, path='wxpy_puid.pkl'):
+    def enable_puid(self, path='wxpy_puid.pkl', puid_logs=None):
         """
         **可选操作:** 启用聊天对象的 :any:`puid <Chat.puid>` 属性::
             
@@ -173,9 +173,10 @@ class Bot(object):
             | 不同于其他 ID 属性，**puid** 可始终被获取到，且具有稳定的唯一性
 
         :param path: puid 所需的映射数据保存/载入路径
+        :param puid_logs: PUID log path
         """
 
-        self.puid_map = PuidMap(path)
+        self.puid_map = PuidMap(path, puid_logs)
         return self.puid_map
 
     def except_self(self, chats_or_dicts):

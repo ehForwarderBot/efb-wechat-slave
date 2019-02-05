@@ -520,7 +520,10 @@ class WeChatChannel(EFBChannel):
             self.bot: wxpy.Bot = wxpy.Bot(cache_path=os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy.pkl"),
                                           qr_callback=qr_callback,
                                           logout_callback=self.exit_callback)
-            self.bot.enable_puid(os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy_puid.pkl"))
+            self.bot.enable_puid(
+                os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy_puid.pkl"),
+                self.flag('puid_logs')
+            )
             self.done_reauth.set()
             if hasattr(self, "slave_message"):
                 self.slave_message.bot = self.bot

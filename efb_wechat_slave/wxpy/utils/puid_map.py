@@ -4,15 +4,16 @@ from __future__ import unicode_literals
 import atexit
 import os
 import pickle
+import logging
+import logging.handlers
 
 import threading
-from typing import Optional
+from typing import Optional, TYPE_CHECKING, Tuple
+from typing_extensions import Final
+from collections import UserDict
 
-from ..compatible import PY2
-if PY2:
-    from UserDict import UserDict
-else:
-    from collections import UserDict
+if TYPE_CHECKING:
+    from ..api.chats.chat import Chat
 
 """
 
@@ -41,10 +42,13 @@ PuidMap 中包含 4 个 dict，分别为
 
 """
 
+# Type definitions
+Caption = Tuple[str, Optional[str], Optional[str], Optional[str]]
+
 
 class PuidMap(object):
 
-    SYSTEM_ACCOUNTS = {
+    SYSTEM_ACCOUNTS: Final = {
         'filehelper': '文件传输助手',
         'newsapp': '新闻应用 (newsapp)',
         'fmessage': '朋友推荐消息',
@@ -78,11 +82,14 @@ class PuidMap(object):
     DUMP_TIMEOUT = 30
     """Number of seconds before auto dump upon lookups."""
 
-    def __init__(self, path):
+    logger: Optional[logging.Logger] = None
+
+    def __init__(self, path, puid_logs=None):
         """
         用于获取聊天对象的 puid (持续有效，并且稳定唯一的用户ID)，和保存映射关系
 
         :param path: 映射数据的保存/载入路径
+        :param puid_logs: PUID log path
         """
         self.path = path
 
@@ -94,12 +101,25 @@ class PuidMap(object):
 
         self._thread_lock = threading.Lock()
 
+        if puid_logs:
+            self.logger = logging.getLogger(__name__)
+            try:
+                self.logger.addHandler(logging.handlers.RotatingFileHandler(puid_logs))
+            except IOError:
+                self.logger = None
+        else:
+            self.logger = None
+
         if os.path.exists(self.path):
             self.load()
 
         self._dump_task: Optional[threading.Timer] = None
 
         atexit.register(self.dump)
+
+    def log(self, *args, **kwargs):
+        if self.logger:
+            self.logger.debug(*args, **kwargs)
 
     @property
     def attr_dicts(self):
@@ -114,7 +134,7 @@ class PuidMap(object):
     def __nonzero__(self):
         return bool(self.path)
 
-    def get_puid(self, chat):
+    def get_puid(self, chat: 'Chat'):
         """
         获取指定聊天对象的 puid
 
@@ -124,11 +144,14 @@ class PuidMap(object):
         """
 
         with self._thread_lock:
+            self.log("Querying chat for PUID: %s", chat)
 
             if chat.user_name in PuidMap.SYSTEM_ACCOUNTS:
+                self.log("%s is a recognised system chat.", chat.user_name)
                 return chat.user_name
 
             if not (chat.user_name and chat.nick_name):
+                self.log("%s has no user_name or nick_name.", chat)
                 return
 
             # 3 of the stable attributes:
@@ -146,48 +169,53 @@ class PuidMap(object):
             # 2. Gender (for user)
             # 3. Province (for user)
             # 4. City (for user)
-            chat_caption = get_caption(chat)
+            chat_caption = self.get_caption(chat)
 
             puid = None
 
-            # Match stable attributes first
+            self.log("Trying to match stable attributes: %s", chat_attrs)
             for i in range(3):
                 puid = self.attr_dicts[i].get(chat_attrs[i])
                 if puid:
+                    self.log("Chat %s is matched to PUID %s with attribute %s", chat, puid, i)
                     break
 
-            # If no PUID is matched, try to match by common attributes
             if not puid:
-                if PY2:
-                    captions = self.captions.keys()
-                else:
-                    captions = self.captions
+                self.log("Stable attribute failed, trying to match common attributes: %s", chat_caption)
+                captions = self.captions
                 for caption in captions:
-                    if match_captions(caption, chat_caption):
+                    if self.match_captions(caption, chat_caption):
                         puid = self.captions[caption]
+                        self.log("Chat %s is matched to PUID %s attributes %s", chat, puid, caption)
                         break
 
-            value_updated = False
-
             if puid:
-                new_caption = merge_captions(self.captions.get_key(puid), chat_caption)
+                new_caption = self.merge_captions(self.captions.get_key(puid), chat_caption)
                 value_updated = chat_caption == new_caption
+                if value_updated:
+                    self.log("Updating common attributes of %s from %s to %s", puid, chat_caption, new_caption)
             else:
                 puid = chat.user_name[-8:]
-                new_caption = get_caption(chat)
+                new_caption = self.get_caption(chat)
+                self.log("Discovered new chat %s with common attributes %s. Assign new PUID: %s",
+                         chat, new_caption, puid)
                 value_updated = True
 
             for i in range(3):
                 chat_attr = chat_attrs[i]
                 if chat_attr:
                     old_attr = self.attr_dicts[i].get_key(puid)
-                    value_updated |= old_attr != chat_attr
+                    if old_attr != chat_attr:
+                        value_updated = True
+                        self.log("Updating stable attributes #%s of PUID %s from %s to %s",
+                                 i, puid, old_attr, chat_attr)
                     self.attr_dicts[i][chat_attr] = puid
 
             self.captions[new_caption] = puid
 
             if value_updated:
                 self.activate_dump()
+                self.log("Refreshing dump delay as value is changed.")
 
             return puid
 
@@ -209,12 +237,51 @@ class PuidMap(object):
         if self._dump_task:
             self._dump_task = None
 
+        self.log("Successfully dumped PUID map to: %s", self.path)
+        self.log("Dumped - user_names: %s", self.user_names)
+        self.log("Dumped - wxids: %s", self.wxids)
+        self.log("Dumped - remark_names: %s", self.remark_names)
+        self.log("Dumped - captions: %s", self.captions)
+
     def load(self):
         """
         载入映射数据
         """
+        self.log("Loading PUID map from local disk: %s", self.path)
         with open(self.path, 'rb') as fp:
             self.user_names, self.wxids, self.remark_names, self.captions = pickle.load(fp)
+            self.log("Local disk - user_names: %s", self.user_names)
+            self.log("Local disk - wxids: %s", self.wxids)
+            self.log("Local disk - remark_names: %s", self.remark_names)
+            self.log("Local disk - captions: %s", self.captions)
+
+    @staticmethod
+    def get_caption(chat: 'Chat') -> Caption:
+        return (
+            chat.nick_name,
+            getattr(chat, 'sex', None),
+            getattr(chat, 'province', None),
+            getattr(chat, 'city', None),
+        )
+
+    def match_captions(self, old: Caption, new: Caption) -> bool:
+        """Full match of a 4-value tuple only when both side has a value"""
+        if new[0] and old:
+            for i in range(4):
+                if old[i] and new[i] and old[i] != new[i]:
+                    if i > 0:
+                        self.log("Potential common attribute match: %s -> %s", old, new)
+                    return False
+            return True
+
+    @staticmethod
+    def merge_captions(old: Optional[Caption], new: Caption) -> Caption:
+        """Merge a 4-value tuple where new values replaces old values"""
+        if not old:
+            return new
+        else:
+            cap: Caption = tuple(new[i] or old[i] for i in range(4))
+            return cap
 
 
 class TwoWayDict(UserDict):
@@ -224,10 +291,7 @@ class TwoWayDict(UserDict):
     """
 
     def __init__(self):
-        if PY2:
-            UserDict.__init__(self)
-        else:
-            super(TwoWayDict, self).__init__()
+        super(TwoWayDict, self).__init__()
         self._reversed = dict()
 
     def get_key(self, value):
@@ -249,43 +313,11 @@ class TwoWayDict(UserDict):
             if value in self._reversed:
                 del self[self.get_key(value)]
             self._reversed[value] = key
-            if PY2:
-                return UserDict.__setitem__(self, key, value)
-            else:
-                return super(TwoWayDict, self).__setitem__(key, value)
+            return super(TwoWayDict, self).__setitem__(key, value)
 
     def __delitem__(self, key):
         del self._reversed[self[key]]
-        if PY2:
-            return UserDict.__delitem__(self, key)
-        else:
-            return super(TwoWayDict, self).__delitem__(key)
+        return super(TwoWayDict, self).__delitem__(key)
 
     def update(*args, **kwargs):
         raise NotImplementedError
-
-
-def get_caption(chat):
-    return (
-        chat.nick_name,
-        getattr(chat, 'sex', None),
-        getattr(chat, 'province', None),
-        getattr(chat, 'city', None),
-    )
-
-
-def match_captions(old, new):
-    """Full match of a 4-value tuple only when both side has a value"""
-    if new[0] and old:
-        for i in range(4):
-            if old[i] and new[i] and old[i] != new[i]:
-                return False
-        return True
-
-
-def merge_captions(old, new):
-    """Merge a 4-value tuple where new values replaces old values"""
-    if not old:
-        return new
-    else:
-        return tuple(new[i] or old[i] for i in range(4))
