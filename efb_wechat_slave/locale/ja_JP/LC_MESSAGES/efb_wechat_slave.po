@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-11 16:38-0800\n"
-"PO-Revision-Date: 2019-01-12 00:38\n"
+"POT-Creation-Date: 2019-02-09 21:16-0800\n"
+"PO-Revision-Date: 2019-02-10 05:16\n"
 "Last-Translator: blueset <ilove@1a23.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -393,46 +393,46 @@ msgstr "完了。"
 msgid "Preparing to log in..."
 msgstr "ログインの準備をしています…"
 
-#: efb_wechat_slave/__init__.py:531
+#: efb_wechat_slave/__init__.py:534
 msgid "Empty username (UE02)."
 msgstr "ユーザーネームなし (UE02)。"
 
-#: efb_wechat_slave/__init__.py:535
+#: efb_wechat_slave/__init__.py:538
 msgid "Error occurred while processing (AF01)."
 msgstr "処理中にエラーが発生しました。 (AF01)"
 
-#: efb_wechat_slave/__init__.py:536
+#: efb_wechat_slave/__init__.py:539
 msgid "Request sent."
 msgstr "リクエストが送信されました。"
 
-#: efb_wechat_slave/__init__.py:540
+#: efb_wechat_slave/__init__.py:543
 msgid "Empty username (UE03)."
 msgstr "ユーザーネームなし (UE03)。"
 
-#: efb_wechat_slave/__init__.py:544
+#: efb_wechat_slave/__init__.py:547
 msgid "Error occurred while processing (AF02)."
 msgstr "処理中にエラーが発生しました。 (AF02)"
 
-#: efb_wechat_slave/__init__.py:545
+#: efb_wechat_slave/__init__.py:548
 msgid "Request accepted."
 msgstr "リクエストを承認しました。"
 
-#: efb_wechat_slave/__init__.py:577
+#: efb_wechat_slave/__init__.py:580
 #, python-brace-format
 msgid "Unknown error occurred while delivering the message: [{code}] {message}"
 msgstr "メッセージの送信中に不明なエラーが発生しました: [{code}] {message}"
 
-#: efb_wechat_slave/__init__.py:584
+#: efb_wechat_slave/__init__.py:587
 #, python-brace-format
 msgid "Unknown error occurred while delivering the file: [{code}] {message}"
 msgstr "ファイルの送信中に不明なエラーが発生しました: [{code}] {message}"
 
-#: efb_wechat_slave/__init__.py:591
+#: efb_wechat_slave/__init__.py:594
 #, python-brace-format
 msgid "Unknown error occurred while delivering the image: [{code}] {message}"
 msgstr "画像の送信中に不明なエラーが発生しました: [{code}] {message}"
 
-#: efb_wechat_slave/__init__.py:598
+#: efb_wechat_slave/__init__.py:601
 #, python-brace-format
 msgid "Unknown error occurred while delivering the video: [{code}] {message}"
 msgstr "動画の送信中に不明なエラーが発生しました: [{code}] {message}"
