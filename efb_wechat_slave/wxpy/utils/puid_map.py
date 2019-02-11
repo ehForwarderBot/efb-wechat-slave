@@ -191,7 +191,7 @@ class PuidMap(object):
 
             if puid:
                 new_caption = self.merge_captions(self.captions.get_key(puid), chat_caption)
-                value_updated = chat_caption == new_caption
+                value_updated = chat_caption != new_caption
                 if value_updated:
                     self.log("Updating common attributes of %s from %s to %s", puid, chat_caption, new_caption)
             else:
