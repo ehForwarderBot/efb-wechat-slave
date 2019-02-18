@@ -106,7 +106,7 @@ class SlaveMessageManager:
         efb_msg.type = MsgType.Text
         if msg.is_at:
             found = False
-            for i in re.finditer("@([^@]*)(?=\u2005)", msg.text):
+            for i in re.finditer("@([^@]*)(?=\u2005|$)", msg.text):
                 if i.groups()[0] in (self.bot.self.name, msg.chat.self.display_name):
                     found = True
                     efb_msg.substitutions = EFBMsgSubstitutions({
@@ -168,6 +168,7 @@ class SlaveMessageManager:
                         return self.wechat_shared_link_msg(msg, source, title, des, url)
                     elif appmsg_type in ('33', '36'):  # Mini programs (wxapp)
                         title = xml.get('msg', {}).get('appmsg', {}).get('sourcedisplayname', None) or \
+                                xml.get('msg', {}).get('appmsg', {}).get('appinfo', {}).get('appname', None) or \
                                 xml.get('msg', {}).get('appmsg', {}).get('title', "")
                         des = xml.get('msg', {}).get('appmsg', {}).get('title', "")
                         url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
