@@ -124,8 +124,8 @@ def task_build():
 
 def task_publish():
     def get_twine_command():
-        __version__ = __import__("{}.__version__".format(PACKAGE)).__version__
-        binary = glob.glob("./dist/*{}*".format(__version__), recursive=True)
+        version = __import__(PACKAGE).__version__.__version__
+        binary = glob.glob("./dist/*{}*".format(version), recursive=True)
         return ' '.join(["twine", "upload"] + binary)
     return {
         "actions": [CmdAction(get_twine_command)],
