@@ -1,6 +1,5 @@
 import glob
 
-from doit.action import CmdAction
 
 PACKAGE = "efb_wechat_slave"
 DEFAULT_BUMP_MODE = "bump"
@@ -15,12 +14,13 @@ def task_gettext():
     pot = "./{package}/locale/{package}.pot".format(package=PACKAGE)
     sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
     command = "xgettext --add-comments=TRANSLATORS -o " + pot + " " + " ".join(sources)
-    targets = [pot]
     return {
         "actions": [
-            command,
+            command
         ],
-        "targets": targets,
+        "targets": [
+            pot
+        ],
         "file_dep": sources
     }
 
@@ -28,7 +28,7 @@ def task_gettext():
 def task_msgfmt():
     sources = glob.glob("./{package}/**/*.po".format(package=PACKAGE), recursive=True)
     dests = [i[:-3] + ".mo" for i in sources]
-    actions = [["msgfmt", sources[i], "-o", dests[i]] for i in range(len(sources))]
+    actions = [("msgfmt", sources[i], "-o", dests[i]) for i in range(len(sources))]
     return {
         "actions": actions,
         "targets": dests,
@@ -38,28 +38,25 @@ def task_msgfmt():
 
 
 def task_crowdin():
-    sources = glob.glob("./{package}/**/*.pot".format(package=PACKAGE), recursive=True)
+    sources = glob.glob("./{package}/**/*.po".format(package=PACKAGE), recursive=True)
     return {
-        "actions": ["crowdin upload sources"],
+        "actions": ["crowdin upload source"],
         "file_dep": sources,
-        "task_dep": ["gettext"],
-        "verbosity": 1
+        "task_dep": ["gettext"]
     }
 
 
 def task_crowdin_pull():
     return {
-        "actions": ["crowdin download"],
-        "verbosity": 1,
-        "task_dep": ["crowdin"]
+        "actions": ["crowdin download"]
     }
 
 
 def task_commit_lang_file():
     return {
         "actions": [
-            ["git", "add", "*.po"],
-            ["git", "commit", "-m", "Sync localization files from Crowdin"]
+            ("git", "add", "*.po"),
+            ("git", "commit", "-s", "Sync localization files from Crowdin")
         ],
         "task_dep": ["crowdin", "crowdin_pull"]
     }
@@ -67,10 +64,14 @@ def task_commit_lang_file():
 
 def task_bump_version():
     def gen_bump_version(mode=DEFAULT_BUMP_MODE):
-        return 'bumpversion ' + mode
+        return 'bumpversion', mode
 
     return {
-        "actions": [CmdAction(gen_bump_version)],
+        "actions": [gen_bump_version],
+        "targets": [
+            "./{package}/__version__.py".format(package=PACKAGE),
+            ".bumpversion.cfg"
+        ],
         "params": [
             {
                 "name": "Version bump mode",
@@ -87,29 +88,24 @@ def task_bump_version():
                     ("dev", "Bump a dev version (for commit only)")
                 ]
             }
-        ],
-        "task_dep": ["test", "commit_lang_file"]
+        ]
     }
 
 
 def task_mypy():
-    actions = ["mypy -p {}".format(PACKAGE)]
+    sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
+    actions = ["mypy {}".format(i) for i in sources]
     return {
-        "actions": actions,
-        "verbosity": 1
+        "actions": actions
     }
 
 
 def task_test():
-    # TODO: Enable when unit test is available
-    # sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
     return {
         "actions": [
-            # "coverage run --source ./{} -m pytest".format(PACKAGE),
-            # "coverage report"
-        ],
-        # "file_dep": sources,
-        "verbosity": 2
+            "coverage run --source ./{} pytest".format(PACKAGE),
+            "coverage report"
+        ]
     }
 
 
@@ -117,17 +113,16 @@ def task_build():
     return {
         "actions": [
             "python setup.py sdist bdist_wheel"
-        ],
-        "task_dep": ["test", "msgfmt", "bump_version"]
+        ]
     }
 
 
 def task_publish():
     def get_twine_command():
-        version = __import__(PACKAGE).__version__.__version__
-        binary = glob.glob("./dist/*{}*".format(version), recursive=True)
-        return ' '.join(["twine", "upload"] + binary)
+        __version__ = __import__("{}.__version__".format(PACKAGE)).__version__
+        binarys = glob.glob("./dist/*{}*".format(__version__), recursive=True)
+        return ["twine", "upload"] + binarys
     return {
-        "actions": [CmdAction(get_twine_command)],
-        "task_dep": ["build"]
+        "actions": [get_twine_command],
+        "task_dep": ["test", "msgfmt", "build"]
     }
