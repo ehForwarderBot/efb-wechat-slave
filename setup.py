@@ -35,7 +35,7 @@ setup(
         "Topic :: Utilities"
     ],
     install_requires=[
-        "ehforwarderbot>=2.0.0b13",
+        "ehforwarderbot>=2.0.0b15",
         "itchat>=1.3.10",
         "python-magic",
         "pillow",

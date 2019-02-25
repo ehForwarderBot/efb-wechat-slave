@@ -516,11 +516,11 @@ class WeChatChannel(EFBChannel):
     def authenticate(self, qr_reload):
         qr_callback = getattr(self, qr_reload, self.master_qr_code)
         with coordinator.mutex:
-            self.bot: wxpy.Bot = wxpy.Bot(cache_path=os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy.pkl"),
+            self.bot: wxpy.Bot = wxpy.Bot(cache_path=str(efb_utils.get_data_path(self.channel_id) / "wxpy.pkl"),
                                           qr_callback=qr_callback,
                                           logout_callback=self.exit_callback)
             self.bot.enable_puid(
-                os.path.join(efb_utils.get_data_path(self.channel_id), "wxpy_puid.pkl"),
+                efb_utils.get_data_path(self.channel_id) / "wxpy_puid.pkl",
                 self.flag('puid_logs')
             )
             self.done_reauth.set()
