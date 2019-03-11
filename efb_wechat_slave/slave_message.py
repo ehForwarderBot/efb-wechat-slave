@@ -141,8 +141,8 @@ class SlaveMessageManager:
     def wechat_location_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
         efb_msg.text = msg.text.split('\n')[0][:-1]
-        efb_msg.attributes = EFBMsgLocationAttribute(longitude=float(msg.location['x']),
-                                                     latitude=float(msg.location['y']))
+        efb_msg.attributes = EFBMsgLocationAttribute(latitude=float(msg.location['x']),
+                                                     longitude=float(msg.location['y']))
         efb_msg.type = MsgType.Location
         return efb_msg
 
