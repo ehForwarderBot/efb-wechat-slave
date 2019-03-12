@@ -12,7 +12,9 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
    :alt: This project proudly supports #SayNoToWeChat campaign.
 
 `README in other languages`_.
+
 .. _README in other languages: ./readme_translations
+
 .. TRANSLATORS: change the URL on previous line as "." (without quotations).
 
 **Channel ID**: ``blueset.wechat``
@@ -28,14 +30,6 @@ Alpha 版本
 
 本项目目前仍是 Alpha 版本，仍不稳定，且功能可能随时变更。
 
-开发进度减缓
-------------
-
-由于技术原因（见注释），EWS 开发进度将会减缓。恢复时间未定。
-
-..  那个垃圾网页版 WC 把俺的账号给封了。
-    只能坐等给恢复了。顺便求恢复方法或者完全封号的方法。
-    （是的俺就想作个大死）
 
 使用前须知
 ----------
@@ -100,7 +94,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 -  **如何切换已登录的微信账号？**
    请登出当前的账号，并使用其他的微信手机登录。
 -  **如何登录两个微信账号？**
-   请 EFB 配置文件中指定不同的实例 ID。
+   请在 EFB 配置文件中指定不同的实例 ID。
 -  **EWS 稳定吗？**
    EWS 依赖于上游项目
    `ItChat <https://github.com/littlecodersh/ItChat>`__
@@ -201,8 +195,8 @@ EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
 ------------
 
 EWS 启用了实验性的本地化翻译。您可以将语言环境变量 (``LANGUAGE``,
-``LC_ALL``, ``LC_MESSAGES`` 或 ``LANG``) 设为一种 `已支持的语言`_ 。
-同时，您也可以在我们的 `Crowdin 项目`_ 里面将 EWS 翻译为您的语言。
+``LC_ALL``, ``LC_MESSAGES`` 或 ``LANG``) 设为一种\ `已支持的语言`_\ 。
+同时，您也可以在我们的 `Crowdin 项目`_\ 里面将 EWS 翻译为您的语言。
 
 .. _已支持的语言: https://crowdin.com/project/ehforwarderbot/
 .. _Crowdin 项目: https://crowdin.com/project/ehforwarderbot/

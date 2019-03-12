@@ -12,6 +12,7 @@ EFB WeChat Slave Channel
    :alt: This project proudly supports #SayNoToWeChat campaign.
 
 `README in other languages`_.
+
 .. _README in other languages: .
 
 **Channel ID**: ``blueset.wechat``
