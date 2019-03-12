@@ -11,6 +11,10 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 .. figure:: https://i.imgur.com/dCZfh14.png
    :alt: This project proudly supports #SayNoToWeChat campaign.
 
+`README in other languages`_.
+.. _README in other languages: ./readme_translations
+.. TRANSLATORS: change the URL on previous line as "." (without quotations).
+
 **Channel ID**: ``blueset.wechat``
 
 EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网页版、
@@ -96,8 +100,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 -  **如何切换已登录的微信账号？**
    请登出当前的账号，并使用其他的微信手机登录。
 -  **如何登录两个微信账号？**
-   该功能没有正式支持，并需要使用者具有一定的技术能力。操作方法请参见项目
-   Wiki。
+   请 EFB 配置文件中指定不同的实例 ID。
 -  **EWS 稳定吗？**
    EWS 依赖于上游项目
    `ItChat <https://github.com/littlecodersh/ItChat>`__

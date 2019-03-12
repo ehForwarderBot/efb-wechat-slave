@@ -13,6 +13,7 @@ DOIT_CONFIG = {
 def task_gettext():
     pot = "./{package}/locale/{package}.pot".format(package=PACKAGE)
     sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
+    sources = [i for i in sources if "__version__.py" not in i]
     command = "xgettext --add-comments=TRANSLATORS -o " + pot + " " + " ".join(sources)
     return {
         "actions": [
@@ -40,7 +41,7 @@ def task_msgfmt():
 def task_crowdin():
     sources = glob.glob("./{package}/**/*.po".format(package=PACKAGE), recursive=True)
     return {
-        "actions": ["crowdin upload source"],
+        "actions": ["crowdin upload sources"],
         "file_dep": sources,
         "task_dep": ["gettext"]
     }
@@ -64,7 +65,7 @@ def task_commit_lang_file():
 
 def task_bump_version():
     def gen_bump_version(mode=DEFAULT_BUMP_MODE):
-        return 'bumpversion', mode
+        return 'bumpversion {mode}'.format(mode=mode)
 
     return {
         "actions": [gen_bump_version],
