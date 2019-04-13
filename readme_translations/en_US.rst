@@ -53,8 +53,8 @@ Dependencies
 -  libmagic
 -  pillow
 
-Install and Enable
-----------
+Install and enable
+------------------
 
 1. Install all binary dependencies stated above
 2. Install
@@ -69,6 +69,20 @@ Install and Enable
 
    **(In EFB 2.0.0a1, the default configuration directory is**
    ``~/.ehforwarderbot/profiles/default`` **)**
+
+Alternative installation methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+EWS also has other alternative installation methods
+contributed by the community, including:
+
+- `AUR package`_ maintained by KeLiu_ (``python-efb-wechat-slave-git``)
+- Other `installation scripts and containers (e.g. Docker)`_
+
+.. _KeLiu: https://github.com/specter119
+.. _AUR package: https://aur.archlinux.org/packages/python-efb-wechat-slave-git
+.. _installation scripts and containers (e.g. Docker): https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker
+
 
 Optional configuration
 ----------------------
@@ -108,7 +122,7 @@ FAQ
    -  have a stable internet connection on your server, and
    -  **keep your WeChat app always online**.
 
-Known Issues
+Known issues
 ------------
 
 - Due to the design of Web WeChat, chats with no name
@@ -119,11 +133,13 @@ Known Issues
   is thus disappeared.
 - Only features supported by Web WeChat are supported by EWS,
   which means:
-    - No "Moments"
-    - No money transfers
-    - Cannot send voice messages
-    - Cannot send locations
-    - etc.
+
+  - No "Moments"
+  - No money transfers
+  - Cannot send voice messages
+  - Cannot send locations
+  - etc.
+
 - Some multimedia files (pictures, stickers, files, etc.) might be
   blocked by Web WeChat, and no data is received, especially for
   stickers. In such cases, you will be reminded to check your phone.

@@ -69,6 +69,20 @@ Alpha 版本
    **(EFB 2.0.0a1 中，默认的配置文件夹位于**
    ``~/.ehforwarderbot/profiles/default`` **)**
 
+
+其他的安装方式
+~~~~~~~~~~~~~~
+
+EWS 同时存在由社区提供的其他安装方式，包括：
+
+- 由 KeLiu_ 维护的 `AUR 软件包`_\ （``python-efb-wechat-slave-git``）。
+- 其他\ `安装脚本或 Docker 等容器`_\ 。
+
+.. _KeLiu: https://github.com/specter119
+.. _AUR 软件包: https://aur.archlinux.org/packages/python-efb-wechat-slave-git
+.. _安装脚本或 Docker 等容器: https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker
+
+
 可选的配置文件
 --------------
 
