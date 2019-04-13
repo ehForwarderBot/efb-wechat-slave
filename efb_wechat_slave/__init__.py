@@ -261,7 +261,7 @@ class WeChatChannel(EFBChannel):
 
     def exit_callback(self):
         # Don't send prompt if there's nowhere to send.
-        if not getattr(coordinator, 'master', default=None):
+        if not getattr(coordinator, 'master', None):
             raise Exception(self._("Web WeChat logged your account out before master channel is ready."))
         self.logger.debug('Calling exit callback...')
         if self._stop_polling_event.is_set():
