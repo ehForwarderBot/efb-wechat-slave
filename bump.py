@@ -12,7 +12,7 @@ import subprocess
 from packaging import version
 from typing import Optional, List
 
-PACKAGE = "ehforwarderbot"
+PACKAGE = "efb_wechat_slave"
 
 parser = argparse.ArgumentParser(description="Custom version bumper partially implements PEP 440.")
 parser.add_argument("level", action="store",

@@ -24,7 +24,7 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.utils import extra
-from . import __version__ as version
+from . import __version__
 from . import utils as ews_utils
 from . import wxpy
 from .wxpy.utils import PuidMap
@@ -46,7 +46,7 @@ class WeChatChannel(EFBChannel):
     channel_id = 'blueset.wechat'
     channel_type = ChannelType.Slave
 
-    __version__ = version.__version__
+    __version__ = __version__
 
     supported_message_types = {MsgType.Text, MsgType.Sticker, MsgType.Image,
                                MsgType.File, MsgType.Video, MsgType.Link, MsgType.Audio}
