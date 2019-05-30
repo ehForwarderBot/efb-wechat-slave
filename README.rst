@@ -195,6 +195,12 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
    输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据会话数量和消息吞吐量
    而占用大量存储空间。
 
+- ``send_stickers_and_gif_as_jpeg`` *(bool)* [默认值: ``true``]
+
+  以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。详见 `#48`_\ 。
+
+.. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
+
 ``vendor_specific``
 -------------------
 
