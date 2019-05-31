@@ -357,9 +357,9 @@ class WeChatChannel(EFBChannel):
 
             convert_to = None
 
-            if self.flags('send_stickers_and_gif_as_jpeg'):
-               if msg.type == MsgType.Sticker or msg.mime == "image/gif":
-                   convert_to = "image/jpeg"
+            if self.flag('send_stickers_and_gif_as_jpeg'):
+                if msg.type == MsgType.Sticker or msg.mime == "image/gif":
+                    convert_to = "image/jpeg"
             else:
                 if msg.type == MsgType.Sticker:
                     convert_to = "image/gif"
