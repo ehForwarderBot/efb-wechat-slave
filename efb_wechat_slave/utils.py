@@ -152,6 +152,14 @@ def generate_message_uid(message: wxpy.SentMessage) -> str:
 
 
 def message_to_dummy_message(message_uid: str, channel: 'WeChatChannel') -> wxpy.SentMessage:
+    """
+    Generate a wxpy.SentMessage object with minimum identifying information.
+    This is generally used to recall messages using WXPY's API without the message object
+
+    Args:
+        message_uid: puid, id, local_id joined by space
+        channel: the slave channel object that issued this message
+    """
     puid, m_id, l_id = message_uid.split(' ', 2)
     d = {
         'receiver': channel.chats.get_wxpy_chat_by_uid(puid),

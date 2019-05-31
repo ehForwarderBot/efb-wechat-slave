@@ -1,13 +1,14 @@
 # coding: utf-8
 
 import logging
-from typing import Optional, List, TYPE_CHECKING
+from typing import Optional, List, TYPE_CHECKING, Dict, Any
 
 from ehforwarderbot import EFBChat
 from ehforwarderbot.constants import ChatType
 from ehforwarderbot.exceptions import EFBChatNotFound
 from . import wxpy
 from . import utils as ews_utils
+
 if TYPE_CHECKING:
     from . import WeChatChannel
 
@@ -99,6 +100,8 @@ class ChatManager:
 
         efb_chat.chat_alias = efb_chat.chat_alias and ews_utils.wechat_string_unescape(efb_chat.chat_alias)
 
+        efb_chat.vendor_specific.update(self.generate_vendor_specific(chat))
+
         self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
         return efb_chat
 
@@ -108,7 +111,7 @@ class ChatManager:
             l.append(self.wxpy_chat_to_efb_chat(i))
         return l
 
-    def search_chat(self, uid: str, refresh: bool=False) -> EFBChat:
+    def search_chat(self, uid: str, refresh: bool = False) -> EFBChat:
         try:
             if refresh:
                 self.bot.chats(True)
@@ -123,7 +126,7 @@ class ChatManager:
             else:
                 raise EFBChatNotFound()
 
-    def search_member(self, uid: str, member_id: str, refresh: bool=False) -> EFBChat:
+    def search_member(self, uid: str, member_id: str, refresh: bool = False) -> EFBChat:
         group = self.search_chat(uid)
         if not isinstance(group, wxpy.Group):
             raise EFBChatNotFound()
@@ -137,3 +140,47 @@ class ChatManager:
                 return self.search_chat(uid, refresh=True)
             else:
                 raise EFBChatNotFound()
+
+    # Constants extracted from Web WC source, see EWS#27.
+    CONTACT_FLAG_CONTACT = 1
+    CONTACT_FLAG_CHAT_CONTACT = 2
+    CONTACT_FLAG_CHAT_ROOM_CONTACT = 4
+    CONTACT_FLAG_BLACKLIST_CONTACT = 8
+    # CONTACT_FLAG_DOMAIN_CONTACT = 16
+    # CONTACT_FLAG_HIDE_CONTACT = 32
+    # CONTACT_FLAG_FAVOUR_CONTACT = 64
+    # CONTACT_FLAG_3RD_APP_CONTACT = 128
+    # CONTACT_FLAG_SNS_BLACKLIST_CONTACT = 256
+    CONTACT_FLAG_NOTIFY_CLOSE_CONTACT = 512
+    CONTACT_FLAG_TOP_CONTACT = 2048
+    # MM_USER_ATTR_VERIFY_FLAG_BIZ = 1
+    # MM_USER_ATTR_VERIFY_FLAG_FAMOUS = 2
+    # MM_USER_ATTR_VERIFY_FLAG_BIZ_BIG = 4
+    MM_USER_ATTR_VERIFY_FLAG_BIZ_BRAND = 8
+    # MM_USER_ATTR_VERIFY_FLAG_BIZ_VERIFIED = 16
+    CHAT_ROOM_NOTIFY_CLOSE = 0
+
+    def generate_vendor_specific(self, chat: wxpy.Chat) -> Dict[str, Any]:
+        """
+        Generate a set of vendor specific attributes from chat.
+        Features extracted from Web WC source, see EWS#27.
+        """
+        is_self = chat == chat.bot.self
+        raw = chat.raw
+        is_room_contact = isinstance(chat, wxpy.Group)
+        username = raw['UserName']
+        contact_flag = raw['ContactFlag']
+        return {
+            'is_contact': bool(contact_flag & self.CONTACT_FLAG_CONTACT) or is_self,
+            'is_blacklist_contact': bool(contact_flag & self.CONTACT_FLAG_BLACKLIST_CONTACT),
+            'is_conversation_contact': bool(contact_flag & self.CONTACT_FLAG_CHAT_CONTACT),
+            'is_room_contact_del': is_room_contact and not bool(contact_flag & self.CONTACT_FLAG_CHAT_ROOM_CONTACT),
+            'is_room_owner': is_room_contact and bool(raw['isOwner']),
+            'is_brand_contact': bool(raw['VerifyFlag'] & self.MM_USER_ATTR_VERIFY_FLAG_BIZ_BRAND),
+            'is_sp_contact': '@' not in username or username.endswith("@qqim"),
+            'is_shield_user': username.endswith("@lbsroom") or username.endswith('@talkroom'),
+            'is_muted': raw['Status'] == self.CHAT_ROOM_NOTIFY_CLOSE if is_room_contact
+                else bool(contact_flag & self.CONTACT_FLAG_NOTIFY_CLOSE_CONTACT),
+            'is_top': bool(contact_flag & self.CONTACT_FLAG_TOP_CONTACT),
+            'has_photo_album': bool(raw['SnsFlag']),
+        }

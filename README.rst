@@ -210,6 +210,28 @@ EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
    该会话是否为公众号。
 -  ``wxpy_objet`` *(wxpy.Chat)*
    该会话所对应的 ``wxpy.Chat`` 对象。
+- ``is_contact`` *(bool)*
+  不明。提取自 API。
+- ``is_blacklist_contact`` *(bool)*
+  该用户是否被加入黑名单。
+- ``is_conversation_contact`` *(bool)*
+  不明。提取自 API。
+- ``is_room_contact_del`` *(bool)*
+  不明。提取自 API。
+- ``is_room_owner`` *(bool)*
+  该用户是否为群组创建者。
+- ``is_brand_contact`` *(bool)*
+  不明。提取自 API。
+- ``is_sp_contact`` *(bool)*
+  不明。提取自 API。
+- ``is_shield_user`` *(bool)*
+  不明。提取自 API。
+- ``is_muted`` *(bool)*
+  该会话是否在微信中开启免打扰。
+- ``is_top`` *(bool)*
+  该会话是否在微信中被置顶。
+- ``has_photo_album`` *(bool)*
+  不明。提取自 API。
 
 本地化翻译实验
 ------------

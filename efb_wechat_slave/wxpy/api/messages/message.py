@@ -396,7 +396,7 @@ class Message(object):
 
         _chat = None
 
-        if user_name.startswith('@@'):
+        if user_name.startswith('@@') or user_name.endswith('@chatroom'):
             _chat = match_in_chats(self.bot.groups())
         elif user_name:
             _chat = match_in_chats(self.bot.friends())

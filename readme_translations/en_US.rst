@@ -226,6 +226,28 @@ disappear at any time. Use at your own risk.
    If the chat is an "Official Account".
 -  ``wxpy_objet`` *(wxpy.Chat)*
    The corresponding ``wxpy.Chat`` object of the chat.
+- ``is_contact`` *(bool)*
+  Unknown. Extracted from API.
+- ``is_blacklist_contact`` *(bool)*
+  If the user is on blacklist.
+- ``is_conversation_contact`` *(bool)*
+  Unknown. Extracted from API.
+- ``is_room_contact_del`` *(bool)*
+  Unknown. Extracted from API.
+- ``is_room_owner`` *(bool)*
+  If the user is the owner of a group.
+- ``is_brand_contact`` *(bool)*
+  Unknown. Extracted from API.
+- ``is_sp_contact`` *(bool)*
+  Unknown. Extracted from API.
+- ``is_shield_user`` *(bool)*
+  Unknown. Extracted from API.
+- ``is_muted`` *(bool)*
+  If this chat is muted in WeChat.
+- ``is_top`` *(bool)*
+  If this chat is pinned on top in WeChat.
+- ``has_photo_album`` *(bool)*
+  Unknown. Extracted from API.
 
 Experimental localization support
 ---------------------------------
