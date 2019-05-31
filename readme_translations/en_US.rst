@@ -53,8 +53,8 @@ Dependencies
 -  libmagic
 -  pillow
 
-Install and enable
-------------------
+Install and Enable
+----------
 
 1. Install all binary dependencies stated above
 2. Install
@@ -69,20 +69,6 @@ Install and enable
 
    **(In EFB 2.0.0a1, the default configuration directory is**
    ``~/.ehforwarderbot/profiles/default`` **)**
-
-Alternative installation methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-EWS also has other alternative installation methods
-contributed by the community, including:
-
-- `AUR package`_ maintained by KeLiu_ (``python-efb-wechat-slave-git``)
-- Other `installation scripts and containers (e.g. Docker)`_
-
-.. _KeLiu: https://github.com/specter119
-.. _AUR package: https://aur.archlinux.org/packages/python-efb-wechat-slave-git
-.. _installation scripts and containers (e.g. Docker): https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker
-
 
 Optional configuration
 ----------------------
@@ -122,7 +108,7 @@ FAQ
    -  have a stable internet connection on your server, and
    -  **keep your WeChat app always online**.
 
-Known issues
+Known Issues
 ------------
 
 - Due to the design of Web WeChat, chats with no name
@@ -133,13 +119,11 @@ Known issues
   is thus disappeared.
 - Only features supported by Web WeChat are supported by EWS,
   which means:
-
-  - No "Moments"
-  - No money transfers
-  - Cannot send voice messages
-  - Cannot send locations
-  - etc.
-
+    - No "Moments"
+    - No money transfers
+    - Cannot send voice messages
+    - Cannot send locations
+    - etc.
 - Some multimedia files (pictures, stickers, files, etc.) might be
   blocked by Web WeChat, and no data is received, especially for
   stickers. In such cases, you will be reminded to check your phone.
@@ -210,13 +194,6 @@ disappear at any time. Use at your own risk.
    In case of high volume of messages and chats, PUID log may occupy a large amount
    of space.
 
-- ``send_stickers_and_gif_as_jpeg`` *(bool)* [Default: ``true``]
-
-  Send stickers and GIFs as JPEG. This is a workaround for the current Web WeChat GIF fail.
-  See `#48`_.
-
-.. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
-
 ``vendor_specific``
 -------------------
 
@@ -226,28 +203,6 @@ disappear at any time. Use at your own risk.
    If the chat is an "Official Account".
 -  ``wxpy_objet`` *(wxpy.Chat)*
    The corresponding ``wxpy.Chat`` object of the chat.
-- ``is_contact`` *(bool)*
-  Unknown. Extracted from API.
-- ``is_blacklist_contact`` *(bool)*
-  If the user is on blacklist.
-- ``is_conversation_contact`` *(bool)*
-  Unknown. Extracted from API.
-- ``is_room_contact_del`` *(bool)*
-  Unknown. Extracted from API.
-- ``is_room_owner`` *(bool)*
-  If the user is the owner of a group.
-- ``is_brand_contact`` *(bool)*
-  Unknown. Extracted from API.
-- ``is_sp_contact`` *(bool)*
-  Unknown. Extracted from API.
-- ``is_shield_user`` *(bool)*
-  Unknown. Extracted from API.
-- ``is_muted`` *(bool)*
-  If this chat is muted in WeChat.
-- ``is_top`` *(bool)*
-  If this chat is pinned on top in WeChat.
-- ``has_photo_album`` *(bool)*
-  Unknown. Extracted from API.
 
 Experimental localization support
 ---------------------------------
