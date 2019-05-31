@@ -5,7 +5,7 @@ import tempfile
 import uuid
 import threading
 import re
-from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO
+from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict
 
 import magic
 import itchat
@@ -50,7 +50,7 @@ class SlaveMessageManager:
                 logger = logging.getLogger(__name__)
                 logger.debug("[%s] Raw message: %r", msg.id, msg.raw)
 
-                efb_msg: EFBMsg = func(self, msg, *args, **kwargs)
+                efb_msg: Optional[EFBMsg] = func(self, msg, *args, **kwargs)
 
                 if efb_msg is None:
                     return
@@ -90,6 +90,7 @@ class SlaveMessageManager:
         self.bot.register(except_self=False, msg_types=consts.CARD)(self.wechat_card_msg)
         self.bot.register(except_self=False, msg_types=consts.FRIENDS)(self.wechat_friend_msg)
         self.bot.register(except_self=False, msg_types=consts.NOTE)(self.wechat_system_msg)
+        self.bot.register(except_self=False, msg_types=consts.UNSUPPORTED)(self.wechat_unsupported_msg)
 
         @self.bot.register(msg_types=consts.SYSTEM)
         def wc_msg_system_log(msg):
@@ -118,6 +119,17 @@ class SlaveMessageManager:
                     (len(msg.text) + 1, len(msg.text) + 1 + len(append)): EFBChat(self.channel).self()
                 })
                 efb_msg.text += " " + append
+        return efb_msg
+
+    @Decorators.wechat_msg_meta
+    def wechat_unsupported_msg(self, msg: wxpy.Message) -> Optional[EFBMsg]:
+        if msg.raw['MsgType'] in (50, 52, 53):
+            text = self._("[Incoming audio/video call, please check your phone.]")
+        else:
+            return
+        efb_msg = EFBMsg()
+        efb_msg.text = text
+        efb_msg.type = MsgType.Unsupported
         return efb_msg
 
     @Decorators.wechat_msg_meta

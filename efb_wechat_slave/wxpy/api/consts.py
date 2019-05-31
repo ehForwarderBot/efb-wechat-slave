@@ -22,6 +22,8 @@ VIDEO = 'Video'
 FRIENDS = 'Friends'
 # 系统
 SYSTEM = 'System'
+# 不支持
+UNSUPPORTED = 'Useless'
 
 # 男性
 MALE = 1
