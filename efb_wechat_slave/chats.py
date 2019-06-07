@@ -168,19 +168,19 @@ class ChatManager:
         is_self = chat == chat.bot.self
         raw = chat.raw
         is_room_contact = isinstance(chat, wxpy.Group)
-        username = raw['UserName']
-        contact_flag = raw['ContactFlag']
+        username = raw.get('UserName', '')
+        contact_flag = raw.get('ContactFlag', 0)
         return {
             'is_contact': bool(contact_flag & self.CONTACT_FLAG_CONTACT) or is_self,
             'is_blacklist_contact': bool(contact_flag & self.CONTACT_FLAG_BLACKLIST_CONTACT),
             'is_conversation_contact': bool(contact_flag & self.CONTACT_FLAG_CHAT_CONTACT),
             'is_room_contact_del': is_room_contact and not bool(contact_flag & self.CONTACT_FLAG_CHAT_ROOM_CONTACT),
-            'is_room_owner': is_room_contact and bool(raw['isOwner']),
-            'is_brand_contact': bool(raw['VerifyFlag'] & self.MM_USER_ATTR_VERIFY_FLAG_BIZ_BRAND),
+            'is_room_owner': is_room_contact and bool(raw.get('isOwner', 0)),
+            'is_brand_contact': bool(raw.get('VerifyFlag', 0) & self.MM_USER_ATTR_VERIFY_FLAG_BIZ_BRAND),
             'is_sp_contact': '@' not in username or username.endswith("@qqim"),
             'is_shield_user': username.endswith("@lbsroom") or username.endswith('@talkroom'),
-            'is_muted': raw['Status'] == self.CHAT_ROOM_NOTIFY_CLOSE if is_room_contact
-                else bool(contact_flag & self.CONTACT_FLAG_NOTIFY_CLOSE_CONTACT),
+            'is_muted': raw.get('Status', 0) == self.CHAT_ROOM_NOTIFY_CLOSE if is_room_contact
+            else bool(contact_flag & self.CONTACT_FLAG_NOTIFY_CLOSE_CONTACT),
             'is_top': bool(contact_flag & self.CONTACT_FLAG_TOP_CONTACT),
-            'has_photo_album': bool(raw['SnsFlag']),
+            'has_photo_album': bool(raw.get('SnsFlag', 0)),
         }
