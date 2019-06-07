@@ -235,6 +235,7 @@ class WeChatChannel(EFBChannel):
         self.qr_uuid = (uuid, status)
 
         msg = EFBMsg()
+        msg.uid = f"ews_auth_{uuid}_{status}"
         msg.type = MsgType.Text
         msg.chat = EFBChat(self).system()
         msg.chat.chat_name = self._("EWS User Auth")
@@ -273,7 +274,7 @@ class WeChatChannel(EFBChannel):
         msg.chat = msg.author = chat
         msg.deliver_to = coordinator.master
         msg.text = self._("WeChat server has logged you out. Please log in again when you are ready.")
-        msg.uid = "__reauth__.%s" % int(time.time())
+        msg.uid = f"__reauth__.{int(time.time())}"
         msg.type = MsgType.Text
         on_log_out = self.flag("on_log_out")
         on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
