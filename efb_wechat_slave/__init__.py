@@ -24,9 +24,9 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.utils import extra
-from . import __version__
 from . import utils as ews_utils
 from . import wxpy
+from .__version__ import __version__
 from .wxpy.utils import PuidMap
 from .chats import ChatManager
 from .slave_message import SlaveMessageManager
