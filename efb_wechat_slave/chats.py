@@ -4,6 +4,7 @@ import logging
 from typing import Optional, List, TYPE_CHECKING, Dict, Any
 
 from ehforwarderbot import EFBChat
+from ehforwarderbot.chat import EFBChatNotificationState
 from ehforwarderbot.constants import ChatType
 from ehforwarderbot.exceptions import EFBChatNotFound
 from . import wxpy
@@ -37,9 +38,9 @@ class ChatManager:
 
     def get_chat_by_puid(self, puid: str) -> EFBChat:
         if puid in wxpy.Chat.SYSTEM_ACCOUNTS:
-            chat = self.wxpy_chat_to_efb_chat(wxpy.Chat(wxpy.utils.wrap_user_name(puid), self.bot))
-            chat.chat_type = ChatType.System
-            return chat
+            efb_chat = self.wxpy_chat_to_efb_chat(wxpy.Chat(wxpy.utils.wrap_user_name(puid), self.bot))
+            efb_chat.chat_type = ChatType.System
+            return efb_chat
         try:
             chat: wxpy.Chat = wxpy.ensure_one(self.bot.search(puid=puid))
             return self.wxpy_chat_to_efb_chat(chat)
@@ -101,6 +102,8 @@ class ChatManager:
         efb_chat.chat_alias = efb_chat.chat_alias and ews_utils.wechat_string_unescape(efb_chat.chat_alias)
 
         efb_chat.vendor_specific.update(self.generate_vendor_specific(chat))
+        if efb_chat.vendor_specific.get('is_muted', False):
+            efb_chat.notification = EFBChatNotificationState.MENTIONS
 
         self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
         return efb_chat
