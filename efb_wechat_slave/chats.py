@@ -75,8 +75,7 @@ class ChatManager:
         efb_chat.chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
         efb_chat.chat_alias = None
         efb_chat.chat_type = ChatType.System
-        efb_chat.vendor_specific = {'is_mp': False,
-                                    'wxpy_object': chat}
+        efb_chat.vendor_specific = {'is_mp': False }
         if isinstance(chat, wxpy.Member):
             efb_chat.chat_type = ChatType.User
             efb_chat.is_chat = False

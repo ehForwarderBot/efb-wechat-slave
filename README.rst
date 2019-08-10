@@ -208,8 +208,6 @@ EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
 
 -  ``is_mp`` *(bool)*
    该会话是否为公众号。
--  ``wxpy_objet`` *(wxpy.Chat)*
-   该会话所对应的 ``wxpy.Chat`` 对象。
 - ``is_contact`` *(bool)*
   不明。提取自 API。
 - ``is_blacklist_contact`` *(bool)*
