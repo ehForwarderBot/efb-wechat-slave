@@ -234,7 +234,7 @@ class SlaveMessageManager:
                     _, _, file = self.save_file(msg, app_message="thumbnail")
                     r = requests.post("https://sm.ms/api/v2/upload",
                                       files={"smfile": file},
-                                      headers={"Authorization":"14ac5499cfdd2bb2859e4476d2e5b1d2bad079bf"},
+                                      headers={"Authorization": "14ac5499cfdd2bb2859e4476d2e5b1d2bad079bf"},
                                       data={"format": "json"}).json()
                     if r.get('code', '') == 'success':
                         image = r['data']['url']

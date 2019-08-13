@@ -4,13 +4,9 @@ files: [
   {
     "source" : "/EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/*.pot",
     "translation" : "/EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/%locale_with_underscore%/LC_MESSAGES/%file_name%.po",
+  },
+  {
+      "source": "/EFBChannels/efb-wechat-slave/readme_translations/locale/README.pot",
+      "translation": "/EFBChannels/efb-wechat-slave/readme_translations/locale/%locale_with_underscore%.po"
   }
-#  {
-#      "source": "/EFBChannels/efb-wechat-slave/readme_translations/en_US.rst",
-#      "translation": "/EFBChannels/efb-wechat-slave/readme_translations/%locale_with_underscore%.rst",
-#      "type": "txt",
-#      "ignore": [
-#          "/EFBChannels/efb-wechat-slave/readme_translations/zh_CN.rst",
-#      ]
-#  }
 ]

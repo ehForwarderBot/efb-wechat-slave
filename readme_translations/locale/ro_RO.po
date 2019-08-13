@@ -1,0 +1,392 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ehforwarderbot\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-13 14:40+0800\n"
+"PO-Revision-Date: 2019-08-13 06:41\n"
+"Last-Translator: Eana Hufwe (blueset)\n"
+"Language-Team: Romanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: ehforwarderbot\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /EFBChannels/efb-wechat-slave/readme_translations/locale/README.pot\n"
+"Language: ro_RO\n"
+
+#: ../../.cache/README.rst:2
+msgid "EFB WeChat Slave Channel"
+msgstr ""
+
+#: ../../.cache/README.rst:None
+msgid ".. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg\n"
+"   :alt: PyPI release"
+msgstr ""
+
+#: ../../.cache/README.rst:None
+msgid ".. image:: https://d322cqt584bo4o.cloudfront.net/ehforwarderbot/localized.svg\n"
+"   :alt: Translate this project"
+msgstr ""
+
+#: ../../.cache/README.rst:None
+msgid ".. image:: https://i.imgur.com/dCZfh14.png\n"
+"   :alt: This project proudly supports #SayNoToWeChat campaign."
+msgstr ""
+
+#: ../../.cache/README.rst:14
+msgid "`README in other languages`_."
+msgstr ""
+
+#: ../../.cache/README.rst:18
+msgid "**Channel ID**: ``blueset.wechat``"
+msgstr ""
+
+#: ../../.cache/README.rst:20
+msgid "EWS is an EFB Slave Channel for WeChat, based on reversed engineered WeChat Web API, modified ``wxpy``, and ``itchat``."
+msgstr ""
+
+#: ../../.cache/README.rst:23
+msgid "Some source code in this repository was adapted from `youfou/wxpy <https://github.com/youfou/wxpy>`__."
+msgstr ""
+
+#: ../../.cache/README.rst:27
+msgid "Alpha Version"
+msgstr ""
+
+#: ../../.cache/README.rst:29
+msgid "This is an unstable alpha version, and its functionality may change at any time."
+msgstr ""
+
+#: ../../.cache/README.rst:33
+msgid "Attention"
+msgstr ""
+
+#: ../../.cache/README.rst:35
+msgid "Since mid-2016, we have received feedback where some users' access to Web WeChat was banned. Most of the users were unbanned within 1 week to 3 months. When a user is banned for Web WeChat access, a pop up would be shown when they try to use it, stating that they \"cannot use Web WeChat temporary\", and are recommended to \"use mobile app or Windows/macOS instead\"."
+msgstr ""
+
+#: ../../.cache/README.rst:41
+msgid "The ban will NOT affect your access to any other client. The cause of such ban is not clear."
+msgstr ""
+
+#: ../../.cache/README.rst:44
+msgid "Please proceed with caution, and avoid using this Channel if you have special need of Web WeChat access. Learn more in the Project Wiki."
+msgstr ""
+
+#: ../../.cache/README.rst:48
+msgid "Dependencies"
+msgstr ""
+
+#: ../../.cache/README.rst:50
+msgid "Python >= 3.6"
+msgstr ""
+
+#: ../../.cache/README.rst:51
+msgid "EH Forwarder Bot >= 2.0.0"
+msgstr ""
+
+#: ../../.cache/README.rst:52
+msgid "ffmpeg"
+msgstr ""
+
+#: ../../.cache/README.rst:53
+msgid "libmagic"
+msgstr ""
+
+#: ../../.cache/README.rst:54
+msgid "pillow"
+msgstr ""
+
+#: ../../.cache/README.rst:57
+msgid "Install and Enable"
+msgstr ""
+
+#: ../../.cache/README.rst:59
+msgid "Install all binary dependencies stated above"
+msgstr ""
+
+#: ../../.cache/README.rst:60
+msgid "Install"
+msgstr ""
+
+#: ../../.cache/README.rst:62
+msgid "pip3 install efb-wechat-slave"
+msgstr ""
+
+#: ../../.cache/README.rst:66
+msgid "Enable EWS in ``config.yaml`` of the current profile."
+msgstr ""
+
+#: ../../.cache/README.rst:68
+msgid "The config directory may vary based on your settings."
+msgstr ""
+
+#: ../../.cache/README.rst:70
+msgid "**(In EFB 2.0.0a1, the default configuration directory is** ``~/.ehforwarderbot/profiles/default`` **)**"
+msgstr ""
+
+#: ../../.cache/README.rst:74
+msgid "Optional configuration"
+msgstr ""
+
+#: ../../.cache/README.rst:76
+msgid "You can enable experimental features by creating a configuration file, which is located at ``<directory to current profile>/blueset.wechat/config.yaml``."
+msgstr ""
+
+#: ../../.cache/README.rst:81
+msgid "Example configuration file"
+msgstr ""
+
+#: ../../.cache/README.rst:83
+msgid "# Experimental flags\n"
+"# This section can be used to enable experimental functionality.\n"
+"# However, those features may be changed or removed at any time.\n"
+"# Options in this section is explained afterward.\n"
+"flags:\n"
+"    option_one: 10\n"
+"    option_two: false\n"
+"    option_three: \"foobar\""
+msgstr ""
+
+#: ../../.cache/README.rst:95
+msgid "FAQ"
+msgstr ""
+
+#: ../../.cache/README.rst:97
+msgid "**How to switch to another WeChat account?** Please log out from your phone, and log in again with another one."
+msgstr ""
+
+#: ../../.cache/README.rst:99
+msgid "**How to log in with multiple WeChat accounts?** Please indicate different Instance ID in the profile's config file."
+msgstr ""
+
+#: ../../.cache/README.rst:101
+msgid "**Is EWS stable?** EWS depends on `ItChat <https://github.com/littlecodersh/ItChat>`__ project and Web WeChat protocol. According to `ItChat FAQ <https://itchat.readthedocs.io/zh/latest/FAQ/>`__ a stable session that lasts over months is possible when you:"
+msgstr ""
+
+#: ../../.cache/README.rst:108
+msgid "have a stable internet connection on your server, and"
+msgstr ""
+
+#: ../../.cache/README.rst:109
+msgid "**keep your WeChat app always online**."
+msgstr ""
+
+#: ../../.cache/README.rst:112
+msgid "Known Issues"
+msgstr ""
+
+#: ../../.cache/README.rst:114
+msgid "Due to the design of Web WeChat, chats with no name or identical name might be identified as the same chat, which might lead to misdelivery of messages."
+msgstr ""
+
+#: ../../.cache/README.rst:117
+msgid "Similarly, in limited situations, a chat will be seen as a \"new chat\" when its name is changed, and the \"old chat\" is thus disappeared."
+msgstr ""
+
+#: ../../.cache/README.rst:120
+msgid "Only features supported by Web WeChat are supported by EWS, which means:"
+msgstr ""
+
+#: ../../.cache/README.rst:122
+msgid "No \"Moments\""
+msgstr ""
+
+#: ../../.cache/README.rst:123
+msgid "No money transfers"
+msgstr ""
+
+#: ../../.cache/README.rst:124
+msgid "Cannot send voice messages"
+msgstr ""
+
+#: ../../.cache/README.rst:125
+msgid "Cannot send locations"
+msgstr ""
+
+#: ../../.cache/README.rst:126
+msgid "etc."
+msgstr ""
+
+#: ../../.cache/README.rst:127
+msgid "Some multimedia files (pictures, stickers, files, etc.) might be blocked by Web WeChat, and no data is received, especially for stickers. In such cases, you will be reminded to check your phone."
+msgstr ""
+
+#: ../../.cache/README.rst:133
+msgid "Experimental features"
+msgstr ""
+
+#: ../../.cache/README.rst:135
+msgid "The following flags are experimental features, may change, break, or disappear at any time. Use at your own risk."
+msgstr ""
+
+#: ../../.cache/README.rst:139
+msgid "``refresh_friends`` *(bool)* [Default: ``false``]"
+msgstr ""
+
+#: ../../.cache/README.rst:141
+msgid "Force refresh the entire chat list every time when queried."
+msgstr ""
+
+#: ../../.cache/README.rst:143
+msgid "``first_link_only`` *(bool)* [Default: ``false``]"
+msgstr ""
+
+#: ../../.cache/README.rst:145
+msgid "Send only the first article link when a message contains multiple articles."
+msgstr ""
+
+#: ../../.cache/README.rst:147
+msgid "``max_quote_length`` *(int)* [Default: ``-1``]"
+msgstr ""
+
+#: ../../.cache/README.rst:149
+msgid "Length limit of quoted message. Set to ``0`` to disable quotation. Set to ``-1`` to include the full quoted message"
+msgstr ""
+
+#: ../../.cache/README.rst:152
+msgid "``qr_reload`` *(str)* [Default: ``\"master_qr_code\"``]"
+msgstr ""
+
+#: ../../.cache/README.rst:154
+msgid "Method to log in when you are logged out while EWS is running. Options:"
+msgstr ""
+
+#: ../../.cache/README.rst:157
+msgid "``\"console_qr_code\"``: Send QR code to standard output (``stdout``)."
+msgstr ""
+
+#: ../../.cache/README.rst:159
+msgid "``\"master_qr_code\"``: Send QR code to master channel. **Note:** QR code might change frequently."
+msgstr ""
+
+#: ../../.cache/README.rst:162
+msgid "``on_log_out`` *(str)* [Default: ``\"command\"``]"
+msgstr ""
+
+#: ../../.cache/README.rst:164
+msgid "Behavior when WeChat server logged your account out. Options:"
+msgstr ""
+
+#: ../../.cache/README.rst:167
+msgid "``\"idle\"``: Only notify the user."
+msgstr ""
+
+#: ../../.cache/README.rst:168
+msgid "``\"reauth\"``: Notify the user and start log in immediately."
+msgstr ""
+
+#: ../../.cache/README.rst:169
+msgid "``\"command\"``: Notify the user, and wait for user to start log in manually."
+msgstr ""
+
+#: ../../.cache/README.rst:172
+msgid "``imgcat_qr`` *(bool)* [Default: ``false``]"
+msgstr ""
+
+#: ../../.cache/README.rst:174
+msgid "Use `iTerm2 image protocol <https://www.iterm2.com/documentation-images.html>`__ to show QR code. This is only applicable to iTerm 2 users."
+msgstr ""
+
+#: ../../.cache/README.rst:178
+msgid "``delete_on_edit`` *(bool)* [Default: ``false``]"
+msgstr ""
+
+#: ../../.cache/README.rst:180
+msgid "Turn on to edit message by recall and resend. Edit message is disabled by default."
+msgstr ""
+
+#: ../../.cache/README.rst:182
+msgid "``app_shared_link_mode`` *(str)* [Default：``\"ignore\"``]"
+msgstr ""
+
+#: ../../.cache/README.rst:184
+msgid "Behavior to deal with thumbnails when a message shared by 3rd party apps is received."
+msgstr ""
+
+#: ../../.cache/README.rst:186
+msgid "``\"ignore\"``\\ ：Ignore thumbnail"
+msgstr ""
+
+#: ../../.cache/README.rst:187
+msgid "``\"upload\"``\\ ：Upload to public image hosting (https://sm.ms ), and output its delete link to the log."
+msgstr ""
+
+#: ../../.cache/README.rst:189
+msgid "``\"image\"``\\ ：Send thumbnail as image (not recommended)."
+msgstr ""
+
+#: ../../.cache/README.rst:191
+msgid "``puid_logs`` *(str)* [Default：``null``]"
+msgstr ""
+
+#: ../../.cache/README.rst:193
+msgid "Output PUID related log to the path indicated. Please use absolute path. In case of high volume of messages and chats, PUID log may occupy a large amount of space."
+msgstr ""
+
+#: ../../.cache/README.rst:198
+msgid "``vendor_specific``"
+msgstr ""
+
+#: ../../.cache/README.rst:200
+msgid "``EFBChat`` from EWS provides the following ``vendor_specific`` items:"
+msgstr ""
+
+#: ../../.cache/README.rst:202
+msgid "``is_mp`` *(bool)* If the chat is an \"Official Account\"."
+msgstr ""
+
+#: ../../.cache/README.rst:204
+msgid "``is_contact`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:206
+msgid "``is_blacklist_contact`` *(bool)* If the chat is blacklisted."
+msgstr ""
+
+#: ../../.cache/README.rst:208
+msgid "``is_conversation_contact`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:210
+msgid "``is_room_contact_del`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:212
+msgid "``is_room_owner`` *(bool)* If the member is the creator of a group chat."
+msgstr ""
+
+#: ../../.cache/README.rst:214
+msgid "``is_brand_contact`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:216
+msgid "``is_sp_contact`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:218
+msgid "``is_shield_user`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:220
+msgid "``is_muted`` *(bool)* If the chat is muted by the user from WeChat."
+msgstr ""
+
+#: ../../.cache/README.rst:222
+msgid "``is_top`` *(bool)* If the chat is pinned to top by the user from WeChat."
+msgstr ""
+
+#: ../../.cache/README.rst:224
+msgid "``has_photo_album`` *(bool)* Unknown. Extracted from API."
+msgstr ""
+
+#: ../../.cache/README.rst:228
+msgid "Experimental localization support"
+msgstr ""
+
+#: ../../.cache/README.rst:230
+msgid "EWS supports localized user interface prompts experimentally, by setting the locale environmental variable (``LANGUAGE``, ``LC_ALL``, ``LC_MESSAGES`` or ``LANG``) to one of our `supported languages`_. Meanwhile, you can help to translate this project into your languages on `our Crowdin page`_."
+msgstr ""
+

@@ -5,6 +5,7 @@ from doit.action import CmdAction
 
 
 PACKAGE = "efb_wechat_slave"
+README_BASE = "./readme_translations/en_US.rst"
 DEFAULT_BUMP_MODE = "alpha"
 # major, minor, patch, alpha, beta, dev, post
 DOIT_CONFIG = {
@@ -17,9 +18,15 @@ def task_gettext():
     sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
     sources = [i for i in sources if "__version__.py" not in i]
     command = "xgettext --add-comments=TRANSLATORS -o " + pot + " " + " ".join(sources)
+    sources.append(README_BASE)
     return {
         "actions": [
-            command
+            command,
+            ['cp', README_BASE, './.cache/README.rst'],
+            ['sphinx-build', '-b', 'gettext', '-C', '-D', 'master_doc=README',
+             '-D', 'gettext_additional_targets=literal-block,image',
+             './.cache', './readme_translations/locale/', './.cache/README.rst'],
+            ['rm', './.cache/README.rst'],
         ],
         "targets": [
             pot
@@ -29,9 +36,28 @@ def task_gettext():
 
 
 def task_msgfmt():
+    languages = [i[i.rfind('/') + 1:i.rfind('.')] for i in glob.glob("./readme_translations/locale/*.po")]
+
+    try:
+        languages.remove("zh_CN")
+    except ValueError:
+        pass
+
     sources = glob.glob("./{package}/**/*.po".format(package=PACKAGE), recursive=True)
     dests = [i[:-3] + ".mo" for i in sources]
     actions = [["msgfmt", sources[i], "-o", dests[i]] for i in range(len(sources))]
+
+    actions.append(["mkdir", "./.cache/source"])
+    actions.append(["cp", README_BASE, "./.cache/source/README.rst"])
+    for i in languages:
+        actions.append(["sphinx-build", "-E", "-b", "rst", "-C",
+                        "-D", f"language={i}", "-D", "locale_dirs=./readme_translations/locale",
+                        "-D", "extensions=sphinxcontrib.restbuilder",
+                        "-D", "master_doc=README", "./.cache/source", f"./.cache/{i}"])
+        actions.append(["mv", f"./.cache/{i}/README.rst", f"./readme_translations/{i}.rst"])
+        actions.append(["rm", "-rf", f"./.cache/{i}"])
+    actions.append(["rm", "-rf", "./.cache/source"])
+
     return {
         "actions": actions,
         "targets": dests,
