@@ -194,6 +194,13 @@ disappear at any time. Use at your own risk.
    In case of high volume of messages and chats, PUID log may occupy a large amount
    of space.
 
+- ``send_stickers_and_gif_as_jpeg`` *(bool)* [Default: ``false``]
+
+  Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker limits as a workaround.
+  See `#48`_ for details.
+
+.. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
+
 ``vendor_specific``
 -------------------
 

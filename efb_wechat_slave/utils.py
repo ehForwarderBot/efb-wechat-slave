@@ -113,7 +113,7 @@ class ExperimentalFlagsManager:
         'delete_on_edit': False,
         'app_shared_link_mode': 'ignore',
         'puid_logs': None,
-        'send_stickers_and_gif_as_jpeg': True
+        'send_stickers_and_gif_as_jpeg': False
     }
 
     def __init__(self, channel: 'WeChatChannel'):
