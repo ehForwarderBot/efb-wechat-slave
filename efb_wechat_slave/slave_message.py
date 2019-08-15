@@ -11,6 +11,7 @@ import magic
 import itchat
 import requests
 import xmltodict
+from PIL import Image
 
 from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
 from ehforwarderbot.status import EFBMessageRemoval
@@ -37,6 +38,7 @@ class SlaveMessageManager:
 
     def __init__(self, channel: 'WeChatChannel'):
         self.channel: 'WeChatChannel' = channel
+        # noinspection PyProtectedMember
         self._ = self.channel._
         self.bot: wxpy.Bot = channel.bot
         self.logger: logging.Logger = logging.getLogger(__name__)
@@ -289,6 +291,9 @@ class SlaveMessageManager:
             if msg.raw['MsgType'] == 47 and not msg.raw['Content']:
                 raise EOFError
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
+            if 'gif' in efb_msg.mime and Image.open(efb_msg.path).is_aniamted:
+                efb_msg.type = MsgType.Animation
+
             efb_msg.text = ""
         except EOFError:
             if efb_msg.type == MsgType.Image:

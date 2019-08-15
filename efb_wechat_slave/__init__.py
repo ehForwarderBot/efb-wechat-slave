@@ -49,7 +49,8 @@ class WeChatChannel(EFBChannel):
     __version__ = __version__
 
     supported_message_types = {MsgType.Text, MsgType.Sticker, MsgType.Image,
-                               MsgType.File, MsgType.Video, MsgType.Link, MsgType.Audio}
+                               MsgType.File, MsgType.Video, MsgType.Link, MsgType.Audio,
+                               MsgType.Animation}
     logger: logging.Logger = logging.getLogger("plugins.%s.WeChatChannel" % channel_id)
     qr_uuid: Tuple[str, int] = None
     done_reauth: threading.Event = threading.Event()
@@ -353,10 +354,12 @@ class WeChatChannel(EFBChannel):
                 msg.text = "%s%s\n\n%s" % (tgt_alias, tgt_text, msg.text)
             r = self._bot_send_msg(chat, msg.text)
             self.logger.debug('[%s] Sent as a text message. %s', msg.uid, msg.text)
-        elif msg.type in (MsgType.Image, MsgType.Sticker):
-            self.logger.info("[%s] Image/Sticker %s", msg.uid, msg.type)
+        elif msg.type in (MsgType.Image, MsgType.Sticker, MsgType.Animation):
+            self.logger.info("[%s] Image/GIF/Sticker %s", msg.uid, msg.type)
 
             convert_to = None
+            file = msg.file
+            assert file is not None
 
             if self.flag('send_stickers_and_gif_as_jpeg'):
                 if msg.type == MsgType.Sticker or msg.mime == "image/gif":
@@ -368,7 +371,7 @@ class WeChatChannel(EFBChannel):
             if convert_to == "image/gif":
                 with NamedTemporaryFile(suffix=".gif") as f:
                     try:
-                        img = Image.open(msg.file)
+                        img = Image.open(file)
                         try:
                             alpha = img.split()[3]
                             mask = Image.eval(alpha, lambda a: 255 if a <= 128 else 0)
@@ -379,37 +382,40 @@ class WeChatChannel(EFBChannel):
                         img.save(f, transparency=255)
                         msg.path = f.name
                         self.logger.debug('[%s] Image converted from %s to GIF', msg.uid, msg.mime)
-                        msg.file.close()
+                        file.close()
                         f.seek(0)
                         if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
                             raise EFBMessageError(self._("Image size is too large. (IS02)"))
                         r = self._bot_send_image(chat, f.name, f)
                     finally:
-                        msg.file.close()
+                        if not file.closed:
+                            file.close()
             elif convert_to == "image/jpeg":
                 with NamedTemporaryFile(suffix=".jpg") as f:
                     try:
-                        img = Image.open(msg.file).convert('RGBA')
+                        img = Image.open(file).convert('RGBA')
                         out = Image.new("RGBA", img.size, (255,255,255,255))
                         out.paste(img, img)
                         out.convert('RGB').save(f)
                         msg.path = f.name
                         self.logger.debug('[%s] Image converted from %s to JPEG', msg.uid, msg.mime)
-                        msg.file.close()
+                        file.close()
                         f.seek(0)
                         if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
                             raise EFBMessageError(self._("Image size is too large. (IS02)"))
                         r = self._bot_send_image(chat, f.name, f)
                     finally:
-                        msg.file.close()
+                        if not file.closed:
+                            file.close()
             else:
                 try:
-                    if os.fstat(msg.file.fileno()).st_size > self.MAX_FILE_SIZE:
+                    if os.fstat(file.fileno()).st_size > self.MAX_FILE_SIZE:
                         raise EFBMessageError(self._("Image size is too large. (IS01)"))
                     self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
-                    r = self._bot_send_image(chat, msg.path, msg.file)
+                    r = self._bot_send_image(chat, msg.path, file)
                 finally:
-                    msg.file.close()
+                    if not file.closed:
+                        file.close()
             if msg.text:
                 self._bot_send_msg(chat, msg.text)
         elif msg.type in (MsgType.File, MsgType.Audio):
