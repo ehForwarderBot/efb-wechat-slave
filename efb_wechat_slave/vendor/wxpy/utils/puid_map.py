@@ -243,17 +243,27 @@ class PuidMap(object):
         self.log("Dumped - remark_names: %s", self.remark_names)
         self.log("Dumped - captions: %s", self.captions)
 
-    def load(self):
+    def load(self, recur=False):
         """
         载入映射数据
         """
         self.log("Loading PUID map from local disk: %s", self.path)
-        with open(self.path, 'rb') as fp:
-            self.user_names, self.wxids, self.remark_names, self.captions = pickle.load(fp)
-            self.log("Local disk - user_names: %s", self.user_names)
-            self.log("Local disk - wxids: %s", self.wxids)
-            self.log("Local disk - remark_names: %s", self.remark_names)
-            self.log("Local disk - captions: %s", self.captions)
+        try:
+            with open(self.path, 'rb') as fp:
+                self.user_names, self.wxids, self.remark_names, self.captions = pickle.load(fp)
+                self.log("Local disk - user_names: %s", self.user_names)
+                self.log("Local disk - wxids: %s", self.wxids)
+                self.log("Local disk - remark_names: %s", self.remark_names)
+                self.log("Local disk - captions: %s", self.captions)
+        except ImportError as e:
+            # Mitigate the pickling issue of migrating .wxpy to .vendor.wxpy
+            if recur:
+                raise e
+            src = open(self.path, 'rb').read()
+            src.replace(b'cefb_wechat_slave.wxpy.', b'cefb_wechat_slave.vendor.wxpy.')
+            with open(self.path, 'wb') as f:
+                f.write(src)
+            return self.load(recur=True)
 
     @staticmethod
     def get_caption(chat: 'Chat') -> Caption:

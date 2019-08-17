@@ -7,8 +7,8 @@ from ehforwarderbot import EFBChat
 from ehforwarderbot.chat import EFBChatNotificationState
 from ehforwarderbot.constants import ChatType
 from ehforwarderbot.exceptions import EFBChatNotFound
-from . import wxpy
 from . import utils as ews_utils
+from .vendor import wxpy
 
 if TYPE_CHECKING:
     from . import WeChatChannel
@@ -66,8 +66,8 @@ class ChatManager:
                 return wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
 
     def wxpy_chat_to_efb_chat(self, chat: wxpy.Chat, recursive=True) -> Optional[EFBChat]:
-        self.logger.debug("Converting WXPY chat %r, %sin recursive mode", chat, '' if recursive else 'not ')
-        self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
+        # self.logger.debug("Converting WXPY chat %r, %sin recursive mode", chat, '' if recursive else 'not ')
+        # self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
         if chat is None:
             return self.MISSING_USER
         efb_chat = EFBChat(self.channel)
@@ -80,7 +80,7 @@ class ChatManager:
             efb_chat.chat_type = ChatType.User
             efb_chat.is_chat = False
             efb_chat.chat_alias = chat.display_name or efb_chat.chat_alias
-            self.logger.debug("[WXPY: %s] Display name: %s;", chat.puid, chat.display_name)
+            # self.logger.debug("[WXPY: %s] Display name: %s;", chat.puid, chat.display_name)
             if recursive:
                 efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
         elif isinstance(chat, wxpy.Group):
@@ -94,7 +94,7 @@ class ChatManager:
         elif isinstance(chat, wxpy.User):
             efb_chat.chat_type = ChatType.User
             efb_chat.chat_alias = chat.remark_name or efb_chat.chat_alias
-            self.logger.debug("[WXPY: %s] Remark name: %s;", chat.puid, chat.remark_name)
+            # self.logger.debug("[WXPY: %s] Remark name: %s;", chat.puid, chat.remark_name)
         if chat == chat.bot.self:
             efb_chat.self()
 

@@ -8,7 +8,6 @@ import re
 from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict
 
 import magic
-import itchat
 import requests
 import xmltodict
 from PIL import Image
@@ -17,10 +16,10 @@ from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
 from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute, EFBMsgCommands, EFBMsgCommand, \
     EFBMsgSubstitutions
-from . import wxpy
-from .wxpy.api import consts
 from . import constants
 from . import utils as ews_utils
+from .vendor import wxpy, itchat
+from .vendor.wxpy.api import consts
 
 if TYPE_CHECKING:
     from . import WeChatChannel

@@ -21,7 +21,7 @@ from ...api.chats import Chat, Group, Member, User
 from ...compatible.utils import force_encoded_string_output
 from ...utils import wrap_user_name, repr_message
 from .article import Article
-from ..consts import ATTACHMENT, CARD, FRIENDS, MAP, PICTURE, RECORDING, SHARING, TEXT, VIDEO, NOTE
+from ..consts import ATTACHMENT, CARD, FRIENDS, MAP, PICTURE, RECORDING, SHARING, TEXT, VIDEO, NOTE, STICKER
 from ...compatible import *
 
 logger = logging.getLogger(__name__)
@@ -132,7 +132,7 @@ class Message(object):
         """
 
         _text = self.raw.get('Text')
-        if callable(_text) and self.type in (PICTURE, RECORDING, ATTACHMENT, VIDEO):
+        if callable(_text) and self.type in (PICTURE, RECORDING, ATTACHMENT, VIDEO, STICKER):
             logger.debug("[%s] Calling downloader function ID %s", self.text, id(_text))
             return _text(save_path)
         else:

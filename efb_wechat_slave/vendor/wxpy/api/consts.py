@@ -25,6 +25,8 @@ SYSTEM = 'System'
 # 不支持
 UNSUPPORTED = 'Useless'
 
+STICKER = 'Sticker'
+
 # 男性
 MALE = 1
 # 女性

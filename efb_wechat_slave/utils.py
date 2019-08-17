@@ -2,9 +2,9 @@
 
 from typing import Dict, Any, TYPE_CHECKING
 
-import itchat.utils
+from .vendor.itchat import utils as itchat_utils
 
-from . import wxpy
+from .vendor import wxpy
 if TYPE_CHECKING:
     from . import WeChatChannel
 
@@ -139,7 +139,7 @@ def wechat_string_unescape(content: str) -> str:
     if not content:
         return ""
     d = {"Content": content}
-    itchat.utils.msg_formatter(d, "Content")
+    itchat_utils.msg_formatter(d, "Content")
     for i in WC_EMOTICON_CONVERSION:
         d['Content'] = d['Content'].replace(i, WC_EMOTICON_CONVERSION[i])
     return d['Content']
