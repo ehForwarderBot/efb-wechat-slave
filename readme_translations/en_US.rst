@@ -21,7 +21,10 @@ EWS is an EFB Slave Channel for WeChat, based on reversed engineered
 WeChat Web API, modified ``wxpy``, and ``itchat``.
 
 Some source code in this repository was adapted from
-`youfou/wxpy <https://github.com/youfou/wxpy>`__.
+`youfou/wxpy`_ and `littlecodersh/ItChat`_.
+
+.. _youfou/wxpy: https://github.com/youfou/wxpy
+.. _littlecodersh/ItChat:  https://github.com/littlecodersh/ItChat/
 
 Alpha Version
 -------------
@@ -231,10 +234,10 @@ disappear at any time. Use at your own risk.
 - ``has_photo_album`` *(bool)*
   Unknown. Extracted from API.
 
-Experimental localization support
----------------------------------
+Experimental translation support
+--------------------------------
 
-EWS supports localized user interface prompts experimentally,
+EWS supports translated user interface prompts experimentally,
 by setting the locale environmental variable (``LANGUAGE``,
 ``LC_ALL``, ``LC_MESSAGES`` or ``LANG``) to one of our
 `supported languages`_. Meanwhile, you can help to translate

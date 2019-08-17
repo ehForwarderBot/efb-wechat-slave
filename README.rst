@@ -20,10 +20,13 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 **Channel ID**: ``blueset.wechat``
 
 EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网页版、
-修改版 ``wxpy``\ ，\ ``itchat``\ 。
+修改版 ``wxpy`` 和 ``ItChat``\ 。
 
 本项目的部分代码修改自
-`youfou/wxpy <https://github.com/youfou/wxpy>`__\ 。
+`youfou/wxpy`_\ 、\ `littlecodersh/ItChat`_\ 。
+
+.. _youfou/wxpy: https://github.com/youfou/wxpy
+.. _littlecodersh/ItChat:  https://github.com/littlecodersh/ItChat/
 
 Alpha 版本
 ----------
