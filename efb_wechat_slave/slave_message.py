@@ -85,6 +85,7 @@ class SlaveMessageManager:
         self.bot.register(except_self=False, msg_types=consts.TEXT)(self.wechat_text_msg)
         self.bot.register(except_self=False, msg_types=consts.SHARING)(self.wechat_sharing_msg)
         self.bot.register(except_self=False, msg_types=consts.PICTURE)(self.wechat_picture_msg)
+        self.bot.register(except_self=False, msg_types=consts.STICKER)(self.wechat_sticker_msg)
         self.bot.register(except_self=False, msg_types=consts.ATTACHMENT)(self.wechat_file_msg)
         self.bot.register(except_self=False, msg_types=consts.RECORDING)(self.wechat_voice_msg)
         self.bot.register(except_self=False, msg_types=consts.MAP)(self.wechat_location_msg)
@@ -286,20 +287,33 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_picture_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
-        efb_msg.type = MsgType.Image if msg.raw['MsgType'] == 3 else MsgType.Sticker
+        efb_msg.type = MsgType.Image
         try:
             if msg.raw['MsgType'] == 47 and not msg.raw['Content']:
                 raise EOFError
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
-            if 'gif' in efb_msg.mime and Image.open(efb_msg.path).is_aniamted:
-                efb_msg.type = MsgType.Animation
-
+            # ^ Also throws EOFError
             efb_msg.text = ""
         except EOFError:
-            if efb_msg.type == MsgType.Image:
-                efb_msg.text += self._("[Failed to download the picture, please check your phone.]")
-            else:
-                efb_msg.text += self._("[Failed to download the sticker, please check your phone.]")
+            efb_msg.text += self._("[Failed to download the picture, please check your phone.]")
+            efb_msg.type = MsgType.Unsupported
+
+        return efb_msg
+
+    @Decorators.wechat_msg_meta
+    def wechat_sticker_msg(self, msg: wxpy.Message) -> EFBMsg:
+        efb_msg = EFBMsg()
+        efb_msg.type = MsgType.Sticker
+        try:
+            if msg.raw['MsgType'] == 47 and not msg.raw['Content']:
+                raise EOFError
+            efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
+            # ^ Also throws EOFError
+            if 'gif' in efb_msg.mime and Image.open(efb_msg.path).is_animated:
+                efb_msg.type = MsgType.Animation
+            efb_msg.text = ""
+        except EOFError:
+            efb_msg.text += self._("[Failed to download the sticker, please check your phone.]")
             efb_msg.type = MsgType.Unsupported
 
         return efb_msg
