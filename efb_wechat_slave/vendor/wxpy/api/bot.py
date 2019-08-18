@@ -34,16 +34,16 @@ itchat.set_logging(showOnCmd=False, loggingLevel=logging.NOTSET)
 class Bot(object):
     """
     机器人对象，用于登陆和操作微信账号，涵盖大部分 Web 微信的功能::
-    
+
         from .. import *
         bot = Bot()
-        
+
         # 机器人账号自身
         myself = bot.self
-        
+
         # 向文件传输助手发送消息
         bot.file_helper.send('Hello from ..!')
-        
+
 
     """
 
@@ -156,19 +156,19 @@ class Bot(object):
     def enable_puid(self, path='wxpy_puid.pkl', puid_logs=None):
         """
         **可选操作:** 启用聊天对象的 :any:`puid <Chat.puid>` 属性::
-            
+
             # 启用 puid 属性，并指定 puid 所需的映射数据保存/载入路径
             bot.enable_puid('wxpy_puid.pkl')
-            
+
             # 指定一个好友
             my_friend = bot.friends().search('游否')[0]
-            
+
             # 查看他的 puid
             print(my_friend.puid)
             # 'edfe8468'
 
         ..  tip::
-        
+
             | :any:`puid <Chat.puid>` 是 **wxpy 特有的聊天对象/用户ID**
             | 不同于其他 ID 属性，**puid** 可始终被获取到，且具有稳定的唯一性
 
@@ -294,9 +294,9 @@ class Bot(object):
     def search(self, keywords=None, **attributes):
         """
         在所有类型的聊天对象中进行搜索
-        
-        ..  note:: 
-        
+
+        ..  note::
+
             | 搜索结果为一个 :class:`Chats (列表) <Chats>` 对象
             | 建议搭配 :any:`ensure_one()` 使用
 
@@ -334,7 +334,7 @@ class Bot(object):
 
         """
         添加/关注 公众号
-        
+
         :param user: 公众号对象，或 user_name
         """
 

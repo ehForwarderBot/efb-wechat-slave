@@ -67,9 +67,9 @@ class Group(Chat):
     def search(self, keywords=None, **attributes):
         """
         在群聊中搜索成员
-        
-        ..  note:: 
-        
+
+        ..  note::
+
             | 搜索结果为一个 :class:`Chats (列表) <Chats>` 对象
             | 建议搭配 :any:`ensure_one()` 使用
 

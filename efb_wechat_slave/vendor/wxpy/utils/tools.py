@@ -84,7 +84,7 @@ def mutual_friends(*args):
 def detect_freq_limit(func, *args, **kwargs):
     """
     检测各类 Web 微信操作的频率限制，获得限制次数和周期
-    
+
     :param func: 需要执行的操作函数
     :param args: 操作函数的位置参数
     :param kwargs: 操作函数的命名参数

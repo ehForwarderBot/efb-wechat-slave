@@ -94,16 +94,16 @@ class Chat(object):
     def puid(self):
         """
         持续有效，且稳定唯一的聊天对象/用户ID，适用于持久保存
-        
+
         请使用 :any:`Bot.enable_puid()` 来启用 puid 属性
-        
+
         ..  tip::
-        
+
             | :any:`puid <Chat.puid>` 是 **wxpy 特有的聊天对象/用户ID**
             | 不同于其他 ID 属性，**puid** 可始终被获取到，且具有稳定的唯一性
 
         ..  attention::
-        
+
             puid 映射数据 **不可跨机器人使用**
 
         """

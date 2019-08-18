@@ -10,7 +10,7 @@ class ReturnValue(dict):
             import requests
             r = requests.get('http://httpbin.org/get')
             print(ReturnValue(rawResponse=r)
-    
+
     for normal dict:
         ..code::python
 

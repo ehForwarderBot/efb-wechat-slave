@@ -30,10 +30,10 @@ logger = logging.getLogger(__name__)
 class Message(object):
     """
     单条消息对象，包括:
-    
+
     * 来自好友、群聊、好友请求等聊天对象的消息
     * 使用机器人账号在手机微信中发送的消息
-    
+
     | 但 **不包括** 代码中通过 .send/reply() 系列方法发出的消息
     | 此类消息请参见 :class:`SentMessage`
     """
@@ -64,7 +64,7 @@ class Message(object):
     def type(self):
         """
         消息的类型，目前可为以下值::
-        
+
             # 文本
             TEXT = 'Text'
             # 位置
@@ -87,7 +87,7 @@ class Message(object):
             FRIENDS = 'Friends'
             # 系统
             SYSTEM = 'System'
-        
+
         :rtype: str
         """
         return self.raw.get('Type')
@@ -125,7 +125,7 @@ class Message(object):
     def get_file(self, save_path=None):
         """
         下载图片、视频、语音、附件消息中的文件内容。
-        
+
         可与 :any:`Message.file_name` 配合使用。
 
         :param save_path: 文件的保存路径。若为 None，将直接返回字节数据
@@ -321,7 +321,7 @@ class Message(object):
 
         * 对于自己发送的消息，为消息的接收者
         * 对于别人发送的消息，为消息的发送者
-        
+
         :rtype: :class:`wxpy.User`, :class:`wxpy.Group`
         """
 
@@ -334,7 +334,7 @@ class Message(object):
     def sender(self):
         """
         消息的发送者
-        
+
         :rtype: :class:`wxpy.User`, :class:`wxpy.Group`
         """
 
@@ -353,7 +353,7 @@ class Message(object):
     def receiver(self):
         """
         消息的接收者
-        
+
         :rtype: :class:`wxpy.User`, :class:`wxpy.Group`
         """
 
@@ -364,7 +364,7 @@ class Message(object):
         """
         * 若消息来自群聊，则此属性为消息的实际发送人(具体的群成员)
         * 若消息来自其他聊天对象(非群聊)，则此属性为 None
-        
+
         :rtype: NoneType, :class:`wxpy.Member`
         """
 
@@ -431,9 +431,9 @@ class Message(object):
             * 语音 (`RECORDING`)
 
                 * 会以文件方式发送
-            
+
             * 地图 (`MAP`)
-                
+
                 * 会转化为 `位置名称 + 地图链接` 形式的文本消息
 
         :param Chat chat: 接收转发消息的聊天对象

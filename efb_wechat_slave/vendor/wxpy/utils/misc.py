@@ -398,7 +398,7 @@ def get_text_without_at_bot(msg):
 def start_new_thread(target, args=(), kwargs=None, daemon=True, use_caller_name=False):
     """
     启动一个新的进程，需要时自动为进程命名，并返回这个线程
-    
+
     :param target: 调用目标
     :param args: 调用位置参数
     :param kwargs: 调用命名参数

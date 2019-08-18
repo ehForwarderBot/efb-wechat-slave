@@ -27,9 +27,9 @@ class Chats(list):
     def search(self, keywords=None, **attributes):
         """
         在聊天对象合集中进行搜索
-        
-        ..  note:: 
-    
+
+        ..  note::
+
             | 搜索结果为一个 :class:`Chats (列表) <Chats>` 对象
             | 建议搭配 :any:`ensure_one()` 使用
 

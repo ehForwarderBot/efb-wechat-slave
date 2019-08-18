@@ -136,7 +136,7 @@ class WeChatChannel(EFBChannel):
     def __init__(self, instance_id: str = None):
         """
         Initialize the channel
-        
+
         Args:
             coordinator (:obj:`ehforwarderbot.coordinator.EFBCoordinator`):
                 The EFB framework coordinator

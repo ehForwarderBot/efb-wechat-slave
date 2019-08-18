@@ -14,13 +14,13 @@ class BaseRequest(object):
     def __init__(self, bot, uri, params=None):
         """
         基本的 Web 微信请求模板，可用于修改后发送请求
-        
+
         可修改属性包括:
-        
+
         * url (会通过 url 参数自动拼接好)
         * data (默认仅包含 BaseRequest 部分)
         * headers
-        
+
         :param bot: 所使用的机器人对象
         :param uri: API 路径，将与基础 URL 进行拼接
         """
@@ -41,7 +41,7 @@ class BaseRequest(object):
     def request(self, method, to_class=None):
         """
         (在完成修改后) 发送请求
-        
+
         :param method: 请求方法: 'GET', 'POST'，'PUT', 'DELETE' 等
         :param to_class: 使用 `@handle_response(to_class)` 把结果转化为相应的类
         """
