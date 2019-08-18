@@ -139,7 +139,7 @@ def wechat_string_unescape(content: str) -> str:
     """
     if not content:
         return ""
-    d = {"Content": content}
+    d: Dict[str, Any] = {"Content": content}
     itchat_utils.msg_formatter(d, "Content")
     for i in WC_EMOTICON_CONVERSION:
         d['Content'] = d['Content'].replace(i, WC_EMOTICON_CONVERSION[i])

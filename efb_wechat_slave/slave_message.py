@@ -99,7 +99,7 @@ class SlaveMessageManager:
             self.logger.debug("WeChat System Message:\n%s", repr(msg))
 
     @Decorators.wechat_msg_meta
-    def wechat_text_msg(self, msg: wxpy.Message) -> EFBMsg:
+    def wechat_text_msg(self, msg: wxpy.Message) -> Optional[EFBMsg]:
         if msg.chat.user_name == "newsapp" and msg.text.startswith("<mmreader>"):
             return self.wechat_newsapp_msg(msg)
         if msg.text.startswith("http://weixin.qq.com/cgi-bin/redirectforward?args="):
@@ -272,7 +272,7 @@ class SlaveMessageManager:
                 efb_msg.text += "\n\n%s" % image
         return efb_msg
 
-    def wechat_newsapp_msg(self, msg: wxpy.Message) -> EFBMsg:
+    def wechat_newsapp_msg(self, msg: wxpy.Message) -> Optional[EFBMsg]:
         data = xmltodict.parse(msg.text)
         news = data.get('mmreader', {}).get('category', {}).get('newitem', [])
         e_msg = None

@@ -10,7 +10,7 @@ import time
 from pkg_resources import resource_filename
 from gettext import translation
 from tempfile import NamedTemporaryFile
-from typing import IO, Any, Dict, Optional, List, Tuple
+from typing import IO, Any, Dict, Optional, List, Tuple, Callable, Final
 
 import yaml
 from PIL import Image
@@ -24,6 +24,7 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.utils import extra
+from types import ChatID, MessageID
 from . import utils as ews_utils
 from .vendor import wxpy
 from .__version__ import __version__
@@ -52,105 +53,79 @@ class WeChatChannel(EFBChannel):
                                MsgType.File, MsgType.Video, MsgType.Link, MsgType.Audio,
                                MsgType.Animation}
     logger: logging.Logger = logging.getLogger("plugins.%s.WeChatChannel" % channel_id)
-    qr_uuid: Tuple[str, int] = None
+    qr_uuid: Tuple[str, int] = ('', 0)
     done_reauth: threading.Event = threading.Event()
     _stop_polling_event: threading.Event = threading.Event()
 
     config = dict()
 
-    # Gnu Gettext Translator
+    bot: wxpy.Bot
+
+    # GNU Gettext Translator
 
     translator = translation("efb_wechat_slave",
                              resource_filename('efb_wechat_slave', 'locale'),
                              fallback=True)
 
-    _ = translator.gettext
-    ngettext = translator.ngettext
+    _: Callable = translator.gettext
+    ngettext: Callable = translator.ngettext
 
-    SYSTEM_ACCOUNTS = {
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+    SYSTEM_ACCOUNTS: Final = {
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'filehelper': _('filehelper'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'newsapp': _('newsapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'fmessage': _('fmessage'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'weibo': _('weibo'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'qqmail': _('qqmail'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'tmessage': _('tmessage'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'qmessage': _('qmessage'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'qqsync': _('qqsync'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'floatbottle': _('floatbottle'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'lbsapp': _('lbsapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'shakeapp': _('shakeapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'medianote': _('medianote'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'qqfriend': _('qqfriend'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'readerapp': _('readerapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'blogapp': _('blogapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'facebookapp': _('facebookapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'masssendapp': _('masssendapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'meishiapp': _('meishiapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'feedsapp': _('feedsapp'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'voip': _('voip'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'blogappweixin': _('blogappweixin'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'weixin': _('weixin'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'brandsessionholder': _('brandsessionholder'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'weixinreminder': _('weixinreminder'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'officialaccounts': _('officialaccounts'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'notification_messages': _('notification_messages'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'wxitil': _('wxitil'),
-        # TRANSLATORS: Translate this to the corresponding display name
-        # of the WeChat system account. Guessed names are not accepted.
+        # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'userexperience_alarm': _('userexperience_alarm'),
     }
 
@@ -185,9 +160,9 @@ class WeChatChannel(EFBChannel):
         Configuration file is in YAML format.
         """
         config_path = efb_utils.get_config_path(self.channel_id)
-        if not os.path.exists(config_path):
+        if not config_path.exists():
             return
-        with open(config_path) as f:
+        with config_path.open() as f:
             d = yaml.load(f)
             if not d:
                 return
@@ -394,7 +369,7 @@ class WeChatChannel(EFBChannel):
                 with NamedTemporaryFile(suffix=".jpg") as f:
                     try:
                         img = Image.open(file).convert('RGBA')
-                        out = Image.new("RGBA", img.size, (255,255,255,255))
+                        out = Image.new("RGBA", img.size, (255, 255, 255, 255))
                         out.paste(img, img)
                         out.convert('RGB').save(f)
                         msg.path = f.name
@@ -664,3 +639,6 @@ class WeChatChannel(EFBChannel):
         res += base64.b64encode(file.getvalue()).decode()
         res += print_st()
         return res
+
+    def get_message_by_id(self, chat_uid: ChatID, msg_id: MessageID) -> Optional['EFBMsg']:
+        raise EFBOperationNotSupported()

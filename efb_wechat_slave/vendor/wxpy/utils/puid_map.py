@@ -48,7 +48,7 @@ Caption = Tuple[str, Optional[str], Optional[str], Optional[str]]
 
 class PuidMap(object):
 
-    SYSTEM_ACCOUNTS: Final = {
+    SYSTEM_ACCOUNTS = {
         'filehelper': '文件传输助手',
         'newsapp': '腾讯新闻',
         'fmessage': '朋友推荐消息',
