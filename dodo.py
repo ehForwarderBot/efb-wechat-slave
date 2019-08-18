@@ -160,7 +160,7 @@ def task_build():
 
 def task_publish():
     def get_twine_command():
-        __version__ = __import__(PACKAGE).__version__.__version__
+        __version__ = __import__(PACKAGE).__version__
         if 'dev' in __version__:
             raise ValueError(f"Cannot publish dev version ({__version__}).")
         binarys = glob.glob("./dist/*{}*".format(__version__), recursive=True)
