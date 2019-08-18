@@ -10,7 +10,8 @@ import time
 from pkg_resources import resource_filename
 from gettext import translation
 from tempfile import NamedTemporaryFile
-from typing import IO, Any, Dict, Optional, List, Tuple, Callable, Final
+from typing import IO, Any, Dict, Optional, List, Tuple, Callable
+from typing_extensions import Final
 
 import yaml
 from PIL import Image
@@ -24,7 +25,7 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.utils import extra
-from types import ChatID, MessageID
+from ehforwarderbot.types import ChatID, MessageID
 from . import utils as ews_utils
 from .vendor import wxpy
 from .__version__ import __version__

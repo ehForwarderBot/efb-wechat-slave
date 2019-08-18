@@ -73,6 +73,19 @@ Install and Enable
    **(In EFB 2.0.0a1, the default configuration directory is**
    ``~/.ehforwarderbot/profiles/default`` **)**
 
+Alternative installation methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ETM also has other alternative installation methods
+contributed by the community, including:
+
+- `AUR package`_ maintained by KeLiu_ (``python-efb-telegram-master-git``)
+- Other `installation scripts and containers (e.g. Docker)`_
+
+.. _KeLiu: https://github.com/specter119
+.. _AUR package: https://aur.archlinux.org/packages/python-efb-telegram-master-git
+.. _installation scripts and containers (e.g. Docker): https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker
+
 Optional configuration
 ----------------------
 
@@ -182,16 +195,16 @@ disappear at any time. Use at your own risk.
 
    Turn on to edit message by recall and resend. Edit message is disabled by default.
 
--  ``app_shared_link_mode`` *(str)* [Default：``"ignore"``]
+-  ``app_shared_link_mode`` *(str)* [Default: ``"ignore"``]
 
    Behavior to deal with thumbnails when a message shared by 3rd party apps is received.
 
-   -  ``"ignore"``\ ：Ignore thumbnail
-   -  ``"upload"``\ ：Upload to public image hosting (https://sm.ms ), and output
+   -  ``"ignore"``: Ignore thumbnail
+   -  ``"upload"``: Upload to public image hosting (https://sm.ms ), and output
       its delete link to the log.
-   -  ``"image"``\ ：Send thumbnail as image (not recommended).
+   -  ``"image"``: Send thumbnail as image (not recommended).
 
--  ``puid_logs`` *(str)* [Default：``null``]
+-  ``puid_logs`` *(str)* [Default: ``null``]
 
    Output PUID related log to the path indicated. Please use absolute path.
    In case of high volume of messages and chats, PUID log may occupy a large amount
