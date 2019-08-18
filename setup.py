@@ -42,7 +42,7 @@ setup(
         "pyqrcode",
         "xmltodict",
         "PyYaml",
-        "requests",
+        "requests>=2.22.0",
         "typing_extensions"
     ],
     entry_points={

@@ -35,6 +35,8 @@ class ChatManager:
         self.MISSING_USER.chat_name = self._("Chat Missing")
         self.MISSING_USER.chat_alias = None
 
+        self.efb_chat_objs: Dict[str, EFBChat] = {}
+
         # Load system chats
         self.system_chats: List[EFBChat] = []
         for i in channel.flag('system_chats_to_include'):
@@ -46,8 +48,6 @@ class ChatManager:
                     )
                 )
             )
-
-        self.efb_chat_objs: Dict[str, EFBChat] = {}
 
     @property
     def bot(self):
