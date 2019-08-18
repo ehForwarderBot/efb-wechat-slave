@@ -57,7 +57,7 @@ Dependencies
 -  pillow
 
 Install and Enable
-----------
+------------------
 
 1. Install all binary dependencies stated above
 2. Install

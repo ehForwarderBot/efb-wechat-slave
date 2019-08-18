@@ -120,3 +120,6 @@ fabric.properties
 
 # doit
 .doit.db
+
+# Readme translations
+readme_translations/locale
