@@ -20,17 +20,34 @@ class ChatManager:
         self.channel: 'WeChatChannel' = channel
         self.logger: logging.Logger = logging.getLogger(__name__)
 
+        # noinspection PyProtectedMember
         self._ = self.channel._
 
         self.MISSING_GROUP: EFBChat = EFBChat(self.channel)
         self.MISSING_GROUP.chat_uid = "__error__"
         self.MISSING_GROUP.chat_type = ChatType.Group
-        self.MISSING_GROUP.chat_name = self.MISSING_GROUP.chat_alias = self._("Chat Missing")
+        self.MISSING_GROUP.chat_name = self._("Chat Missing")
+        self.MISSING_GROUP.chat_alias = None
 
         self.MISSING_USER: EFBChat = EFBChat(self.channel)
         self.MISSING_USER.chat_uid = "__error__"
         self.MISSING_USER.chat_type = ChatType.User
-        self.MISSING_USER.chat_name = self.MISSING_USER.chat_alias = self._("Chat Missing")
+        self.MISSING_USER.chat_name = self._("Chat Missing")
+        self.MISSING_USER.chat_alias = None
+
+        # Load system chats
+        self.system_chats: List[EFBChat] = []
+        for i in channel.flag('system_chats_to_include'):
+            self.system_chats.append(
+                self.wxpy_chat_to_efb_chat(
+                    wxpy.Chat(
+                        wxpy.utils.wrap_user_name(i),
+                        self.bot
+                    )
+                )
+            )
+
+        self.efb_chat_objs: Dict[str, EFBChat] = {}
 
     @property
     def bot(self):
@@ -39,6 +56,7 @@ class ChatManager:
     def get_chat_by_puid(self, puid: str) -> EFBChat:
         if puid in wxpy.Chat.SYSTEM_ACCOUNTS:
             efb_chat = self.wxpy_chat_to_efb_chat(wxpy.Chat(wxpy.utils.wrap_user_name(puid), self.bot))
+            assert efb_chat is not None
             efb_chat.chat_type = ChatType.System
             return efb_chat
         try:
@@ -47,7 +65,7 @@ class ChatManager:
         except ValueError:
             try:
                 self.bot.chats(update=True)
-                chat: wxpy.Chat = wxpy.ensure_one(self.bot.search(puid=puid))
+                chat = wxpy.ensure_one(self.bot.search(puid=puid))
                 return self.wxpy_chat_to_efb_chat(chat)
             except ValueError:
                 return self.MISSING_USER
@@ -65,17 +83,19 @@ class ChatManager:
             except ValueError:
                 return wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
 
-    def wxpy_chat_to_efb_chat(self, chat: wxpy.Chat, recursive=True) -> Optional[EFBChat]:
+    def wxpy_chat_to_efb_chat(self, chat: wxpy.Chat, recursive=True) -> EFBChat:
         # self.logger.debug("Converting WXPY chat %r, %sin recursive mode", chat, '' if recursive else 'not ')
         # self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
         if chat is None:
             return self.MISSING_USER
+        if chat.puid in self.efb_chat_objs:
+            return self.efb_chat_objs[chat.puid]
         efb_chat = EFBChat(self.channel)
         efb_chat.chat_uid = chat.puid or "__invalid__"
         efb_chat.chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
         efb_chat.chat_alias = None
         efb_chat.chat_type = ChatType.System
-        efb_chat.vendor_specific = {'is_mp': False }
+        efb_chat.vendor_specific = {'is_mp': False}
         if isinstance(chat, wxpy.Member):
             efb_chat.chat_type = ChatType.User
             efb_chat.is_chat = False
@@ -104,11 +124,15 @@ class ChatManager:
         if efb_chat.vendor_specific.get('is_muted', False):
             efb_chat.notification = EFBChatNotificationState.MENTIONS
 
-        self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
+        # self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
+
+        if chat.puid:
+            self.efb_chat_objs[chat.puid] = efb_chat
+
         return efb_chat
 
     def get_chats(self) -> List[EFBChat]:
-        l = [self.wxpy_chat_to_efb_chat(self.bot.file_helper)]
+        l = self.system_chats.copy()
         for i in self.bot.chats(self.channel.flag('refresh_friends')):
             l.append(self.wxpy_chat_to_efb_chat(i))
         return l

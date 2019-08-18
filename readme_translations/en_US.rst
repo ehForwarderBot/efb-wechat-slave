@@ -204,6 +204,12 @@ disappear at any time. Use at your own risk.
 
 .. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
 
+- ``system_chats_to_include`` *(list of str)** [Default: ``[filehelper]``]
+
+  List of system chats to show in the default chat list. It must be zero to
+  four of the following: ``filehelper`` (File Helper), ``fmessage`` (Friend
+  suggestions), ``newsapp`` (Tencent News) and, ``weixin`` (WeChat Team).
+
 ``vendor_specific``
 -------------------
 

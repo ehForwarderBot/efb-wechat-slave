@@ -50,7 +50,7 @@ class PuidMap(object):
 
     SYSTEM_ACCOUNTS: Final = {
         'filehelper': '文件传输助手',
-        'newsapp': '新闻应用 (newsapp)',
+        'newsapp': '腾讯新闻',
         'fmessage': '朋友推荐消息',
         'weibo': '微博账号 (weibo)',
         'qqmail': 'QQ邮箱 (qqmail)',
