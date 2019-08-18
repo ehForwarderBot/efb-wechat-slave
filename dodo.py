@@ -40,6 +40,7 @@ def task_msgfmt():
 
     try:
         languages.remove("zh_CN")
+        languages.remove("en_US")
     except ValueError:
         pass
 

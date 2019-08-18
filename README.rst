@@ -136,7 +136,6 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 - 部分文件、图片、表情等多媒体文件会被网页版微信截断，即收不到任何数据，
   尤以表情为甚。因此造成的偶发现象，会提醒用户使用移动客户端查看。
 
-
 实验功能
 --------
 
@@ -205,7 +204,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 
 .. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
 
-- ``system_chats_to_include`` *(list of str)** [默认值: ``[filehelper]``]
+- ``system_chats_to_include`` *(list of str)* [默认值: ``[filehelper]``]
 
   在默认会话列表中显示的特殊系统会话。其内容仅能为 ``filehelper``\
   （文件传输助手）、\ ``fmessage``\ （朋友推荐消息）、\ ``newsapp``\

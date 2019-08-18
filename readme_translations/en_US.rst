@@ -135,11 +135,11 @@ Known Issues
   is thus disappeared.
 - Only features supported by Web WeChat are supported by EWS,
   which means:
-    - No "Moments"
-    - No money transfers
-    - Cannot send voice messages
-    - Cannot send locations
-    - etc.
+  - No "Moments"
+  - No money transfers
+  - Cannot send voice messages
+  - Cannot send locations
+  - etc.
 - Some multimedia files (pictures, stickers, files, etc.) might be
   blocked by Web WeChat, and no data is received, especially for
   stickers. In such cases, you will be reminded to check your phone.

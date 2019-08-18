@@ -43,9 +43,12 @@ setup(
         "xmltodict",
         "PyYaml",
         "requests>=2.22.0",
-        "typing_extensions"
+        "typing_extensions",
+        "bullet",
+        "cjkwrap"
     ],
     entry_points={
-        'ehforwarderbot.slave': 'blueset.wechat = efb_wechat_slave:WeChatChannel'
+        'ehforwarderbot.slave': 'blueset.wechat = efb_wechat_slave:WeChatChannel',
+        'ehforwarderbot.wizard': 'blueset.wechat = efb_wechat_slave.wizard:wizard'
     }
 )
