@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 18:53+0800\n"
-"PO-Revision-Date: 2019-08-18 13:12\n"
+"POT-Creation-Date: 2019-08-18 22:27+0800\n"
+"PO-Revision-Date: 2019-08-18 14:27\n"
 "Last-Translator: Eana Hufwe (blueset)\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -476,34 +476,34 @@ msgstr ""
 msgid "List of system chats to show in the default chat list. It must be zero to four of the following: filehelper (File Helper), fmessage (Friend suggestions), newsapp (Tencent News) and, weixin (WeChat Team)."
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:148
+#: efb_wechat_slave/wizard.py:147
 msgid "EWS does not require any configuration, you only need to scan a QR code when you start up EH Forwarder Bot. It’s as simple as that.\n\n"
 "We has provided some experimental features that you can use. They are not required to be enabled for EWS to work. If you do not want to enable these feature, just press ENTER, and you are good to go."
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:157
+#: efb_wechat_slave/wizard.py:156
 msgid "Do you want to config experimental features? "
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:194
+#: efb_wechat_slave/wizard.py:193
 msgid "Skipped."
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:196
+#: efb_wechat_slave/wizard.py:195
 msgid "Saving configurations..."
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:198
+#: efb_wechat_slave/wizard.py:197
 msgid "OK"
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:205
+#: efb_wechat_slave/wizard.py:204
 msgid "=====================================\n"
 "EFB WeChat Slave Channel Setup Wizard\n"
 "=====================================\n"
 msgstr ""
 
-#: efb_wechat_slave/wizard.py:216
+#: efb_wechat_slave/wizard.py:217
 msgid "Congratulations! You have finished the setup wizard for EFB WeChat Slave channel."
 msgstr ""
 

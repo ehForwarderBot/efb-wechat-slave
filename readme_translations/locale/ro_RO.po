@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 18:50+0800\n"
-"PO-Revision-Date: 2019-08-18 13:11\n"
+"POT-Creation-Date: 2019-08-18 22:27+0800\n"
+"PO-Revision-Date: 2019-08-18 14:27\n"
 "Last-Translator: Eana Hufwe (blueset)\n"
 "Language-Team: Romanian\n"
 "MIME-Version: 1.0\n"
@@ -331,7 +331,7 @@ msgid "Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker 
 msgstr ""
 
 #: ../../.cache/README.rst:220
-msgid "``system_chats_to_include`` *(list of str)* [Default: ``[filehelper]``]"
+msgid "``system_chats_to_include`` *(list of str)** [Default: ``[filehelper]``]"
 msgstr ""
 
 #: ../../.cache/README.rst:222
