@@ -260,7 +260,7 @@ class PuidMap(object):
             if recur:
                 raise e
             src = open(self.path, 'rb').read()
-            src.replace(b'cefb_wechat_slave.wxpy.', b'cefb_wechat_slave.vendor.wxpy.')
+            src = src.replace(b'cefb_wechat_slave.wxpy.', b'cefb_wechat_slave.vendor.wxpy.')
             with open(self.path, 'wb') as f:
                 f.write(src)
             return self.load(recur=True)

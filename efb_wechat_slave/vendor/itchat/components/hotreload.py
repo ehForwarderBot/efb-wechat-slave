@@ -45,7 +45,7 @@ def load_login_status(self, fileDir,
         if recur:
             raise e
         src = open(fileDir, 'rb').read()
-        src.replace(b'citchat', b'cefb_wechat_slave.vendor.itchat')
+        src = src.replace(b'citchat', b'cefb_wechat_slave.vendor.itchat')
         with open(fileDir, 'wb') as f:
             f.write(src)
         return self.load_login_status(fileDir, loginCallback, exitCallback, recur=True)
