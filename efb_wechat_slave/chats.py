@@ -99,7 +99,7 @@ class ChatManager:
         if isinstance(chat, wxpy.Member):
             efb_chat.chat_type = ChatType.User
             efb_chat.is_chat = False
-            efb_chat.chat_alias = chat.display_name or efb_chat.chat_alias
+            efb_chat.chat_alias = chat.name
             # self.logger.debug("[WXPY: %s] Display name: %s;", chat.puid, chat.display_name)
             if recursive:
                 efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
