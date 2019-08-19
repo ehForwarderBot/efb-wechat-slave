@@ -26,7 +26,7 @@ if any("__version__.py" in i for i in stashed):
 # Bump version by a "dev".
 bump_py = str(pathlib.Path(ROOT_PATH) / "bump.py")
 subprocess.run((bump_py, '--allow-dirty', '--no-commit', 'dev'),
-               capture_output=False)
+               capture_output=True)
 subprocess.run(("git", "add", VERSION_FILE),
                capture_output=True)
 exit(0)

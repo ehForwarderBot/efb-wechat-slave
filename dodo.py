@@ -86,7 +86,7 @@ def task_crowdin_pull():
 def task_commit_lang_file():
     def git_actions():
         if subprocess.run(['git', 'diff-index', '--quiet', 'HEAD']).returncode != 0:
-            return ["git commit -m \"Sync localization files from Crowdin\""]
+            return ["git commit -S -m \"Sync localization files from Crowdin\""]
         return ["echo"]
 
     return {
