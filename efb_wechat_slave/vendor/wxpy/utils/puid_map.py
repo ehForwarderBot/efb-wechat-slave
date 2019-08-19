@@ -255,7 +255,7 @@ class PuidMap(object):
                 self.log("Local disk - wxids: %s", self.wxids)
                 self.log("Local disk - remark_names: %s", self.remark_names)
                 self.log("Local disk - captions: %s", self.captions)
-        except ImportError as e:
+        except (ImportError, ModuleNotFoundError) as e:
             # Mitigate the pickling issue of migrating .wxpy to .vendor.wxpy
             if recur:
                 raise e

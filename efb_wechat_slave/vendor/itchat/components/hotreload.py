@@ -40,7 +40,7 @@ def load_login_status(self, fileDir,
     try:
         with open(fileDir, 'rb') as f:
             j = pickle.load(f)
-    except ImportError as e:
+    except (ImportError, ModuleNotFoundError) as e:
         # Mitigate the pickling issue of migrating itchat to ews.vendor.itchat
         if recur:
             raise e
