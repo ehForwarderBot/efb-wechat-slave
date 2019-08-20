@@ -8,7 +8,10 @@ EFB WeChat Slave Channel
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 
-.. figure:: https://i.imgur.com/dCZfh14.png
+.. image:: https://github.com/blueset/efb-wechat-slave/blob/master/banner.png
+   :alt: Banner
+
+.. image:: https://i.imgur.com/dCZfh14.png
    :alt: This project proudly supports #SayNoToWeChat campaign.
 
 `README in other languages`_.
