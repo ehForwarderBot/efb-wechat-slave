@@ -313,11 +313,13 @@ class WeChatChannel(EFBChannel):
         if msg.type in [MsgType.Text, MsgType.Link]:
             if isinstance(msg.target, EFBMsg):
                 max_length = self.flag("max_quote_length")
-                qt_txt = "%s" % msg.target.text
+                qt_txt = msg.target.text or msg.target.type.name
                 if max_length > 0:
-                    tgt_text = qt_txt[:max_length]
                     if len(qt_txt) >= max_length:
+                        tgt_text = qt_txt[:max_length]
                         tgt_text += "…"
+                    else:
+                        tgt_text = qt_txt
                     tgt_text = "「%s」" % tgt_text
                 elif max_length < 0:
                     tgt_text = "「%s」" % qt_txt
@@ -641,5 +643,5 @@ class WeChatChannel(EFBChannel):
         res += print_st()
         return res
 
-    def get_message_by_id(self, chat_uid: ChatID, msg_id: MessageID) -> Optional['EFBMsg']:
+    def get_message_by_id(self, chat: EFBChat, msg_id: MessageID) -> Optional['EFBMsg']:
         raise EFBOperationNotSupported()
