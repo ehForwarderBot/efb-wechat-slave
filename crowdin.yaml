@@ -7,6 +7,6 @@ files: [
   },
   {
       "source": "/EFBChannels/efb-wechat-slave/readme_translations/locale/README.pot",
-      "translation": "/EFBChannels/efb-wechat-slave/readme_translations/locale/%locale_with_underscore%.po"
+      "translation": "/EFBChannels/efb-wechat-slave/readme_translations/locale/%locale_with_underscore%/LC_MESSAGES/README.po"
   }
 ]

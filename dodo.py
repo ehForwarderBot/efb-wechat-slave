@@ -44,7 +44,7 @@ def task_msgfmt():
     except ValueError:
         pass
 
-    sources = glob.glob("./{package}/**/*.po".format(package=PACKAGE), recursive=True)
+    sources = glob.glob("./**/*.po", recursive=True)
     dests = [i[:-3] + ".mo" for i in sources]
     actions = [["msgfmt", sources[i], "-o", dests[i]] for i in range(len(sources))]
 
