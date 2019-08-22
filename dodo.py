@@ -1,5 +1,6 @@
 import glob
 import subprocess
+from pathlib import Path
 
 from doit.action import CmdAction
 
@@ -36,7 +37,7 @@ def task_gettext():
 
 
 def task_msgfmt():
-    languages = [i[i.rfind('/') + 1:i.rfind('.')] for i in glob.glob("./readme_translations/locale/*.po")]
+    languages = [i[i.rfind('/')+1:] for i in glob.glob("./readme_translations/locale/*_*")]
 
     try:
         languages.remove("zh_CN")
@@ -50,9 +51,10 @@ def task_msgfmt():
 
     actions.append(["mkdir", "./.cache/source"])
     actions.append(["cp", README_BASE, "./.cache/source/README.rst"])
+    locale_dirs = (Path('.') / "readme_translations" / "locale").absolute()
     for i in languages:
         actions.append(["sphinx-build", "-E", "-b", "rst", "-C",
-                        "-D", f"language={i}", "-D", "locale_dirs=./readme_translations/locale",
+                        "-D", f"language={i}", "-D", f"locale_dirs={locale_dirs}",
                         "-D", "extensions=sphinxcontrib.restbuilder",
                         "-D", "master_doc=README", "./.cache/source", f"./.cache/{i}"])
         actions.append(["mv", f"./.cache/{i}/README.rst", f"./readme_translations/{i}.rst"])
