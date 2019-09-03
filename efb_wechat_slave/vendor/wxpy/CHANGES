@@ -1,0 +1,2 @@
+- Identifies more system accounts.
+- Allow to send file by IO[bytes] objects with newer itchat versions

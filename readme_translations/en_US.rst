@@ -256,10 +256,10 @@ disappear at any time. Use at your own risk.
 - ``has_photo_album`` *(bool)*
   Unknown. Extracted from API.
 
-Experimental translation support
---------------------------------
+Translation support
+-------------------
 
-EWS supports translated user interface prompts experimentally,
+EWS supports translated user interface prompts,
 by setting the locale environmental variable (``LANGUAGE``,
 ``LC_ALL``, ``LC_MESSAGES`` or ``LANG``) to one of our
 `supported languages`_. Meanwhile, you can help to translate
@@ -267,3 +267,9 @@ this project into your languages on `our Crowdin page`_.
 
 .. _supported languages: https://crowdin.com/project/ehforwarderbot/
 .. _our Crowdin page: https://crowdin.com/project/ehforwarderbot/
+
+.. note::
+
+    If your are installing from source code, you will not get translations
+    of the user interface without manual compile of message catalogs (``.mo``)
+    prior to installation.

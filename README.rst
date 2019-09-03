@@ -243,12 +243,17 @@ EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
 - ``has_photo_album`` *(bool)*
   不明。提取自 API。
 
-本地化翻译实验
---------------
+翻译界面
+--------
 
-EWS 启用了实验性的本地化翻译。您可以将语言环境变量 (``LANGUAGE``,
+EWS 启用了社区支持的本地化翻译。您可以将语言环境变量 (``LANGUAGE``,
 ``LC_ALL``, ``LC_MESSAGES`` 或 ``LANG``) 设为一种\ `已支持的语言`_\ 。
 同时，您也可以在我们的 `Crowdin 项目`_\ 里面将 EWS 翻译为您的语言。
 
 .. _已支持的语言: https://crowdin.com/project/ehforwarderbot/
 .. _Crowdin 项目: https://crowdin.com/project/ehforwarderbot/
+
+.. note::
+
+    如果您是从源码安装的 EWS，您需要在安装前事先编译翻译文本目录（\ ``.mo``\ ），\
+    才可启用界面翻译。
