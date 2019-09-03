@@ -290,7 +290,10 @@ class SlaveMessageManager:
         try:
             if msg.raw['MsgType'] == 47 and not msg.raw['Content']:
                 raise EOFError
+            if msg.file_size == 0:
+                raise EOFError
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
+            efb_msg.filename = msg.file_name
             # ^ Also throws EOFError
             efb_msg.text = ""
         except EOFError:
@@ -306,7 +309,10 @@ class SlaveMessageManager:
         try:
             if msg.raw['MsgType'] == 47 and not msg.raw['Content']:
                 raise EOFError
+            if msg.file_size == 0:
+                raise EOFError
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
+            efb_msg.filename = msg.file_name
             # ^ Also throws EOFError
             if 'gif' in efb_msg.mime and Image.open(efb_msg.path).is_animated:
                 efb_msg.type = MsgType.Animation
@@ -347,7 +353,10 @@ class SlaveMessageManager:
         efb_msg = EFBMsg()
         efb_msg.type = MsgType.Video
         try:
+            if msg.file_size == 0:
+                raise EOFError
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
+            efb_msg.filename = msg.file_name
             efb_msg.text = ""
         except EOFError:
             efb_msg.type = MsgType.Text
