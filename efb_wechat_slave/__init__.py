@@ -7,15 +7,15 @@ import os
 import tempfile
 import threading
 import time
-from pkg_resources import resource_filename
 from gettext import translation
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List, Tuple, Callable
-from typing_extensions import Final
 
 import yaml
 from PIL import Image
+from pkg_resources import resource_filename
 from pyqrcode import QRCode
+from typing_extensions import Final
 
 from ehforwarderbot import EFBChannel, EFBMsg, MsgType, ChannelType, \
     ChatType, EFBStatus, EFBChat, coordinator
@@ -24,15 +24,16 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
     EFBOperationNotSupported
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.status import EFBMessageRemoval
+from ehforwarderbot.types import MessageID
 from ehforwarderbot.utils import extra
-from ehforwarderbot.types import ChatID, MessageID
 from . import utils as ews_utils
-from .vendor import wxpy
 from .__version__ import __version__
-from .vendor.wxpy.utils import PuidMap
 from .chats import ChatManager
 from .slave_message import SlaveMessageManager
 from .utils import ExperimentalFlagsManager
+from .vendor import wxpy
+from .vendor.wxpy import ResponseError
+from .vendor.wxpy.utils import PuidMap
 
 
 class WeChatChannel(EFBChannel):
@@ -429,16 +430,22 @@ class WeChatChannel(EFBChannel):
             raise EFBOperationNotSupported()
 
     def get_chat_picture(self, chat: EFBChat) -> IO[bytes]:
-        chat = self.chats.search_chat(uid=chat.chat_uid)
-        wxpy_chat: wxpy.Chat = chat.vendor_specific['wxpy_object']
+        uid = chat.chat_uid
+        if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
+            wxpy_chat: wxpy.Chat = wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
+        else:
+            wxpy_chat = wxpy.utils.ensure_one(self.bot.search(puid=uid))
         f = None
         try:
             f = tempfile.NamedTemporaryFile(suffix='.jpg')
-            wxpy_chat.get_avatar(f.name)
+            data = wxpy_chat.get_avatar(None)
+            if not data:
+                raise EFBOperationNotSupported()
+            f.write(data)
             f.seek(0)
             return f
-        except TypeError:
-            if hasattr(f, 'close'):
+        except (TypeError, ResponseError):
+            if f is not None:
                 f.close()
             raise EFBOperationNotSupported()
 
