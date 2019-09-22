@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 22:27+0800\n"
-"PO-Revision-Date: 2019-09-03 07:44\n"
+"POT-Creation-Date: 2019-09-22 22:37+0800\n"
+"PO-Revision-Date: 2019-09-22 14:37\n"
 "Last-Translator: Eana Hufwe (blueset)\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -28,36 +28,36 @@ msgstr "[対応されていないメッセージタイプですので、携帯�
 msgid "Via "
 msgstr "by "
 
-#: efb_wechat_slave/slave_message.py:297
+#: efb_wechat_slave/slave_message.py:300
 msgid "[Failed to download the picture, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:315
+#: efb_wechat_slave/slave_message.py:321
 msgid "[Failed to download the sticker, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:330
+#: efb_wechat_slave/slave_message.py:336
 msgid "[Failed to download the file, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:342
+#: efb_wechat_slave/slave_message.py:348
 msgid "[Failed to download the voice message, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:354
+#: efb_wechat_slave/slave_message.py:363
 msgid "[Failed to download the video message, please check your phone.]"
 msgstr ""
 
 #. TRANSLATORS: Gender of contact
-#: efb_wechat_slave/slave_message.py:361 efb_wechat_slave/slave_message.py:381
+#: efb_wechat_slave/slave_message.py:370 efb_wechat_slave/slave_message.py:390
 msgid "M"
 msgstr "男"
 
-#: efb_wechat_slave/slave_message.py:361 efb_wechat_slave/slave_message.py:381
+#: efb_wechat_slave/slave_message.py:370 efb_wechat_slave/slave_message.py:390
 msgid "F"
 msgstr "女"
 
-#: efb_wechat_slave/slave_message.py:362 efb_wechat_slave/slave_message.py:382
+#: efb_wechat_slave/slave_message.py:371 efb_wechat_slave/slave_message.py:391
 #, python-brace-format
 msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
@@ -68,223 +68,223 @@ msgstr "連絡先カード: {user.nick_name}\n"
 "状況: {user.signature}\n"
 "性別: {gender}"
 
-#: efb_wechat_slave/slave_message.py:371
+#: efb_wechat_slave/slave_message.py:380
 msgid "Send friend request"
 msgstr "友達リクエストを送信"
 
-#: efb_wechat_slave/slave_message.py:391
+#: efb_wechat_slave/slave_message.py:400
 msgid "Accept friend request"
 msgstr "友達リクエストを承認する"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:76
+#: efb_wechat_slave/__init__.py:77
 msgid "filehelper"
 msgstr "ファイル転送"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:78
+#: efb_wechat_slave/__init__.py:79
 msgid "newsapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:80
+#: efb_wechat_slave/__init__.py:81
 msgid "fmessage"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:82
+#: efb_wechat_slave/__init__.py:83
 msgid "weibo"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:84
+#: efb_wechat_slave/__init__.py:85
 msgid "qqmail"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:86
+#: efb_wechat_slave/__init__.py:87
 msgid "tmessage"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:88
+#: efb_wechat_slave/__init__.py:89
 msgid "qmessage"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:90
+#: efb_wechat_slave/__init__.py:91
 msgid "qqsync"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:92
+#: efb_wechat_slave/__init__.py:93
 msgid "floatbottle"
 msgstr "メッセージボトル"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:94
+#: efb_wechat_slave/__init__.py:95
 msgid "lbsapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:96
+#: efb_wechat_slave/__init__.py:97
 msgid "shakeapp"
 msgstr "シェイク"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:98
+#: efb_wechat_slave/__init__.py:99
 msgid "medianote"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:100
+#: efb_wechat_slave/__init__.py:101
 msgid "qqfriend"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:102
+#: efb_wechat_slave/__init__.py:103
 msgid "readerapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:104
+#: efb_wechat_slave/__init__.py:105
 msgid "blogapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:106
+#: efb_wechat_slave/__init__.py:107
 msgid "facebookapp"
 msgstr "Facebook"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:108
+#: efb_wechat_slave/__init__.py:109
 msgid "masssendapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:110
+#: efb_wechat_slave/__init__.py:111
 msgid "meishiapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:112
+#: efb_wechat_slave/__init__.py:113
 msgid "feedsapp"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:114
+#: efb_wechat_slave/__init__.py:115
 msgid "voip"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:116
+#: efb_wechat_slave/__init__.py:117
 msgid "blogappweixin"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:118
+#: efb_wechat_slave/__init__.py:119
 msgid "weixin"
 msgstr "WeChatチーム"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:120
+#: efb_wechat_slave/__init__.py:121
 msgid "brandsessionholder"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:122
+#: efb_wechat_slave/__init__.py:123
 msgid "weixinreminder"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:124
+#: efb_wechat_slave/__init__.py:125
 msgid "officialaccounts"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:126
+#: efb_wechat_slave/__init__.py:127
 msgid "notification_messages"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:128
+#: efb_wechat_slave/__init__.py:129
 msgid "wxitil"
 msgstr ""
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
-#: efb_wechat_slave/__init__.py:130
+#: efb_wechat_slave/__init__.py:131
 msgid "userexperience_alarm"
 msgstr ""
 
-#: efb_wechat_slave/__init__.py:182 efb_wechat_slave/__init__.py:224
+#: efb_wechat_slave/__init__.py:183 efb_wechat_slave/__init__.py:225
 msgid "Confirm on your phone."
 msgstr "携帯電話で確認ボタンを押してください。"
 
-#: efb_wechat_slave/__init__.py:185 efb_wechat_slave/__init__.py:227
+#: efb_wechat_slave/__init__.py:186 efb_wechat_slave/__init__.py:228
 msgid "Successfully logged in."
 msgstr "ログイン完了。"
 
-#: efb_wechat_slave/__init__.py:190
+#: efb_wechat_slave/__init__.py:191
 #, python-brace-format
 msgid "EWS: Please scan the QR code with your camera, screenshots will not work. ({0}, {1})"
 msgstr "EWS: 携帯カメラでこのQRコードをスキャンしてください。スクリンショットしないでください。 ({0}, {1})"
 
-#: efb_wechat_slave/__init__.py:193 efb_wechat_slave/__init__.py:233
+#: efb_wechat_slave/__init__.py:194 efb_wechat_slave/__init__.py:234
 msgid "QR code expired, please scan the new one."
 msgstr "QRコードは更新されました、新しいコードをスキャンしてください。"
 
-#: efb_wechat_slave/__init__.py:204
+#: efb_wechat_slave/__init__.py:205
 #, python-brace-format
 msgid "If the QR code was not shown correctly, please visit:\n"
 "https://login.weixin.qq.com/qrcode/{0}"
 msgstr "QR コードが正しく表示されていない場合は、下記のURLをチェックしてください: \n"
 "https://login.weixin.qq.com/qrcode/{0}"
 
-#: efb_wechat_slave/__init__.py:218 efb_wechat_slave/__init__.py:250
+#: efb_wechat_slave/__init__.py:219 efb_wechat_slave/__init__.py:251
 msgid "EWS User Auth"
 msgstr "EWS ユーザー認証"
 
-#: efb_wechat_slave/__init__.py:243
+#: efb_wechat_slave/__init__.py:244
 msgid "Web WeChat logged your account out before master channel is ready."
 msgstr ""
 
-#: efb_wechat_slave/__init__.py:253
+#: efb_wechat_slave/__init__.py:254
 msgid "WeChat server has logged you out. Please log in again when you are ready."
 msgstr "WeChat サーバーがあなたをログアウトされました。準備ができたら、もう一度ログインしてください。"
 
-#: efb_wechat_slave/__init__.py:261
+#: efb_wechat_slave/__init__.py:262
 msgid "Log in again"
 msgstr "再度ログインする"
 
-#: efb_wechat_slave/__init__.py:264 efb_wechat_slave/__init__.py:525
+#: efb_wechat_slave/__init__.py:265 efb_wechat_slave/__init__.py:534
 msgid "Please check your log to continue."
 msgstr "続けるには、ログをチェックしてください。"
 
-#: efb_wechat_slave/__init__.py:310
+#: efb_wechat_slave/__init__.py:311
 msgid "Failed to recall message, edited message was not sent."
 msgstr "送信取り消しが失敗しました、編集したメッセージが送信しません。"
 
-#: efb_wechat_slave/__init__.py:364 efb_wechat_slave/__init__.py:381
+#: efb_wechat_slave/__init__.py:367 efb_wechat_slave/__init__.py:384
 msgid "Image size is too large. (IS02)"
 msgstr "画像のサイズが大きすぎます。(IS02)"
 
-#: efb_wechat_slave/__init__.py:389
+#: efb_wechat_slave/__init__.py:392
 msgid "Image size is too large. (IS01)"
 msgstr "画像のサイズが大きすぎます。(IS01)"
 
-#: efb_wechat_slave/__init__.py:420
+#: efb_wechat_slave/__init__.py:423
 msgid "You can only recall your own messages."
 msgstr "自分のメッセージだけを取り消すことができます。"
 
-#: efb_wechat_slave/__init__.py:425
+#: efb_wechat_slave/__init__.py:428
 msgid "Failed to recall the message."
 msgstr "メッセージの取り消す失敗しました。"
 
-#: efb_wechat_slave/__init__.py:445
+#: efb_wechat_slave/__init__.py:454
 msgid "Show chat list"
 msgstr "全てのチャットを表示する"
 
-#: efb_wechat_slave/__init__.py:446
+#: efb_wechat_slave/__init__.py:455
 #, python-brace-format
 msgid "Show a list of chats from WeChat.\n"
 "Usage:\n"
@@ -295,34 +295,34 @@ msgstr "WeChat でのチャットリストを表示する。\n"
 "    {function_name} [-r]\n"
 "    -r: リストを更新する"
 
-#: efb_wechat_slave/__init__.py:455
+#: efb_wechat_slave/__init__.py:464
 msgid "Unknown parameter: {}."
 msgstr "不明なパラメーター: {}。"
 
-#: efb_wechat_slave/__init__.py:458
+#: efb_wechat_slave/__init__.py:467
 msgid "Chat list:"
 msgstr "チャットリスト:"
 
 #. TRANSLATORS: Acronym for MP accounts
-#: efb_wechat_slave/__init__.py:467
+#: efb_wechat_slave/__init__.py:476
 msgid "MP"
 msgstr "公"
 
 #. TRANSLATORS: Acronym for groups
-#: efb_wechat_slave/__init__.py:470
+#: efb_wechat_slave/__init__.py:479
 msgid "Gr"
 msgstr "グ"
 
 #. TRANSLATORS: Acronym for users/friends
-#: efb_wechat_slave/__init__.py:473
+#: efb_wechat_slave/__init__.py:482
 msgid "Fr"
 msgstr "友"
 
-#: efb_wechat_slave/__init__.py:478
+#: efb_wechat_slave/__init__.py:487
 msgid "Set alias"
 msgstr "別名設定"
 
-#: efb_wechat_slave/__init__.py:479
+#: efb_wechat_slave/__init__.py:488
 #, python-brace-format
 msgid "Set an alias (remark name) for friends. Not applicable to groups and MPs.\n"
 "Usage:\n"
@@ -335,84 +335,84 @@ msgstr "友人の別名を設定する。グループと公式アカウントに
 "    id: チャット ID、「チャットリストを表示する」から選択できます。\n"
 "    alias: 別名、空にすると削除できます。"
 
-#: efb_wechat_slave/__init__.py:499
+#: efb_wechat_slave/__init__.py:508
 #, python-brace-format
 msgid "Chat {0} is not found."
 msgstr "チャット {0} が見つかりません。"
 
-#: efb_wechat_slave/__init__.py:502
+#: efb_wechat_slave/__init__.py:511
 msgid "Remark name is only applicable to friends."
 msgstr "別名設定は友人のみに設定できます。"
 
-#: efb_wechat_slave/__init__.py:507
+#: efb_wechat_slave/__init__.py:516
 #, python-brace-format
 msgid "\"{0}\" now has remark name \"{1}\"."
 msgstr "\"{0}\" の別名は \"{1}\" にしました。"
 
-#: efb_wechat_slave/__init__.py:509
+#: efb_wechat_slave/__init__.py:518
 #, python-brace-format
 msgid "Remark name of \"{0}\" has been removed."
 msgstr "\"{0}\" の別名を削除されました。"
 
-#: efb_wechat_slave/__init__.py:511
+#: efb_wechat_slave/__init__.py:520
 msgid "Log out"
 msgstr "ログアウト"
 
-#: efb_wechat_slave/__init__.py:512
+#: efb_wechat_slave/__init__.py:521
 #, python-brace-format
 msgid "Log out from WeChat and try to log in again.\n"
 "Usage: {function_name}"
 msgstr "WeChat からログアウトし、再度ログインする。\n"
 "使用法: {function_name}"
 
-#: efb_wechat_slave/__init__.py:517
+#: efb_wechat_slave/__init__.py:526
 msgid "Done."
 msgstr "完了。"
 
-#: efb_wechat_slave/__init__.py:522
+#: efb_wechat_slave/__init__.py:531
 msgid "Preparing to log in..."
 msgstr "ログインの準備をしています…"
 
-#: efb_wechat_slave/__init__.py:547
+#: efb_wechat_slave/__init__.py:556
 msgid "Empty username (UE02)."
 msgstr "ユーザーネームなし (UE02)。"
 
-#: efb_wechat_slave/__init__.py:551
+#: efb_wechat_slave/__init__.py:560
 msgid "Error occurred while processing (AF01)."
 msgstr "処理中にエラーが発生しました。 (AF01)"
 
-#: efb_wechat_slave/__init__.py:552
+#: efb_wechat_slave/__init__.py:561
 msgid "Request sent."
 msgstr "リクエストが送信されました。"
 
-#: efb_wechat_slave/__init__.py:556
+#: efb_wechat_slave/__init__.py:565
 msgid "Empty username (UE03)."
 msgstr "ユーザーネームなし (UE03)。"
 
-#: efb_wechat_slave/__init__.py:560
+#: efb_wechat_slave/__init__.py:569
 msgid "Error occurred while processing (AF02)."
 msgstr "処理中にエラーが発生しました。 (AF02)"
 
-#: efb_wechat_slave/__init__.py:561
+#: efb_wechat_slave/__init__.py:570
 msgid "Request accepted."
 msgstr "リクエストを承認しました。"
 
-#: efb_wechat_slave/__init__.py:593
+#: efb_wechat_slave/__init__.py:602
 #, python-brace-format
 msgid "Unknown error occurred while delivering the message: [{code}] {message}"
 msgstr "メッセージの送信中に不明なエラーが発生しました: [{code}] {message}"
 
-#: efb_wechat_slave/__init__.py:600
+#: efb_wechat_slave/__init__.py:609
 #, python-brace-format
 msgid "Unknown error occurred while delivering the file: [{code}] {message}"
 msgstr "ファイルの送信中に不明なエラーが発生しました: [{code}] {message}"
 
-#: efb_wechat_slave/__init__.py:607
+#: efb_wechat_slave/__init__.py:616
 #, python-brace-format
 msgid "Unknown error occurred while delivering the image: [{code}] {message}"
 msgstr "画像の送信中に不明なエラーが発生しました: [{code}] {message}"
 
-#: efb_wechat_slave/__init__.py:614
+#: efb_wechat_slave/__init__.py:623
 #, python-brace-format
 msgid "Unknown error occurred while delivering the video: [{code}] {message}"
 msgstr "動画の送信中に不明なエラーが発生しました: [{code}] {message}"
