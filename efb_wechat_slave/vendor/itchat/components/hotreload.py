@@ -63,15 +63,19 @@ def load_login_status(self, fileDir,
             'ErrMsg': 'cached status ignored because of version',
             'Ret': -1005, }})
     self.loginInfo = j['loginInfo']
+    if 'User' not in j:
+        return ReturnValue({'BaseResponse': {
+            'ErrMsg': 'Incomplete login info detected. Give up loading.',
+            'Ret': -2000, }})
     self.loginInfo['User'] = templates.User(self.loginInfo['User'])
     self.loginInfo['User'].core = self
     self.s.cookies = requests.utils.cookiejar_from_dict(j['cookies'])
     self.storageClass.loads(j['storage'])
     try:
-        msgList, contactList = self.get_msg()
+        msg_list, contact_list = self.get_msg()
     except:
-        msgList = contactList = None
-    if (msgList or contactList) is None:
+        msg_list = contact_list = None
+    if (msg_list or contact_list) is None:
         self.logout()
         load_last_login_status(self.s, j['cookies'])
         logger.debug('server refused, loading login status failed.')
@@ -79,15 +83,15 @@ def load_login_status(self, fileDir,
             'ErrMsg': 'server refused, loading login status failed.',
             'Ret': -1003, }})
     else:
-        if contactList:
-            for contact in contactList:
+        if contact_list:
+            for contact in contact_list:
                 if '@@' in contact['UserName']:
                     update_local_chatrooms(self, [contact])
                 else:
                     update_local_friends(self, [contact])
-        if msgList:
-            msgList = produce_msg(self, msgList)
-            for msg in msgList: self.msgList.put(msg)
+        if msg_list:
+            msg_list = produce_msg(self, msg_list)
+            for msg in msg_list: self.msgList.put(msg)
         self.start_receiving(exitCallback)
         logger.debug('loading login status succeeded.')
         if hasattr(loginCallback, '__call__'):
