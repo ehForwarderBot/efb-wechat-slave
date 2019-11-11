@@ -88,8 +88,10 @@ class ChatManager:
         # self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
         if chat is None:
             return self.MISSING_USER
-        if chat.puid in self.efb_chat_objs:
-            return self.efb_chat_objs[chat.puid]
+
+        # if chat name or alias changes, update cache immediately
+        if chat.puid and chat.name and (chat.puid + chat.name) in self.efb_chat_objs:
+            return self.efb_chat_objs[chat.puid + chat.name]
         efb_chat = EFBChat(self.channel)
         efb_chat.chat_uid = chat.puid or "__invalid__"
         efb_chat.chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
@@ -126,8 +128,8 @@ class ChatManager:
 
         # self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
 
-        if chat.puid:
-            self.efb_chat_objs[chat.puid] = efb_chat
+        if chat.puid and chat.name:
+            self.efb_chat_objs[chat.puid + chat.name] = efb_chat
 
         return efb_chat
 
