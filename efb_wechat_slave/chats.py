@@ -218,8 +218,11 @@ class ChatManager:
             'is_brand_contact': bool(raw.get('VerifyFlag', 0) & self.MM_USER_ATTR_VERIFY_FLAG_BIZ_BRAND),
             'is_sp_contact': '@' not in username or username.endswith("@qqim"),
             'is_shield_user': username.endswith("@lbsroom") or username.endswith('@talkroom'),
-            'is_muted': raw.get('Status', 0) == self.CHAT_ROOM_NOTIFY_CLOSE if is_room_contact
-            else bool(contact_flag & self.CONTACT_FLAG_NOTIFY_CLOSE_CONTACT),
+            'is_muted':
+                raw.get('Statues', 0) == self.CHAT_ROOM_NOTIFY_CLOSE if is_room_contact
+                else bool(contact_flag & self.CONTACT_FLAG_NOTIFY_CLOSE_CONTACT),
+                # WTF is ``statues``?!!? Seriously, you have spelt “status” correctly in the message object,
+                # why can’t you do it this time?
             'is_top': bool(contact_flag & self.CONTACT_FLAG_TOP_CONTACT),
             'has_photo_album': bool(raw.get('SnsFlag', 0)),
         }
