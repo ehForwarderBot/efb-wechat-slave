@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import logging
-from typing import Optional, List, TYPE_CHECKING, Dict, Any
+from typing import Optional, List, TYPE_CHECKING, Dict, Any, Tuple
 
 from ehforwarderbot import EFBChat
 from ehforwarderbot.chat import EFBChatNotificationState
@@ -35,7 +35,8 @@ class ChatManager:
         self.MISSING_USER.chat_name = self._("Chat Missing")
         self.MISSING_USER.chat_alias = None
 
-        self.efb_chat_objs: Dict[str, EFBChat] = {}
+        self.efb_chat_objs: Dict[Tuple[str, Optional[str]], EFBChat] = {}
+        # Cached EFBChat objects. Key: tuple(chat PUID, group PUID or None)
 
         # Load system chats
         self.system_chats: List[EFBChat] = []
@@ -88,19 +89,38 @@ class ChatManager:
         # self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
         if chat is None:
             return self.MISSING_USER
-        if chat.puid in self.efb_chat_objs:
-            return self.efb_chat_objs[chat.puid]
-        efb_chat = EFBChat(self.channel)
+
+        # Use chat puid and group puid as key, update cache if name is changed.
+        if isinstance(chat, wxpy.Member):
+            # noinspection PyBroadException
+            try:
+                cache_key = (chat.puid, chat.group.puid)
+            except Exception:
+                # [Note] chat.group might not be available, and raises `Exception`.
+                # Need to deal with this option.
+                cache_key = (chat.puid, None)
+        else:
+            cache_key = (chat.puid, None)
+
+        # if chat name or alias changes, update cache immediately
+        chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
+        chat_alias = getattr(chat, 'display_name', None) or getattr(chat, 'remark_name', None)
+        cached_obj: EFBChat = None
+        if chat_alias:
+            chat_alias = ews_utils.wechat_string_unescape(chat_alias)
+        if cache_key in self.efb_chat_objs:
+            cached_obj = self.efb_chat_objs[cache_key]
+            if chat_name == cached_obj.chat_name and chat_alias == cached_obj.chat_alias:
+                return cached_obj
+        efb_chat: EFBChat = cached_obj or EFBChat(self.channel)
         efb_chat.chat_uid = chat.puid or "__invalid__"
-        efb_chat.chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
-        efb_chat.chat_alias = None
+        efb_chat.chat_name = chat_name
+        efb_chat.chat_alias = chat_alias
         efb_chat.chat_type = ChatType.System
         efb_chat.vendor_specific = {'is_mp': False}
         if isinstance(chat, wxpy.Member):
             efb_chat.chat_type = ChatType.User
             efb_chat.is_chat = False
-            efb_chat.chat_alias = chat.name
-            # self.logger.debug("[WXPY: %s] Display name: %s;", chat.puid, chat.display_name)
             if recursive:
                 efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
         elif isinstance(chat, wxpy.Group):
@@ -113,21 +133,14 @@ class ChatManager:
             efb_chat.vendor_specific['is_mp'] = True
         elif isinstance(chat, wxpy.User):
             efb_chat.chat_type = ChatType.User
-            efb_chat.chat_alias = chat.remark_name or efb_chat.chat_alias
-            # self.logger.debug("[WXPY: %s] Remark name: %s;", chat.puid, chat.remark_name)
         if chat == chat.bot.self:
             efb_chat.self()
-
-        efb_chat.chat_alias = efb_chat.chat_alias and ews_utils.wechat_string_unescape(efb_chat.chat_alias)
 
         efb_chat.vendor_specific.update(self.generate_vendor_specific(chat))
         if efb_chat.vendor_specific.get('is_muted', False):
             efb_chat.notification = EFBChatNotificationState.MENTIONS
 
-        # self.logger.debug('WXPY chat %s converted to EFBChat %s', chat.puid, efb_chat)
-
-        if chat.puid:
-            self.efb_chat_objs[chat.puid] = efb_chat
+        self.efb_chat_objs[cache_key] = efb_chat
 
         return efb_chat
 
