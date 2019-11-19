@@ -139,6 +139,11 @@ flags_settings = {
              '(File Helper), fmessage (Friend suggestions), newsapp '
              '(Tencent News) and, weixin (WeChat Team).'
         )),
+    "user_agent":
+        (None, 'str', None,
+         _('Choose the User Agent string to use when accessing Web Wechat. '
+           'Leave undefined to use the default value provided by itchat.'
+           )),
 }
 
 

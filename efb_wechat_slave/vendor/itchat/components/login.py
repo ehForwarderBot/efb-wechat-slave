@@ -91,7 +91,7 @@ def push_login(core):
     if 'wxuin' in cookiesDict:
         url = '%s/cgi-bin/mmwebwx-bin/webwxpushloginurl?uin=%s' % (
             config.BASE_URL, cookiesDict['wxuin'])
-        headers = {'User-Agent': config.USER_AGENT}
+        headers = {'User-Agent': self.user_agent}
         r = core.s.get(url, headers=headers).json()
         if 'uuid' in r and r.get('ret') in (0, '0'):
             core.uuid = r['uuid']
@@ -104,7 +104,7 @@ def get_QRuuid(self):
     params = {
         'appid': 'wx782c26e4c19acffb',
         'fun': 'new', }
-    headers = {'User-Agent': config.USER_AGENT}
+    headers = {'User-Agent': self.user_agent}
     r = self.s.get(url, params=params, headers=headers)
     regx = r'window.QRLogin.code = (\d+); window.QRLogin.uuid = "(\S+?)";'
     data = re.search(regx, r.text)
@@ -137,7 +137,7 @@ def check_login(self, uuid=None):
     localTime = int(time.time())
     params = 'loginicon=true&uuid=%s&tip=1&r=%s&_=%s' % (
         uuid, int(-localTime / 1579), localTime)
-    headers = {'User-Agent': config.USER_AGENT}
+    headers = {'User-Agent': self.user_agent}
     r = self.s.get(url, params=params, headers=headers)
     regx = r'window.code=(\d+)'
     data = re.search(regx, r.text)
@@ -160,7 +160,7 @@ def process_login_info(core, loginContent):
     """
     regx = r'window.redirect_uri="(\S+)";'
     core.loginInfo['url'] = re.search(regx, loginContent).group(1)
-    headers = {'User-Agent': config.USER_AGENT}
+    headers = {'User-Agent': self.user_agent}
     r = core.s.get(core.loginInfo['url'], headers=headers, allow_redirects=False)
     core.loginInfo['url'] = core.loginInfo['url'][:core.loginInfo['url'].rfind('/')]
     for indexUrl, detailedUrl in (
@@ -203,7 +203,7 @@ def web_init(self):
     data = {'BaseRequest': self.loginInfo['BaseRequest'], }
     headers = {
         'ContentType': 'application/json; charset=UTF-8',
-        'User-Agent': config.USER_AGENT, }
+        'User-Agent': self.user_agent, }
     r = self.s.post(url, params=params, data=json.dumps(data), headers=headers)
     dic = json.loads(r.content.decode('utf-8', 'replace'))
     # deal with login info
@@ -246,7 +246,7 @@ def show_mobile_login(self):
         'ClientMsgId': int(time.time()), }
     headers = {
         'ContentType': 'application/json; charset=UTF-8',
-        'User-Agent': config.USER_AGENT, }
+        'User-Agent': self.user_agent, }
     r = self.s.post(url, data=json.dumps(data), headers=headers)
     return ReturnValue(rawResponse=r)
 
@@ -314,7 +314,7 @@ def sync_check(self):
         'deviceid': self.loginInfo['deviceid'],
         'synckey': self.loginInfo['synckey'],
         '_': self.loginInfo['logintime'], }
-    headers = {'User-Agent': config.USER_AGENT}
+    headers = {'User-Agent': self.user_agent}
     self.loginInfo['logintime'] += 1
     try:
         r = self.s.get(url, params=params, headers=headers, timeout=config.TIMEOUT)
@@ -348,7 +348,7 @@ def get_msg(self):
         'rr': ~int(time.time()), }
     headers = {
         'ContentType': 'application/json; charset=UTF-8',
-        'User-Agent': config.USER_AGENT}
+        'User-Agent': self.user_agent}
     r = self.s.post(url, data=json.dumps(data), headers=headers, timeout=config.TIMEOUT)
     dic = json.loads(r.content.decode('utf-8', 'replace'))
     if dic['BaseResponse']['Ret'] != 0: return None, None
@@ -365,7 +365,7 @@ def logout(self):
             'redirect': 1,
             'type': 1,
             'skey': self.loginInfo['skey'], }
-        headers = {'User-Agent': config.USER_AGENT}
+        headers = {'User-Agent': self.user_agent}
         self.s.get(url, params=params, headers=headers)
         self.alive = False
     self.isLogging = False

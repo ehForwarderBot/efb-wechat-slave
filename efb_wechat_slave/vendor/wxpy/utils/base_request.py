@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 import functools
 import json
 
-from ...itchat.config import USER_AGENT
 from ...itchat.returnvalues import ReturnValue
 
 from .misc import handle_response
@@ -30,7 +29,7 @@ class BaseRequest(object):
         self.data = {'BaseRequest': self.bot.core.loginInfo['BaseRequest']}
         self.headers = {
             'ContentType': 'application/json; charset=UTF-8',
-            'User-Agent': USER_AGENT
+            'User-Agent': bot.user_agent
         }
 
         for method in 'get', 'post', 'put', 'delete':

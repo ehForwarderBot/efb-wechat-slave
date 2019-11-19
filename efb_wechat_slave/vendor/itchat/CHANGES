@@ -18,7 +18,6 @@ Changes from Eana Hufwe
 - Raise `ConnectionError` instead of exit when failed to connect at beginning, [ews#50]
 
 
-
 [jjkkoo/ea0704f]: https://github.com/littlecodersh/ItChat/commit/ea0704ffbd814f888fbe48109bd764541807e523
 [terryso/269448b..849de6a]: https://github.com/littlecodersh/ItChat/commit/849de6af022f6dfeef9a0334bea617df09681fea
 [littlecodersh#829]: https://github.com/littlecodersh/ItChat/pull/829

@@ -1,2 +1,3 @@
 - Identifies more system accounts.
 - Allow to send file by IO[bytes] objects with newer itchat versions
+- Allow per-bot instance definition of user agent (need accompanied changes in itchat too)

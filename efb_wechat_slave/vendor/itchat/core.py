@@ -5,7 +5,7 @@ from .components import load_components
 
 
 class Core(object):
-    def __init__(self):
+    def __init__(self, user_agent=None):
         """ init is the only method defined in core.py
             alive is value showing whether core is running
                 - you should call logout method to change it
@@ -28,10 +28,14 @@ class Core(object):
         self.functionDict = {'FriendChat': {}, 'GroupChat': {}, 'MpChat': {}}
         self.useHotReload, self.hotReloadDir = False, 'itchat.pkl'
         self.receivingRetryCount = 5
+        if user_agent is None:
+            self.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36'
+        else:
+            self.user_agent = user_agent
 
     def login(self, enableCmdQR=False, picDir=None, qrCallback=None,
               loginCallback=None, exitCallback=None):
-        self.demand_ = """ log in like web wechat does
+        """ log in like web wechat does
             for log in
                 - a QR code will be downloaded and opened
                 - then scanning status is logged, it paused for you confirm

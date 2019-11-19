@@ -430,7 +430,7 @@ class SlaveMessageManager:
                     'msgid': msg.id,
                     'skey': msg.bot.core.loginInfo['skey']
                 }
-                headers = {'User-Agent': itchat.config.USER_AGENT}
+                headers = {'User-Agent': self.bot.user_agent}
                 if app_message == 'thumbnail':
                     params['type'] = 'slave'
                 r = msg.bot.core.s.get(url, params=params, stream=True, headers=headers)

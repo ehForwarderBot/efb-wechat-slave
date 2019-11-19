@@ -80,7 +80,7 @@ Alpha 版本
 
 EWS 同时存在由社区提供的其他安装方式，包括：
 
-- 由 KeLiu_ 维护的 `AUR 软件包`_\ （``python-efb-wechat-slave-git``）。
+- 由 KeLiu_ 维护的 `AUR 软件包`_\ （``python-efb-wechat-slave-git``）。
 - 其他\ `安装脚本或 Docker 等容器`_\ 。
 
 .. _KeLiu: https://github.com/specter119
@@ -197,12 +197,12 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 
 -  ``puid_logs`` *(str)* [默认值：``null``]
 
-   输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据\
+   输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据\
    会话数量和消息吞吐量而占用大量存储空间。
 
 - ``send_stickers_and_gif_as_jpeg`` *(bool)* [默认值: ``false``]
 
-  以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。\
+  以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。\
   详见 `#48`_\ 。
 
 .. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
@@ -212,6 +212,11 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
   在默认会话列表中显示的特殊系统会话。其内容仅能为 ``filehelper``\
   （文件传输助手）、\ ``fmessage``\ （朋友推荐消息）、\ ``newsapp``\
   （腾讯新闻）、\ ``weixin``\ （微信团队）其中零到四个选项。
+
+- ``user_agent`` *(str)* [默认值: ``null``]
+
+  指定登陆网页版微信时所使用的「用户代理」（user agent）字符串。\
+  不指定则使用 itchat 提供的默认值。
 
 ``vendor_specific``
 -------------------

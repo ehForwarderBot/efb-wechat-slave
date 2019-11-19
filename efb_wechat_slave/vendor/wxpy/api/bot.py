@@ -49,7 +49,8 @@ class Bot(object):
 
     def __init__(
             self, cache_path=None, console_qr=False, qr_path=None,
-            qr_callback=None, login_callback=None, logout_callback=None
+            qr_callback=None, login_callback=None, logout_callback=None,
+            user_agent=None
     ):
         """
         :param cache_path:
@@ -65,9 +66,11 @@ class Bot(object):
         :param qr_callback: 获得二维码后的回调，可以用来定义二维码的处理方式，接收参数: uuid, status, qrcode
         :param login_callback: 登陆成功后的回调，若不指定，将进行清屏操作，并删除二维码文件
         :param logout_callback: 登出时的回调
+        :param user_agent: User agent used during request.
         """
 
-        self.core = itchat.Core()
+        self.core = itchat.Core(user_agent)
+        self.user_agent = self.core.user_agent
         itchat.instanceList.append(self)
 
         enhance_connection(self.core.s)

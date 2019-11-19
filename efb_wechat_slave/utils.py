@@ -96,6 +96,7 @@ WC_EMOTICON_CONVERSION = {
     '[红包]': '💰', '[Packet]': '💰',
     '[鸡]': '🐥', '[Chick]': '🐥',
     '[蜡烛]': '🕯️', '[Candle]': '🕯️',
+    '[糗大了]': '😥',
     '[Thumbs Up]': '👍', '[Pleased]': '😊',
     '[Rich]': '🀅',
     '[Pup]': '🐶',
@@ -114,7 +115,8 @@ class ExperimentalFlagsManager:
         'app_shared_link_mode': 'ignore',
         'puid_logs': None,
         'send_stickers_and_gif_as_jpeg': False,
-        'system_chats_to_include': ['filehelper']
+        'system_chats_to_include': ['filehelper'],
+        'user_agent': None
     }
 
     def __init__(self, channel: 'WeChatChannel'):

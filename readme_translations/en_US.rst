@@ -226,6 +226,11 @@ disappear at any time. Use at your own risk.
   four of the following: ``filehelper`` (File Helper), ``fmessage`` (Friend
   suggestions), ``newsapp`` (Tencent News) and, ``weixin`` (WeChat Team).
 
+- ``user_agent`` *(str)* [Default: ``null``]
+
+  Choose the User Agent string to use when accessing Web Wechat. Leave undefined
+  to use the default value provided by ``itchat``.
+
 ``vendor_specific``
 -------------------
 

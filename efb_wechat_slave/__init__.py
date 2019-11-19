@@ -541,7 +541,8 @@ class WeChatChannel(EFBChannel):
         with coordinator.mutex:
             self.bot: wxpy.Bot = wxpy.Bot(cache_path=str(efb_utils.get_data_path(self.channel_id) / "wxpy.pkl"),
                                           qr_callback=qr_callback,
-                                          logout_callback=self.exit_callback)
+                                          logout_callback=self.exit_callback,
+                                          user_agent=self.flag('user_agent'))
             self.bot.enable_puid(
                 efb_utils.get_data_path(self.channel_id) / "wxpy_puid.pkl",
                 self.flag('puid_logs')
