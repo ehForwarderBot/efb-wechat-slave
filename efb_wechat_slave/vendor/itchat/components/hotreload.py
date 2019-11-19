@@ -63,7 +63,7 @@ def load_login_status(self, fileDir,
             'ErrMsg': 'cached status ignored because of version',
             'Ret': -1005, }})
     self.loginInfo = j['loginInfo']
-    if 'User' not in j:
+    if 'User' not in self.loginInfo:
         return ReturnValue({'BaseResponse': {
             'ErrMsg': 'Incomplete login info detected. Give up loading.',
             'Ret': -2000, }})
