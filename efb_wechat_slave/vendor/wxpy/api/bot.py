@@ -403,7 +403,7 @@ class Bot(object):
         if user_name:
             return Group(self.core.update_chatroom(userName=user_name), self)
         else:
-            from ...utils import decode_text_from_webwx
+            from ..utils import decode_text_from_webwx
             ret = decode_text_from_webwx(pformat(ret))
             raise Exception('Failed to create group:\n{}'.format(ret))
 

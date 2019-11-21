@@ -91,7 +91,7 @@ def push_login(core):
     if 'wxuin' in cookiesDict:
         url = '%s/cgi-bin/mmwebwx-bin/webwxpushloginurl?uin=%s' % (
             config.BASE_URL, cookiesDict['wxuin'])
-        headers = {'User-Agent': self.user_agent}
+        headers = {'User-Agent': core.user_agent}
         r = core.s.get(url, headers=headers).json()
         if 'uuid' in r and r.get('ret') in (0, '0'):
             core.uuid = r['uuid']
@@ -160,7 +160,7 @@ def process_login_info(core, loginContent):
     """
     regx = r'window.redirect_uri="(\S+)";'
     core.loginInfo['url'] = re.search(regx, loginContent).group(1)
-    headers = {'User-Agent': self.user_agent}
+    headers = {'User-Agent': core.user_agent}
     r = core.s.get(core.loginInfo['url'], headers=headers, allow_redirects=False)
     core.loginInfo['url'] = core.loginInfo['url'][:core.loginInfo['url'].rfind('/')]
     for indexUrl, detailedUrl in (

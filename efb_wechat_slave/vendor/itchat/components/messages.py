@@ -30,7 +30,7 @@ def get_download_fn(core, url, msgId):
         params = {
             'msgid': msgId,
             'skey': core.loginInfo['skey'], }
-        headers = {'User-Agent': self.user_agent}
+        headers = {'User-Agent': core.user_agent}
         r = core.s.get(url, params=params, stream=True, headers=headers)
         tempStorage = io.BytesIO()
         for block in r.iter_content(1024):
@@ -129,7 +129,7 @@ def produce_msg(core, msgList):
                 params = {
                     'msgid': msgId,
                     'skey': core.loginInfo['skey'], }
-                headers = {'Range': 'bytes=0-', 'User-Agent': self.user_agent}
+                headers = {'Range': 'bytes=0-', 'User-Agent': core.user_agent}
                 r = core.s.get(url, params=params, headers=headers, stream=True)
                 tempStorage = io.BytesIO()
                 for block in r.iter_content(1024):
@@ -162,7 +162,7 @@ def produce_msg(core, msgList):
                     'fromuser': core.loginInfo['wxuin'],
                     'pass_ticket': 'undefined',
                     'webwx_data_ticket': cookiesList['webwx_data_ticket'], }
-                headers = {'User-Agent': self.user_agent}
+                headers = {'User-Agent': core.user_agent}
 
                 def download_atta(attaDir=None):
                     r = core.s.get(url, params=params, stream=True, headers=headers)
@@ -378,7 +378,7 @@ def upload_chunk_file(core, fileDir, fileSymbol, fileSize,
         del files['chunks']
     else:
         files['chunk'], files['chunks'] = (None, str(chunk)), (None, str(chunks))
-    headers = {'User-Agent': self.user_agent}
+    headers = {'User-Agent': core.user_agent}
     return core.s.post(url, files=files, headers=headers, timeout=config.TIMEOUT)
 
 
