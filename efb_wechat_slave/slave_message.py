@@ -173,7 +173,7 @@ class SlaveMessageManager:
                     xml = xmltodict.parse(msg.raw.get('Content'))
                     appmsg_type = xml.get('msg').get('appmsg').get('type')
                     source = xml.get('msg').get('appinfo').get('appname')
-                    if appmsg_type == 2:  # Image
+                    if appmsg_type == '2':  # Image
                         return self.wechat_shared_image_msg(msg, source)
                     elif appmsg_type in ('3', '5'):
                         title = xml.get('msg', {}).get('appmsg', {}).get('title', "")
@@ -187,6 +187,9 @@ class SlaveMessageManager:
                         des = xml.get('msg', {}).get('appmsg', {}).get('title', "")
                         url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
                         return self.wechat_shared_link_msg(msg, source, title, des, url)
+                    elif appmsg_type == '1':  # Strange “app message” that looks like a text link
+                        msg.raw['text'] = xml.get('msg').get('appmsg').get('title')
+                        return self.wechat_text_msg(msg)
                     else:
                         # Unidentified message type
                         self.logger.error("[%s] Identified unsupported sharing message type. Raw message: %s",
