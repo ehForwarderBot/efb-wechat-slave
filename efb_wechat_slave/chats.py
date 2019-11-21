@@ -7,6 +7,7 @@ from ehforwarderbot import EFBChat
 from ehforwarderbot.chat import EFBChatNotificationState
 from ehforwarderbot.constants import ChatType
 from ehforwarderbot.exceptions import EFBChatNotFound
+from ehforwarderbot.types import ChatID
 from . import utils as ews_utils
 from .vendor import wxpy
 
@@ -112,8 +113,13 @@ class ChatManager:
             cached_obj = self.efb_chat_objs[cache_key]
             if chat_name == cached_obj.chat_name and chat_alias == cached_obj.chat_alias:
                 return cached_obj
+
+        # Remove alias if its same as chat name
+        if chat_alias == chat_name:
+            chat_alias = None
+
         efb_chat: EFBChat = cached_obj or EFBChat(self.channel)
-        efb_chat.chat_uid = chat.puid or "__invalid__"
+        efb_chat.chat_uid = ChatID(chat.puid or "__invalid__")
         efb_chat.chat_name = chat_name
         efb_chat.chat_alias = chat_alias
         efb_chat.chat_type = ChatType.System
