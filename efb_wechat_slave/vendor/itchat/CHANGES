@@ -16,6 +16,7 @@ Changes from Eana Hufwe
 
 - Download multiple files in batch will produce duplicated contents, [ews#30]
 - Raise `ConnectionError` instead of exit when failed to connect at beginning, [ews#50]
+- Add names to threads
 
 
 [jjkkoo/ea0704f]: https://github.com/littlecodersh/ItChat/commit/ea0704ffbd814f888fbe48109bd764541807e523

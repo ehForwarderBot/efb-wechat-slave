@@ -299,7 +299,7 @@ def start_receiving(self, exitCallback=None, getReceivingFnOnly=False):
     if getReceivingFnOnly:
         return maintain_loop
     else:
-        maintainThread = threading.Thread(target=maintain_loop)
+        maintainThread = threading.Thread(target=maintain_loop, name="itchat polling thread (maintain_loop)")
         maintainThread.setDaemon(True)
         maintainThread.start()
 

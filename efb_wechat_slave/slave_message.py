@@ -76,7 +76,7 @@ class SlaveMessageManager:
 
             def thread_wrapper(*args, **kwargs):
                 """Run message requests in separate threads to prevent blocking"""
-                threading.Thread(target=wrap_func, args=args, kwargs=kwargs).run()
+                threading.Thread(target=wrap_func, args=args, kwargs=kwargs, name=f"EWS slave message thread running {func}").run()
 
             return thread_wrapper
 

@@ -533,7 +533,7 @@ class WeChatChannel(EFBChannel):
         if command and qr_reload == "console_qr_code":
             msg += "\n" + self._("Please check your log to continue.")
 
-        threading.Thread(target=self.authenticate, args=(qr_reload,)).start()
+        threading.Thread(target=self.authenticate, args=(qr_reload,), name="EWS reauth thread").start()
         return msg
 
     def authenticate(self, qr_reload):

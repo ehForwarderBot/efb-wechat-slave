@@ -109,6 +109,6 @@ def run(self, debug=False, blockThread=True):
     if blockThread:
         reply_fn()
     else:
-        replyThread = threading.Thread(target=reply_fn)
+        replyThread = threading.Thread(target=reply_fn, name="itchat message listener thread (reply_fn)")
         replyThread.setDaemon(True)
         replyThread.start()
