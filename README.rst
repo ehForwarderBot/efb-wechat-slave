@@ -8,7 +8,7 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 
-.. image:: https://ews.1a23.studio/raw/master/banner.png
+.. image:: https://github.com/blueset/efb-wechat-slave/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
