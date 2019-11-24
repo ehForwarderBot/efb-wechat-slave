@@ -2,6 +2,7 @@
 
 import base64
 import io
+import json
 import logging
 import os
 import tempfile
@@ -289,7 +290,7 @@ class WeChatChannel(EFBChannel):
             EFBMessageTypeNotSupported: Raised when message type is not supported by the channel.
         """
         chat: wxpy.Chat = self.chats.get_wxpy_chat_by_uid(msg.chat.chat_uid)
-        r: wxpy.SentMessage
+        r: List[wxpy.SentMessage] = []
         self.logger.info("[%s] Sending message to WeChat:\n"
                          "uid: %s\n"
                          "UserName: %s\n"
@@ -301,17 +302,34 @@ class WeChatChannel(EFBChannel):
 
         chat.mark_as_read()
 
+        send_text_only = False
         self.logger.debug('[%s] Is edited: %s', msg.uid, msg.edit)
         if msg.edit:
             if self.flag('delete_on_edit'):
-                try:
-                    ews_utils.message_to_dummy_message(msg.uid, self).recall()
-                except wxpy.ResponseError as e:
-                    self.logger.error("[%s] Trying to recall message but failed: %s", msg.uid, e)
-                    raise EFBMessageError(self._('Failed to recall message, edited message was not sent.'))
+                msg_ids = json.loads(msg.uid)
+                if not msg.edit_media:
+                    # Treat message as text message to prevent resend of media
+                    msg_ids = msg_ids[1:]
+                    send_text_only = True
+                failed = 0
+                for i in msg_ids:
+                    try:
+                        ews_utils.message_to_dummy_message(i, self).recall()
+                    except wxpy.ResponseError as e:
+                        self.logger.error("[%s] Trying to recall message but failed: %s", msg.uid, e)
+                        failed += 1
+                if failed:
+                    raise EFBMessageError(
+                        self.ngettext('Failed to recall {failed} out of {total} message, edited message was not sent.',
+                                      'Failed to recall {failed} out of {total} messages, edited message was not sent.',
+                                      len(msg_ids)).format(
+                            failed=failed,
+                            total=len(msg_ids)
+                        ))
+                # Not caching message ID as message recall feedback is not needed in edit mode
             else:
                 raise EFBOperationNotSupported()
-        if msg.type in [MsgType.Text, MsgType.Link]:
+        if send_text_only or msg.type in [MsgType.Text, MsgType.Link]:
             if isinstance(msg.target, EFBMsg):
                 max_length = self.flag("max_quote_length")
                 qt_txt = msg.target.text or msg.target.type.name
@@ -331,7 +349,7 @@ class WeChatChannel(EFBChannel):
                 else:
                     tgt_alias = ""
                 msg.text = "%s%s\n\n%s" % (tgt_alias, tgt_text, msg.text)
-            r = self._bot_send_msg(chat, msg.text)
+            r.append(self._bot_send_msg(chat, msg.text))
             self.logger.debug('[%s] Sent as a text message. %s', msg.uid, msg.text)
         elif msg.type in (MsgType.Image, MsgType.Sticker, MsgType.Animation):
             self.logger.info("[%s] Image/GIF/Sticker %s", msg.uid, msg.type)
@@ -365,7 +383,7 @@ class WeChatChannel(EFBChannel):
                         f.seek(0)
                         if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
                             raise EFBMessageError(self._("Image size is too large. (IS02)"))
-                        r = self._bot_send_image(chat, f.name, f)
+                        r.append(self._bot_send_image(chat, f.name, f))
                     finally:
                         if not file.closed:
                             file.close()
@@ -382,7 +400,7 @@ class WeChatChannel(EFBChannel):
                         f.seek(0)
                         if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
                             raise EFBMessageError(self._("Image size is too large. (IS02)"))
-                        r = self._bot_send_image(chat, f.name, f)
+                        r.append(self._bot_send_image(chat, f.name, f))
                     finally:
                         if not file.closed:
                             file.close()
@@ -391,24 +409,24 @@ class WeChatChannel(EFBChannel):
                     if os.fstat(file.fileno()).st_size > self.MAX_FILE_SIZE:
                         raise EFBMessageError(self._("Image size is too large. (IS01)"))
                     self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
-                    r = self._bot_send_image(chat, msg.path, file)
+                    r.append(self._bot_send_image(chat, msg.path, file))
                 finally:
                     if not file.closed:
                         file.close()
             if msg.text:
-                self._bot_send_msg(chat, msg.text)
+                r.append(self._bot_send_msg(chat, msg.text))
         elif msg.type in (MsgType.File, MsgType.Audio):
             self.logger.info("[%s] Sending %s to WeChat\nFileName: %s\nPath: %s\nFilename: %s",
                              msg.uid, msg.type, msg.text, msg.path, msg.filename)
-            r = self._bot_send_file(chat, msg.filename, file=msg.file)
+            r.append(self._bot_send_file(chat, msg.filename, file=msg.file))
             if msg.text:
                 self._bot_send_msg(chat, msg.text)
             msg.file.close()
         elif msg.type == MsgType.Video:
             self.logger.info("[%s] Sending video to WeChat\nFileName: %s\nPath: %s", msg.uid, msg.text, msg.path)
-            r = self._bot_send_video(chat, msg.path, file=msg.file)
+            r.append(self._bot_send_video(chat, msg.path, file=msg.file))
             if msg.text:
-                self._bot_send_msg(chat, msg.text)
+                r.append(self._bot_send_msg(chat, msg.text))
             msg.file.close()
         else:
             raise EFBMessageTypeNotSupported()
@@ -421,11 +439,24 @@ class WeChatChannel(EFBChannel):
         if isinstance(status, EFBMessageRemoval):
             if not status.message.author.is_self:
                 raise EFBMessageError(self._('You can only recall your own messages.'))
-            try:
-                ews_utils.message_to_dummy_message(status.message.uid, self).recall()
-            except wxpy.ResponseError as e:
+            msg_ids = json.loads(status.message.uid)
+            failed = 0
+            for i in msg_ids:
+                try:
+                    ews_utils.message_to_dummy_message(i, self).recall()
+                except wxpy.ResponseError:
+                    failed += 1
+            if failed:
                 raise EFBMessageError(
-                    self._('Failed to recall the message.') + '{0} ({1})'.format(e.err_msg, e.err_code))
+                    self.ngettext(
+                        'Failed to recall {failed} of {total} message.',
+                        'Failed to recall {failed} of {total} messages.',
+                        len(msg_ids)
+                    ).format(failed=failed, total=len(msg_ids)))
+            else:
+                val = [status.message.uid, len(msg_ids)]
+                for i in msg_ids:
+                    self.slave_message.recall_msg_id_conversion[str(i[1])] = val
         else:
             raise EFBOperationNotSupported()
 

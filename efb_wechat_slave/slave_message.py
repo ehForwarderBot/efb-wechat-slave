@@ -5,7 +5,8 @@ import tempfile
 import uuid
 import threading
 import re
-from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict
+import json
+from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict, List
 
 import magic
 import requests
@@ -16,6 +17,7 @@ from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
 from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute, EFBMsgCommands, EFBMsgCommand, \
     EFBMsgSubstitutions
+from ehforwarderbot.types import MessageID
 from . import constants
 from . import utils as ews_utils
 from .vendor import wxpy, itchat
@@ -43,6 +45,8 @@ class SlaveMessageManager:
         self.logger: logging.Logger = logging.getLogger(__name__)
         self.wechat_msg_register()
         self.file_download_mutex_lock = threading.Lock()
+        # Message ID: [JSON ID, remaining count]
+        self.recall_msg_id_conversion: Dict[str, List[str, int]] = dict()
 
     class Decorators:
         @classmethod
@@ -56,7 +60,10 @@ class SlaveMessageManager:
                 if efb_msg is None:
                     return
 
-                efb_msg.uid = getattr(msg, "id", constants.INVALID_MESSAGE_ID + str(uuid.uuid4()))
+                # Format message IDs as JSON of List[List[str]].
+                efb_msg.uid = MessageID(json.dumps(
+                    [[str(getattr(msg, "id", constants.INVALID_MESSAGE_ID + str(uuid.uuid4())))]]
+                ))
 
                 chat: EFBChat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
 
@@ -137,10 +144,24 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_system_msg(self, msg: wxpy.Message) -> Optional[EFBMsg]:
         if msg.recalled_message_id:
+            recall_id = str(msg.recalled_message_id)
             efb_msg = EFBMsg()
             efb_msg.chat = self.channel.chats.wxpy_chat_to_efb_chat(msg.chat)
             efb_msg.author = self.channel.chats.wxpy_chat_to_efb_chat(msg.sender)
-            efb_msg.uid = str(msg.recalled_message_id)
+            # check conversion table first
+            if recall_id in self.recall_msg_id_conversion:
+                # prevent feedback of messages deleted by master channel.
+                del self.recall_msg_id_conversion[recall_id]
+                return None
+                # val = self.recall_msg_id_conversion.pop(recall_id)
+                # val[1] -= 1
+                # if val[1] > 0:  # not all associated messages are recalled.
+                #     return None
+                # else:
+                #     efb_msg.uid = val[0]
+            else:
+                # Format message IDs as JSON of List[List[str]].
+                efb_msg.uid = MessageID(json.dumps([[recall_id]]))
             coordinator.send_status(EFBMessageRemoval(source_channel=self.channel,
                                                       destination_channel=coordinator.master,
                                                       message=efb_msg))
