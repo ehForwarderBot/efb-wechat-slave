@@ -42,8 +42,8 @@ class DataModel:
             self.data = self.yaml.load(self.config_path.open())
 
     def build_default_config(self):
-        # TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
         s = _(
+            # TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
             "# ===========================================\n"
             "# EFB WeChat Slave Channel Configuration File\n"
             "# ===========================================\n"
