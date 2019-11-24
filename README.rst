@@ -8,7 +8,7 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 
-.. image:: https://github.com/blueset/efb-wechat-slave/blob/master/banner.png
+.. image:: https://ews.1a23.studio/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -84,7 +84,7 @@ EWS 同时存在由社区提供的其他安装方式，包括：
 
 .. _KeLiu: https://github.com/specter119
 .. _AUR 软件包: https://aur.archlinux.org/packages/python-efb-wechat-slave-git
-.. _安装脚本或 Docker 等容器: https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker
+.. _安装脚本或 Docker 等容器: https://efb-modules.1a23.studio#scripts-and-containers-eg-docker
 
 
 可选的配置文件
@@ -204,7 +204,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
   以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。\
   详见 `#48`_\ 。
 
-.. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
+.. _#48: https://ews.1a23.studio/issues/48
 
 - ``system_chats_to_include`` *(list of str)* [默认值: ``[filehelper]``]
 

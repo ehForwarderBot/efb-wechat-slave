@@ -8,7 +8,7 @@ EFB WeChat Slave Channel
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 
-.. image:: https://github.com/blueset/efb-wechat-slave/blob/master/banner.png
+.. image:: https://ews.1a23.studio/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -87,7 +87,7 @@ contributed by the community, including:
 
 .. _KeLiu: https://github.com/specter119
 .. _AUR package: https://aur.archlinux.org/packages/python-efb-telegram-master-git
-.. _installation scripts and containers (e.g. Docker): https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker
+.. _installation scripts and containers (e.g. Docker): https://efb-modules.1a23.studio#scripts-and-containers-eg-docker
 
 Optional configuration
 ----------------------
@@ -218,7 +218,7 @@ disappear at any time. Use at your own risk.
   Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker limits as a workaround.
   See `#48`_ for details.
 
-.. _#48: https://github.com/blueset/efb-wechat-slave/issues/48
+.. _#48: https://ews.1a23.studio/issues/48
 
 - ``system_chats_to_include`` *(list of str)** [Default: ``[filehelper]``]
 

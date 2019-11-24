@@ -10,7 +10,7 @@ EFB 微信从端
    :target: https://crowdin.com/project/ehforwarderbot/
    :alt: Translate this project
 
-.. image:: https://github.com/blueset/efb-wechat-slave/blob/master/banner.png
+.. image:: https://ews.1a23.studio/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -87,7 +87,7 @@ Web 微信。你可以通过手机客户端或 Windows 微信登录」或类似�
   (``python-efb-telegram-master-git``)
 
 * 其他\ `安装脚本和容器（Docker 等）
-  <https://github.com/blueset/ehForwarderBot/wiki/Channels-Repository#scripts-and-containers-eg-docker>`_
+  <https://efb-modules.1a23.studio#scripts-and-containers-eg-docker>`_
 
 
 可选配置
@@ -202,7 +202,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 * ``send_image_as_file`` *(bool)* [默认：``false``]
 
   以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。详见 `#48
-  <https://github.com/blueset/efb-wechat-slave/issues/48>`_。
+  <https://ews.1a23.studio/issues/48>`_。
 
 * ``system_chats_to_include`` *(list of str)** [默认: ``[filehelper]``]
 

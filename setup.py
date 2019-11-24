@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     author='Eana Hufwe',
     author_email='ilove@1a23.com',
-    url='https://github.com/blueset/efb-wechat-slave',
+    url='https://ews.1a23.studio',
     license='AGPLv3+',
     python_requires='>=3.6',
     keywords=['ehforwarderbot', 'EH Forwarder Bot', 'EH Forwarder Bot Slave Channel',
