@@ -38,12 +38,12 @@ any time.
 Attention
 =========
 
-Since mid-2016, we have received feedback where some users' access to
+Since mid-2016, we have received feedback where some users’ access to
 Web WeChat was banned. Most of the users were unbanned within 1 week
 to 3 months. When a user is banned for Web WeChat access, a pop up
-would be shown when they try to use it, stating that they "cannot use
-Web WeChat temporary", and are recommended to "use mobile app or
-Windows/macOS instead".
+would be shown when they try to use it, stating that they “cannot use
+Web WeChat temporary”, and are recommended to “use mobile app or
+Windows/macOS instead”.
 
 The ban will NOT affect your access to any other client. The cause of
 such ban is not clear.
@@ -129,7 +129,7 @@ FAQ
   your phone, and log in again with another one.
 
 * **How to log in with multiple WeChat accounts?** Please indicate
-  different Instance ID in the profile's config file.
+  different Instance ID in the profile’s config file.
 
 * **Is EWS stable?** EWS depends on \ `ItChat
   <https://github.com/littlecodersh/ItChat>`_ project and Web WeChat
@@ -149,12 +149,12 @@ Known Issues
   name might be identified as the same chat, which might lead to
   misdelivery of messages.
 
-* Similarly, in limited situations, a chat will be seen as a "new
-  chat" when its name is changed, and the "old chat" is thus
+* Similarly, in limited situations, a chat will be seen as a “new
+  chat” when its name is changed, and the “old chat” is thus
   disappeared.
 
 * Only features supported by Web WeChat are supported by EWS, which
-  means: - No "Moments" - No money transfers - Cannot send voice
+  means: - No “Moments” - No money transfers - Cannot send voice
   messages - Cannot send locations - etc.
 
 * Some multimedia files (pictures, stickers, files, etc.) might be
@@ -258,7 +258,7 @@ disappear at any time. Use at your own risk.
 
 ``EFBChat`` from EWS provides the following ``vendor_specific`` items:
 
-* ``is_mp`` *(bool)* If the chat is an "Official Account".
+* ``is_mp`` *(bool)* If the chat is an “Official Account”.
 
 * ``is_contact`` *(bool)* Unknown. Extracted from API.
 

@@ -10,7 +10,7 @@ EFB WeChat Slave Channel
    :target: https://crowdin.com/project/ehforwarderbot/
    :alt: Translate this project
 
-.. image:: https://ews.1a23.studio/raw/master/banner.png
+.. image:: https://github.com/blueset/efb-wechat-slave/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -237,8 +237,7 @@ disappear at any time. Use at your own risk.
 
   Send stickers and GIF images as JPEG to bypass Web WeChat custom
   sticker limits as a workaround. See `#48
-  <https://ews.1a23.studio/issues/48>`_ for
-  details.
+  <https://ews.1a23.studio/issues/48>`_ for details.
 
 * ``system_chats_to_include`` *(list of str)** [Default:
   ``[filehelper]``]
@@ -247,6 +246,11 @@ disappear at any time. Use at your own risk.
   zero to four of the following: ``filehelper`` (File Helper),
   ``fmessage`` (Friend suggestions), ``newsapp`` (Tencent News) and,
   ``weixin`` (WeChat Team).
+
+* ``user_agent`` *(str)* [Default: ``null``]
+
+  Choose the User Agent string to use when accessing Web Wechat. Leave
+  undefined to use the default value provided by ``itchat``.
 
 
 ``vendor_specific``

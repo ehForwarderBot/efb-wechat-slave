@@ -279,4 +279,4 @@ EWS 支持了界面本地化翻译。您可以将语言环境变量（``LANGUAGE
 <https://crowdin.com/project/ehforwarderbot/>`_。同时，您也可以在我们的 `Crowdin
 页面 <https://crowdin.com/project/ehforwarderbot/>`_\ 里将 EWS 翻译为您的语言。
 
-備註: 如果您使用源代码安装，您需要手动编译翻译字符串文件（``.mo``）才可启用翻译后的界面。
+注解: 如果您使用源代码安装，您需要手动编译翻译字符串文件（``.mo``）才可启用翻译后的界面。
