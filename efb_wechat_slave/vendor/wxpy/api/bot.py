@@ -50,7 +50,8 @@ class Bot(object):
     def __init__(
             self, cache_path=None, console_qr=False, qr_path=None,
             qr_callback=None, login_callback=None, logout_callback=None,
-            user_agent=None
+            user_agent=None,
+            start_immediately=True
     ):
         """
         :param cache_path:
@@ -67,6 +68,7 @@ class Bot(object):
         :param login_callback: 登陆成功后的回调，若不指定，将进行清屏操作，并删除二维码文件
         :param logout_callback: 登出时的回调
         :param user_agent: User agent used during request.
+        :param start_immediately: Start the bot immediately.
         """
 
         self.core = itchat.Core(user_agent)
@@ -117,9 +119,10 @@ class Bot(object):
         else:
             self.temp_dir = tempfile.TemporaryDirectory(prefix='wxpy_')
 
-        self.start()
+        if start_immediately:
+            self.start()
 
-        atexit.register(self._cleanup)
+        # atexit.register(self.cleanup)
 
     @force_encoded_string_output
     def __repr__(self):
@@ -557,7 +560,7 @@ class Bot(object):
             except KeyboardInterrupt:
                 pass
 
-    def _cleanup(self):
+    def cleanup(self):
         if self.is_listening:
             self.stop()
         if self.alive and self.core.useHotReload:

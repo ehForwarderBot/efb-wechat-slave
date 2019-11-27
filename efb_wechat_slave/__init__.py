@@ -269,6 +269,7 @@ class WeChatChannel(EFBChannel):
         coordinator.send_message(msg)
 
     def poll(self):
+        self.bot.start()
         self._stop_polling_event.wait()
         # while not self.stop_polling:
         #     if not self.bot.alive:
@@ -567,13 +568,16 @@ class WeChatChannel(EFBChannel):
         threading.Thread(target=self.authenticate, args=(qr_reload,), name="EWS reauth thread").start()
         return msg
 
-    def authenticate(self, qr_reload):
+    def authenticate(self, qr_reload, first_start=False):
         qr_callback = getattr(self, qr_reload, self.master_qr_code)
+        if getattr(self, 'bot', None):  # if a bot exists
+            self.bot.cleanup()
         with coordinator.mutex:
             self.bot: wxpy.Bot = wxpy.Bot(cache_path=str(efb_utils.get_data_path(self.channel_id) / "wxpy.pkl"),
                                           qr_callback=qr_callback,
                                           logout_callback=self.exit_callback,
-                                          user_agent=self.flag('user_agent'))
+                                          user_agent=self.flag('user_agent'),
+                                          start_immediately=not first_start)
             self.bot.enable_puid(
                 efb_utils.get_data_path(self.channel_id) / "wxpy_puid.pkl",
                 self.flag('puid_logs')
@@ -622,6 +626,7 @@ class WeChatChannel(EFBChannel):
                 return chat
 
     def stop_polling(self):
+        self.bot.cleanup()
         if not self._stop_polling_event.is_set():
             self._stop_polling_event.set()
         else:

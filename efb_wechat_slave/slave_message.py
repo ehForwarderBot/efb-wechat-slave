@@ -46,7 +46,7 @@ class SlaveMessageManager:
         self.wechat_msg_register()
         self.file_download_mutex_lock = threading.Lock()
         # Message ID: [JSON ID, remaining count]
-        self.recall_msg_id_conversion: Dict[str, List[str, int]] = dict()
+        self.recall_msg_id_conversion: Dict[str, Tuple[str, int]] = dict()
 
     class Decorators:
         @classmethod
@@ -59,6 +59,12 @@ class SlaveMessageManager:
 
                 if efb_msg is None:
                     return
+
+                if getattr(coordinator, 'master', None) is None:
+                    logger.debug("[%s] Dropping message as master channel is not ready yet.", efb_msg.uid)
+                    return
+
+                efb_msg.deliver_to = coordinator.master
 
                 # Format message IDs as JSON of List[List[str]].
                 efb_msg.uid = MessageID(json.dumps(
@@ -74,8 +80,6 @@ class SlaveMessageManager:
                 efb_msg.author = efb_msg.author or author
 
                 logger.debug("[%s] Chat: %s, Author: %s", efb_msg.uid, efb_msg.chat, efb_msg.author)
-
-                efb_msg.deliver_to = coordinator.master
 
                 coordinator.send_message(efb_msg)
                 if efb_msg.file:
