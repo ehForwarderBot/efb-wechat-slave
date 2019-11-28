@@ -60,7 +60,7 @@ class WeChatChannel(EFBChannel):
     done_reauth: threading.Event = threading.Event()
     _stop_polling_event: threading.Event = threading.Event()
 
-    config = dict()
+    config: Dict[str, Any] = dict()
 
     bot: wxpy.Bot
 
@@ -200,10 +200,10 @@ class WeChatChannel(EFBChannel):
                 qr_file = io.BytesIO()
                 qr_obj.png(qr_file, scale=10)
                 qr_file.seek(0)
-                qr += self.imgcat(qr_file, "%s_QR_%s.png" % (self.channel_id, uuid))
+                qr += ews_utils.imgcat(qr_file, f"{self.channel_id}_QR_{uuid}.png")
             else:
                 qr += qr_obj.terminal()
-            qr += "\n" + self._("If the QR code was not shown correctly, please visit:\n" \
+            qr += "\n" + self._("If the QR code was not shown correctly, please visit:\n"
                                 "https://login.weixin.qq.com/qrcode/{0}").format(uuid)
             return self.logger.log(99, qr)
 
@@ -291,6 +291,8 @@ class WeChatChannel(EFBChannel):
             EFBMessageTypeNotSupported: Raised when message type is not supported by the channel.
         """
         chat: wxpy.Chat = self.chats.get_wxpy_chat_by_uid(msg.chat.chat_uid)
+
+        # List of "SentMessage" response for all messages sent
         r: List[wxpy.SentMessage] = []
         self.logger.info("[%s] Sending message to WeChat:\n"
                          "uid: %s\n"
@@ -301,7 +303,10 @@ class WeChatChannel(EFBChannel):
                          msg.uid,
                          msg.chat.chat_uid, chat.user_name, chat.name, msg.type, msg.text)
 
-        chat.mark_as_read()
+        try:
+            chat.mark_as_read()
+        except wxpy.ResponseError as e:
+            self.logger.exception("[%s] Error occurred while marking chat as read. (%s)", msg.uid, e)
 
         send_text_only = False
         self.logger.debug('[%s] Is edited: %s', msg.uid, msg.edit)
@@ -523,9 +528,9 @@ class WeChatChannel(EFBChannel):
                   "    {function_name} id [alias]\n"
                   "    id: Chat ID, available from \"Show chat list\".\n"
                   "    alias: Alias. Leave empty to delete alias."))
-    def set_alias(self, param: str = "") -> str:
-        if param:
-            param = param.split(maxsplit=1)
+    def set_alias(self, r_param: str = "") -> str:
+        if r_param:
+            param = r_param.split(maxsplit=1)
             if len(param) == 1:
                 cid = param[0]
                 alias = ""
@@ -636,56 +641,55 @@ class WeChatChannel(EFBChannel):
         try:
             return chat.send_msg(message)
         except wxpy.ResponseError as e:
-            raise EFBMessageError(self._("Unknown error occurred while delivering the message: [{code}] {message}")
+            e = self.substitute_known_error_reason(e)
+            raise EFBMessageError(self._("Error from Web WeChat while sending message: [{code}] {message}")
                                   .format(code=e.err_code, message=e.err_msg))
 
     def _bot_send_file(self, chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
         try:
             return chat.send_file(filename, file=file)
         except wxpy.ResponseError as e:
-            raise EFBMessageError(self._("Unknown error occurred while delivering the file: [{code}] {message}")
+            e = self.substitute_known_error_reason(e)
+            raise EFBMessageError(self._("Error from Web WeChat while sending file: [{code}] {message}")
                                   .format(code=e.err_code, message=e.err_msg))
 
     def _bot_send_image(self, chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
         try:
             return chat.send_image(filename, file=file)
         except wxpy.ResponseError as e:
-            raise EFBMessageError(self._("Unknown error occurred while delivering the image: [{code}] {message}")
+            e = self.substitute_known_error_reason(e)
+            raise EFBMessageError(self._("Error from Web WeChat while sending image: [{code}] {message}")
                                   .format(code=e.err_code, message=e.err_msg))
 
     def _bot_send_video(self, chat: wxpy.Chat, filename: str, file: IO[bytes]) -> wxpy.SentMessage:
         try:
             return chat.send_video(filename, file=file)
         except wxpy.ResponseError as e:
-            raise EFBMessageError(self._("Unknown error occurred while delivering the video: [{code}] {message}")
+            e = self.substitute_known_error_reason(e)
+            raise EFBMessageError(self._("Error from Web WeChat while sending video: [{code}] {message}")
                                   .format(code=e.err_code, message=e.err_msg))
 
-    @staticmethod
-    def imgcat(file: io.BytesIO, filename: str) -> str:
-        """
-        Form a string to print in iTerm 2's ``imgcat`` format
-        from a filename and a image file
-        """
-
-        def print_osc():
-            if str(os.environ.get("TERM", "")).startswith("screen"):
-                return "\x1bPtmux;\x1b\x1b]"
+    def substitute_known_error_reason(self, err: wxpy.ResponseError) -> wxpy.ResponseError:
+        if not err.err_msg:
+            issue_url = "https://ews.1a23.studio/issues/55"
+            if err.err_code in (1101, 1102, 1103):
+                err.err_msg = self._("Your Web WeChat session might be expired. "
+                                     "Please try to log out with the “force_log_out” command, and log in again. "
+                                     "If you believe that is not the case, please leave a comment at {issue_url} .").format(
+                    issue_url=issue_url
+                )
+            elif err.err_code == 1204:
+                err.err_msg = self._("You don’t have access to the chat that you are trying to send message to.")
+            elif err.err_code == 1205:
+                err.err_msg = self._("You might have sent your messages too fast. Please try to slow down "
+                                     "and retry after a while.")
             else:
-                return "\x1b]"
-
-        def print_st():
-            if str(os.environ.get("TERM", "")).startswith("screen"):
-                return "\x07\x1b\\"
-            else:
-                return "\x07"
-
-        res = print_osc()
-        res += "1337;File=name="
-        res += base64.b64encode(filename.encode()).decode()
-        res += ";inline=1:"
-        res += base64.b64encode(file.getvalue()).decode()
-        res += print_st()
-        return res
+                err.err_msg = self._("This is an unknown error from Web WeChat which we know nothing about why this "
+                                     "is happening. If you have seen a pattern or if you happen to know the reason "
+                                     "for this error code, please leave a comment at {issue_url} .").format(
+                    issue_url=issue_url
+                )
+        return err
 
     def get_message_by_id(self, chat: EFBChat, msg_id: MessageID) -> Optional['EFBMsg']:
         raise EFBOperationNotSupported()

@@ -1,7 +1,11 @@
 # coding: utf-8
+import base64
+import io
+import os
 import json
 from typing import Dict, Any, TYPE_CHECKING, List
 
+from ehforwarderbot.types import MessageID
 from .vendor.itchat import utils as itchat_utils
 
 from .vendor import wxpy
@@ -149,11 +153,11 @@ def wechat_string_unescape(content: str) -> str:
     return d['Content']
 
 
-def generate_message_uid(messages: List[wxpy.SentMessage]) -> str:
-    return json.dumps(
+def generate_message_uid(messages: List[wxpy.SentMessage]) -> MessageID:
+    return MessageID(json.dumps(
         [[message.chat.puid, message.id, message.local_id]
          for message in messages]
-    )
+    ))
 
 
 def message_to_dummy_message(message_uid: List[str], channel: 'WeChatChannel') -> wxpy.SentMessage:
@@ -172,3 +176,30 @@ def message_to_dummy_message(message_uid: List[str], channel: 'WeChatChannel') -
         'local_id': l_id
     }
     return wxpy.SentMessage(d)
+
+
+def imgcat(file: io.BytesIO, filename: str) -> str:
+    """
+    Form a string to print in iTerm 2's ``imgcat`` format
+    from a filename and a image file
+    """
+
+    def print_osc():
+        if str(os.environ.get("TERM", "")).startswith("screen"):
+            return "\x1bPtmux;\x1b\x1b]"
+        else:
+            return "\x1b]"
+
+    def print_st():
+        if str(os.environ.get("TERM", "")).startswith("screen"):
+            return "\x07\x1b\\"
+        else:
+            return "\x07"
+
+    res = print_osc()
+    res += "1337;File=name="
+    res += base64.b64encode(filename.encode()).decode()
+    res += ";inline=1:"
+    res += base64.b64encode(file.getvalue()).decode()
+    res += print_st()
+    return res
