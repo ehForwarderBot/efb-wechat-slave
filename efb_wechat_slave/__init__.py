@@ -9,6 +9,7 @@ import tempfile
 import threading
 import time
 from gettext import translation
+from json import JSONDecodeError
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List, Tuple, Callable
 
@@ -444,9 +445,16 @@ class WeChatChannel(EFBChannel):
     def send_status(self, status: EFBStatus):
         if isinstance(status, EFBMessageRemoval):
             if not status.message.author.is_self:
-                raise EFBMessageError(self._('You can only recall your own messages.'))
-            msg_ids = json.loads(status.message.uid)
+                raise EFBOperationNotSupported(self._('You can only recall your own messages.'))
+            try:
+                msg_ids = json.loads(status.message.uid)
+            except JSONDecodeError:
+                raise EFBMessageError(self._("ID of the message to recall is invalid."))
             failed = 0
+            if any(len(i) == 1 for i in msg_ids):  # Message is not sent through EWS
+                raise EFBOperationNotSupported(
+                    self._("You may only recall messages sent via EWS.")
+                )
             for i in msg_ids:
                 try:
                     ews_utils.message_to_dummy_message(i, self).recall()
