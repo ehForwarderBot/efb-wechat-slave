@@ -124,12 +124,13 @@ def produce_msg(core, msgList):
         elif m['MsgType'] in (43, 62):  # tiny video
             msgId = m['MsgId']
 
+            url = '%s/webwxgetvideo' % core.loginInfo['url']
+            params = {
+                'msgid': msgId,
+                'skey': core.loginInfo['skey'], }
+            headers = {'Range': 'bytes=0-', 'User-Agent': core.user_agent}
+
             def download_video(videoDir=None):
-                url = '%s/webwxgetvideo' % core.loginInfo['url']
-                params = {
-                    'msgid': msgId,
-                    'skey': core.loginInfo['skey'], }
-                headers = {'Range': 'bytes=0-', 'User-Agent': core.user_agent}
                 r = core.s.get(url, params=params, headers=headers, stream=True)
                 tempStorage = io.BytesIO()
                 for block in r.iter_content(1024):
