@@ -15,8 +15,8 @@ DOIT_CONFIG = {
 
 
 def task_gettext():
-    pot = "./{package}/locale/{package}.pot".format(package=PACKAGE)
-    sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
+    pot = f"./{PACKAGE}/locale/{PACKAGE}.pot"
+    sources = glob.glob(f"./{PACKAGE}/**/*.py", recursive=True)
     sources = [i for i in sources if "__version__.py" not in i]
     command = "xgettext --add-comments=TRANSLATORS --from-code=UTF-8 -o " + pot + " " + " ".join(sources)
     sources.append(README_BASE)
@@ -70,7 +70,7 @@ def task_msgfmt():
 
 
 def task_crowdin():
-    sources = glob.glob("./{package}/**/*.po".format(package=PACKAGE), recursive=True)
+    sources = glob.glob(f"./{PACKAGE}/**/*.po", recursive=True)
     sources.append("readme_translations/en_US.rst")
     return {
         "actions": ["crowdin upload sources"],
@@ -88,7 +88,7 @@ def task_crowdin_pull():
 def task_commit_lang_file():
     def git_actions():
         if subprocess.run(['git', 'diff-index', '--quiet', 'HEAD']).returncode != 0:
-            return ["git commit -S -m \"loc: sync localization files from crowdin\""]
+            return ['git commit -S -m "loc: sync localization files from crowdin"']
         return ["echo"]
 
     return {
@@ -129,8 +129,8 @@ def task_bump_version():
 
 
 def task_mypy():
-    actions = ["mypy -p {}".format(PACKAGE)]
-    sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
+    actions = [f"mypy -p {PACKAGE}"]
+    sources = glob.glob(f"./{PACKAGE}/**/*.py", recursive=True)
     sources = [i for i in sources if "__version__.py" not in i]
     return {
         "actions": actions,
@@ -154,7 +154,8 @@ def task_test():
 def task_build():
     return {
         "actions": [
-            "python setup.py sdist bdist_wheel"
+            "python setup.py sdist bdist_wheel",
+            f"rm -rf build {PACKAGE}.egg-info"
         ],
         "task_dep": ["test", "msgfmt", "bump_version"]
     }
@@ -165,7 +166,7 @@ def task_publish():
         __version__ = __import__(PACKAGE).__version__
         if 'dev' in __version__:
             raise ValueError(f"Cannot publish dev version ({__version__}).")
-        binarys = glob.glob("./dist/*{}*".format(__version__), recursive=True)
+        binarys = glob.glob(f"./dist/*{__version__}*", recursive=True)
         return " ".join(["twine", "upload"] + binarys)
     return {
         "actions": [CmdAction(get_twine_command)],
