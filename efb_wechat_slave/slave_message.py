@@ -7,10 +7,11 @@ import threading
 import re
 import json
 from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict, List
+from xml.etree.ElementTree import Element
 
 import magic
 import requests
-import xmltodict
+from xml.etree import ElementTree as ETree
 from PIL import Image
 
 from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
@@ -195,32 +196,32 @@ class SlaveMessageManager:
                 return self.wechat_unsupported_msg(msg)
             else:
                 try:
-                    xml = xmltodict.parse(msg.raw.get('Content'))
-                    appmsg_type = xml.get('msg').get('appmsg').get('type')
-                    source = xml.get('msg').get('appinfo').get('appname')
+                    xml = ETree.fromstring(msg.raw.get('Content'))
+                    appmsg_type = self.get_node_text(xml, './appmsg/type', "")
+                    source = self.get_node_text(xml, './appinfo/appname', "")
                     if appmsg_type == '2':  # Image
                         return self.wechat_shared_image_msg(msg, source)
                     elif appmsg_type in ('3', '5'):
-                        title = xml.get('msg', {}).get('appmsg', {}).get('title', "")
-                        des = xml.get('msg', {}).get('appmsg', {}).get('des', "")
-                        url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
+                        title = self.get_node_text(xml, './appmsg/title', "")
+                        des = self.get_node_text(xml, './appmsg/des', "")
+                        url = self.get_node_text(xml, './appmsg/url', "")
                         return self.wechat_shared_link_msg(msg, source, title, des, url)
                     elif appmsg_type in ('33', '36'):  # Mini programs (wxapp)
-                        title = xml.get('msg', {}).get('appmsg', {}).get('sourcedisplayname', None) or \
-                                xml.get('msg', {}).get('appmsg', {}).get('appinfo', {}).get('appname', None) or \
-                                xml.get('msg', {}).get('appmsg', {}).get('title', "")
-                        des = xml.get('msg', {}).get('appmsg', {}).get('title', "")
-                        url = xml.get('msg', {}).get('appmsg', {}).get('url', "")
+                        title = self.get_node_text(xml, './appmsg/sourcedisplayname', "") or \
+                                self.get_node_text(xml, './appmsg/appinfo/appname', "") or \
+                                self.get_node_text(xml, './appmsg/title', "")
+                        des = self.get_node_text(xml, './appmsg/title', "")
+                        url = self.get_node_text(xml, './appmsg/url', "")
                         return self.wechat_shared_link_msg(msg, source, title, des, url)
                     elif appmsg_type == '1':  # Strange “app message” that looks like a text link
-                        msg.raw['text'] = xml.get('msg').get('appmsg').get('title')
+                        msg.raw['text'] = self.get_node_text(xml, './appmsg/title', "")
                         return self.wechat_text_msg(msg)
                     else:
                         # Unidentified message type
                         self.logger.error("[%s] Identified unsupported sharing message type. Raw message: %s",
                                           msg.id, msg.raw)
                         raise KeyError()
-                except KeyError:
+                except (TypeError, KeyError, ValueError, ETree.ParseError):
                     return self.wechat_unsupported_msg(msg)
         if self.channel.flag("first_link_only"):
             links = links[:1]
@@ -239,7 +240,7 @@ class SlaveMessageManager:
     def wechat_shared_image_msg(self, msg: wxpy.Message, source: str, text: str = "", mode: str = "image") -> EFBMsg:
         efb_msg = EFBMsg()
         efb_msg.type = MsgType.Image
-        efb_msg.text = self._("Via ") + source
+        efb_msg.text = self._("Via {source}").format(source=source)
         if text:
             efb_msg.text = "%s\n%s" % (text, efb_msg.text)
         efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg, app_message=mode)
@@ -248,9 +249,9 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_shared_link_msg(self, msg: wxpy.Message, source: str, title: str, des: str, url: str) -> EFBMsg:
         share_mode = self.channel.flag('app_shared_link_mode')
-        thumb_url = re.search(r"<thumburl>(.*?)</thumburl>", msg.raw['Content'])
-        thumb_url = thumb_url and thumb_url.group(1)
-        via = (source and self._("Via ") + source) or ""
+        xml = ETree.fromstring(msg.raw.get('Content'))
+        thumb_url = self.get_node_text(xml, ".//thumburl", "")
+        via = self._("Via {source}").format(source=source) if source else ""
         if thumb_url:
             return self.wechat_raw_link_msg(msg, title, des, thumb_url, url)
         if share_mode == "image":
@@ -301,14 +302,21 @@ class SlaveMessageManager:
         return efb_msg
 
     def wechat_newsapp_msg(self, msg: wxpy.Message) -> Optional[EFBMsg]:
-        data = xmltodict.parse(msg.text)
-        news = data.get('mmreader', {}).get('category', {}).get('newitem', [])
+        xml = ETree.fromstring(msg.raw.get('Content'))
+        news = xml.findall('.//category/item')
         e_msg = None
         if news:
-            e_msg = self.wechat_raw_link_msg(msg, news[0]['title'], news[0]['digest'],
-                                             news[0]['cover'], news[0]['shorturl'])
+            e_msg = self.wechat_raw_link_msg(msg,
+                                             self.get_node_text(news[0], 'title', ""),
+                                             self.get_node_text(news[0], 'digest', ""),
+                                             self.get_node_text(news[0], 'cover', ""),
+                                             self.get_node_text(news[0], 'shorturl', ""))
             for i in news[1:]:
-                self.wechat_raw_link_msg(msg, i['title'], i['digest'], i['cover'], i['shorturl'])
+                self.wechat_raw_link_msg(msg,
+                                         self.get_node_text(i, 'title', ""),
+                                         self.get_node_text(i, 'digest', ""),
+                                         self.get_node_text(i, 'cover', ""),
+                                         self.get_node_text(i, 'shorturl', ""))
         return e_msg
 
     @Decorators.wechat_msg_meta
@@ -356,9 +364,13 @@ class SlaveMessageManager:
         efb_msg = EFBMsg()
         efb_msg.type = MsgType.File
         try:
+            file_name = msg.file_name
+            efb_msg.text = file_name or ""
+            app_name = msg.app_name
+            if app_name:
+                efb_msg.text = self._("{file_name} sent via {app_name}").format(file_name=file_name, app_name=app_name)
+            efb_msg.filename = file_name or ""
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
-            efb_msg.text = msg.file_name or ""
-            efb_msg.filename = msg.file_name or ""
         except EOFError:
             efb_msg.type = MsgType.Text
             efb_msg.text += self._("[Failed to download the file, please check your phone.]")
@@ -476,3 +488,10 @@ class SlaveMessageManager:
             mime = mime.decode()
         self.logger.debug("[%s] File downloaded: %s (%s)", msg.id, file.name, mime)
         return file.name, mime, file
+
+    @staticmethod
+    def get_node_text(root: Element, path: str, fallback: str) -> str:
+        node = root.find(path)
+        if node:
+            return node.text or fallback
+        return fallback

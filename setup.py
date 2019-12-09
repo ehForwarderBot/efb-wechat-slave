@@ -40,7 +40,6 @@ setup(
         "python-magic",
         "pillow",
         "pyqrcode",
-        "xmltodict",
         "PyYaml",
         "requests>=2.22.0",
         "typing_extensions",
