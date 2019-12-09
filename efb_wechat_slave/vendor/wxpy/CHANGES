@@ -3,3 +3,5 @@
 - Allow per-bot instance definition of user agent (need accompanied changes in itchat too)
 - Allow the bot not to start immediately when instantiated.
 - Remove registration of cleanup method with atexit.
+- Use filename in XML if possible to avoid improper escape of file name in JSON data
+- Add attribute Message.app_name

@@ -143,6 +143,13 @@ class Message(object):
         """
         消息中文件的文件名
         """
+        try:
+            # Use filename in XML if possible to avoid improper escape of file name in JSON data
+            xml_title = ETree.fromstring(self.raw['Content']).find('./appmsg/title')
+            if xml_title and xml_title.text:
+                return xml_title.text
+        except (TypeError, KeyError, ValueError, ETree.ParseError):
+            pass
         return self.raw.get('FileName')
 
     @property
@@ -311,7 +318,6 @@ class Message(object):
             except (TypeError, KeyError, ValueError, ETree.ParseError):
                 pass
 
-
     # chats
 
     @property
@@ -380,6 +386,20 @@ class Message(object):
                     UserName=actual_user_name,
                     NickName=self.raw.get('ActualNickName')
                 ), self.chat)
+
+    # Other attributes
+
+    @property
+    def app_name(self):
+        """
+        Name of the WeChat app the message is sent with, if available
+        """
+        try:
+            ret = ETree.fromstring(self.raw['Content']).find('./appinfo/appname')
+            if ret:
+                return ret.text
+        except (TypeError, KeyError, ValueError, ETree.ParseError):
+            pass
 
     def _get_chat_by_user_name(self, user_name):
         """
