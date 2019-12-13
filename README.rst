@@ -22,7 +22,7 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 **Channel ID**: ``blueset.wechat``
 
 EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网页版、\
-修改版 ``wxpy`` 和 ``ItChat``\ 。
+修改版 ``wxpy``\  和 \ ``ItChat``\ 。
 
 本项目的部分代码修改自 `youfou/wxpy`_\ 、\ `littlecodersh/ItChat`_\ 。
 
@@ -45,7 +45,7 @@ Alpha 版本
 该封禁不影响其他客户端的登录。目前封禁的原因尚不明确。
 
 与此同时，有现象表明 2016 年中旬以来新注册的微信用户不能够使用微信网页版。\
-在初次使用之前，请先访问 \ `微信网页版`_\ 并确认您可以正常使用此功能。\
+在初次使用之前，请先访问\ `微信网页版`_\ 并确认您可以正常使用此功能。\
 若您的账号不能使用该功能，请尝试换用其他账号尝试。
 
 如果你对网页版登录有要求的话，请慎用此信道。详细的相关信息请参见 `issue #7`_\ 。
@@ -72,12 +72,12 @@ Alpha 版本
 
        pip3 install efb-wechat-slave
 
-3. 在当前配置文件夹（Profile）的 ``config.yaml`` 中启用 EWS。
+3. 在当前配置文件夹（Profile）的 \ ``config.yaml``\  中启用 EWS。
 
    当前配置文件夹的位置会根据用户的设定而改变。
 
-   **(EFB 2.0.0a1 中，默认的配置文件夹位于** \
-   ``~/.ehforwarderbot/profiles/default`` **)**
+   **(EFB 2.0.0a1 中，默认的配置文件夹位于** 
+   ``~/.ehforwarderbot/profiles/default``\  **)**
 
 
 其他的安装方式
