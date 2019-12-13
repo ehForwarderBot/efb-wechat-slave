@@ -38,17 +38,24 @@ time.
 Attention
 ---------
 
-Since mid-2016, we have received feedback where some users' access to Web
-WeChat was banned. Most of the users were unbanned within 1 week to 3 months.
+Since mid-2016, we have received feedback where some users’ access to Web
+WeChat was banned. Most of the users were unbanned within 1 day to 3 months.
 When a user is banned for Web WeChat access, a pop up would be shown when
-they try to use it, stating that they "cannot use Web WeChat temporary", and
-are recommended to "use mobile app or Windows/macOS instead".
+they try to use it, stating that they “cannot use Web WeChat temporary”, and
+are recommended to use mobile app or Windows/macOS instead".
+
+Meanwhile, it is reported that WeChat accounts registered after mid-2016
+cannot use Web WeChat “for security reason”. Please confirm that you can
+use `Web WeChat`_ with your account before setting up EWS.
 
 The ban will NOT affect your access to any other client. The cause of such ban
 is not clear.
 
 Please proceed with caution, and avoid using this Channel if you have special
-need of Web WeChat access. Learn more in the Project Wiki.
+need of Web WeChat access. More details are available in `issue #7`_.
+
+.. _Web WeChat: https://web.wechat.com/
+.. _issue #7: https://github.com/blueset/efb-wechat-slave/issues/7
 
 Dependencies
 ------------
