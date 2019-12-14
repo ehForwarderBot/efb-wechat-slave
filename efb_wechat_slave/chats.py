@@ -106,7 +106,7 @@ class ChatManager:
         # if chat name or alias changes, update cache immediately
         chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
         chat_alias = getattr(chat, 'display_name', None) or getattr(chat, 'remark_name', None)
-        cached_obj: EFBChat = None
+        cached_obj: Optional[EFBChat] = None
         if chat_alias:
             chat_alias = ews_utils.wechat_string_unescape(chat_alias)
         if cache_key in self.efb_chat_objs:
