@@ -36,13 +36,23 @@ Alpha 版本
 注意
 ====
 
-自 2016
-年中旬以来，陆续有用户报告其微信网页版登录被腾讯封禁。表现为用任何方式登录微信网页版提示「当前登录环境异常。为了你的账号安全，暂时不能登录
-Web 微信。你可以通过手机客户端或 Windows 微信登录」或类似的提示。大部分用户会在封禁后三个月内解封，不同用户的解封耗时不同。
+Since mid-2016, we have received feedback where some users’ access to
+Web WeChat was banned. Most of the users were unbanned within 1 day to
+3 months. When a user is banned for Web WeChat access, a pop up would
+be shown when they try to use it, stating that they “cannot use Web
+WeChat temporary”, and are recommended to use mobile app or
+Windows/macOS instead」.
+
+Meanwhile, it is reported that WeChat accounts registered after
+mid-2016 cannot use Web WeChat “for security reason”. Please confirm
+that you can use `Web WeChat <https://web.wechat.com/>`_ with your
+account before setting up EWS.
 
 该封禁不影响其他客户端的登录。目前封禁的原因尚不明确。
 
-如果你对网页版登录有要求的话，请慎用此信道。详细的相关信息请参见项目 Wiki。
+Please proceed with caution, and avoid using this Channel if you have
+special need of Web WeChat access. More details are available in
+`issue #7 <https://github.com/blueset/efb-wechat-slave/issues/7>`_.
 
 
 依赖

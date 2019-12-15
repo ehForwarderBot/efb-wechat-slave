@@ -16,7 +16,7 @@ EFB WeChat Slave Channel
 .. image:: https://i.imgur.com/dCZfh14.png
    :alt: This project proudly supports #SayNoToWeChat campaign.
 
-`README in other languages <.>`_.
+`他の言語でREADMEを読む <.>`_
 
 **Channel ID**: ``blueset.wechat``
 
@@ -38,18 +38,24 @@ any time.
 Attention
 =========
 
-Since mid-2016, we have received feedback where some users』 access to
-Web WeChat was banned. Most of the users were unbanned within 1 week
-to 3 months. When a user is banned for Web WeChat access, a pop up
-would be shown when they try to use it, stating that they 「cannot use
-Web WeChat temporary」, and are recommended to 「use mobile app or
+Since mid-2016, we have received feedback where some users’ access to
+Web WeChat was banned. Most of the users were unbanned within 1 day to
+3 months. When a user is banned for Web WeChat access, a pop up would
+be shown when they try to use it, stating that they “cannot use Web
+WeChat temporary”, and are recommended to use mobile app or
 Windows/macOS instead」.
+
+Meanwhile, it is reported that WeChat accounts registered after
+mid-2016 cannot use Web WeChat “for security reason”. Please confirm
+that you can use `Web WeChat <https://web.wechat.com/>`_ with your
+account before setting up EWS.
 
 The ban will NOT affect your access to any other client. The cause of
 such ban is not clear.
 
 Please proceed with caution, and avoid using this Channel if you have
-special need of Web WeChat access. Learn more in the Project Wiki.
+special need of Web WeChat access. More details are available in
+`issue #7 <https://github.com/blueset/efb-wechat-slave/issues/7>`_.
 
 
 Dependencies
@@ -71,7 +77,7 @@ Install and Enable
 
 1. Install all binary dependencies stated above
 
-2. Install
+2. インストール
 
     ::
        pip3 install efb-wechat-slave
