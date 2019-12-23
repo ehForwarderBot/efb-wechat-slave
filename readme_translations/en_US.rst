@@ -4,6 +4,9 @@ EFB WeChat Slave Channel
 .. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg
    :alt: PyPI release
    :target: https://pypi.org/project/efb-wechat-slave/
+.. image:: https://pepy.tech/badge/efb-wechat-slave/month
+   :alt: Downloads per month
+   :target: https://pepy.tech/project/efb-wechat-slave
 .. image:: https://d322cqt584bo4o.cloudfront.net/ehforwarderbot/localized.svg
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/

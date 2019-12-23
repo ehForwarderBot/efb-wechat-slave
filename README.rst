@@ -4,6 +4,9 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 .. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg
    :alt: PyPI release
    :target: https://pypi.org/project/efb-wechat-slave/
+.. image:: https://pepy.tech/badge/efb-wechat-slave/month
+   :alt: Downloads per month
+   :target: https://pepy.tech/project/efb-wechat-slave
 .. image:: https://d322cqt584bo4o.cloudfront.net/ehforwarderbot/localized.svg
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
@@ -226,7 +229,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存�
 ``vendor_specific``
 -------------------
 
-EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
+EWS 的 \ ``EFBChat``\  提供了以下的 \ ``vendor_specific``\  项目：
 
 -  ``is_mp`` *(bool)*
    该会话是否为公众号。
