@@ -3,6 +3,7 @@ from __future__ import print_function
 import warnings as _warnings
 import os as _os
 import sys as _sys
+from contextlib import suppress
 
 from tempfile import mkdtemp
 
@@ -82,14 +83,10 @@ class TemporaryDirectory(object):
             if isdir:
                 self._rmtree(fullname)
             else:
-                try:
+                with suppress(OSError):
                     self._remove(fullname)
-                except OSError:
-                    pass
-        try:
+        with suppress(OSError):
             self._rmdir(path)
-        except OSError:
-            pass
 
 
 def force_encoded_string_output(func):

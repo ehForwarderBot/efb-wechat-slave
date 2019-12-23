@@ -554,11 +554,9 @@ class Bot(object):
         """
 
         if isinstance(self.listening_thread, Thread):
-            try:
+            with suppress(KeyboardInterrupt):
                 logger.info('{}: joined'.format(self))
                 self.listening_thread.join()
-            except KeyboardInterrupt:
-                pass
 
     def cleanup(self):
         if self.is_listening:

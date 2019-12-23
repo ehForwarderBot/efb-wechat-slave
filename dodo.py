@@ -39,11 +39,9 @@ def task_gettext():
 def task_msgfmt():
     languages = [i[i.rfind('/')+1:] for i in glob.glob("./readme_translations/locale/*_*")]
 
-    try:
+    with suppress(ValueError):
         languages.remove("zh_CN")
         languages.remove("en_US")
-    except ValueError:
-        pass
 
     sources = glob.glob("./**/*.po", recursive=True)
     dests = [i[:-3] + ".mo" for i in sources]

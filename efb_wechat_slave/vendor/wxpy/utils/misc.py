@@ -7,6 +7,7 @@ import random
 import re
 import threading
 import weakref
+from contextlib import suppress
 from functools import wraps
 
 import requests
@@ -26,10 +27,8 @@ def decode_text_from_webwx(text):
     :param text: 从 Web 微信获得到的中文乱码
     """
     if isinstance(text, str):
-        try:
+        with suppress(UnicodeDecodeError):
             text = text.encode('raw_unicode_escape').decode()
-        except UnicodeDecodeError:
-            pass
     return text
 
 
