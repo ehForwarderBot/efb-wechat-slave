@@ -1,17 +1,16 @@
 # coding: utf-8
 
-import base64
 import io
 import json
 import logging
 import os
 import tempfile
 import threading
-import time
 from gettext import translation
 from json import JSONDecodeError
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List, Tuple, Callable
+from uuid import uuid4
 
 import yaml
 from PIL import Image
@@ -254,7 +253,7 @@ class WeChatChannel(EFBChannel):
         msg.chat = msg.author = chat
         msg.deliver_to = coordinator.master
         msg.text = self._("WeChat server has logged you out. Please log in again when you are ready.")
-        msg.uid = f"__reauth__.{int(time.time())}"
+        msg.uid = f"__reauth__.{uuid4()}"
         msg.type = MsgType.Text
         on_log_out = self.flag("on_log_out")
         on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
@@ -346,16 +345,15 @@ class WeChatChannel(EFBChannel):
                         tgt_text += "…"
                     else:
                         tgt_text = qt_txt
-                    tgt_text = "「%s」" % tgt_text
                 elif max_length < 0:
-                    tgt_text = "「%s」" % qt_txt
+                    tgt_text = qt_txt
                 else:
                     tgt_text = ""
                 if isinstance(chat, wxpy.Group) and not msg.target.author.is_self:
-                    tgt_alias = "@%s\u2005 " % msg.target.author.display_name
+                    tgt_alias = "@%s\u2005：" % msg.target.author.display_name
                 else:
                     tgt_alias = ""
-                msg.text = "%s%s\n\n%s" % (tgt_alias, tgt_text, msg.text)
+                msg.text = f"「{tgt_alias}{tgt_text}」\n- - - - - - - - - - - - - - -\n{msg.text}"
             r.append(self._bot_send_msg(chat, msg.text))
             self.logger.debug('[%s] Sent as a text message. %s', msg.uid, msg.text)
         elif msg.type in (MsgType.Image, MsgType.Sticker, MsgType.Animation):
