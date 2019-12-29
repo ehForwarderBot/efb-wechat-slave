@@ -492,6 +492,4 @@ class SlaveMessageManager:
     @staticmethod
     def get_node_text(root: Element, path: str, fallback: str) -> str:
         node = root.find(path)
-        if node:
-            return node.text or fallback
-        return fallback
+        return getattr(node, 'text', fallback) or fallback
