@@ -53,7 +53,7 @@ class WeChatChannel(EFBChannel):
     __version__ = __version__
 
     supported_message_types = {MsgType.Text, MsgType.Sticker, MsgType.Image,
-                               MsgType.File, MsgType.Video, MsgType.Link, MsgType.Audio,
+                               MsgType.File, MsgType.Video, MsgType.Link, MsgType.Voice,
                                MsgType.Animation}
     logger: logging.Logger = logging.getLogger("plugins.%s.WeChatChannel" % channel_id)
     qr_uuid: Tuple[str, int] = ('', 0)

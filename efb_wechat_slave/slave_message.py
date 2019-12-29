@@ -379,7 +379,7 @@ class SlaveMessageManager:
     @Decorators.wechat_msg_meta
     def wechat_voice_msg(self, msg: wxpy.Message) -> EFBMsg:
         efb_msg = EFBMsg()
-        efb_msg.type = MsgType.Audio
+        efb_msg.type = MsgType.Voice
         try:
             efb_msg.path, efb_msg.mime, efb_msg.file = self.save_file(msg)
             efb_msg.text = ""
