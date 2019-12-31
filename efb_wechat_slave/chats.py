@@ -24,17 +24,21 @@ class ChatManager:
         # noinspection PyProtectedMember
         self._ = self.channel._
 
-        self.MISSING_GROUP: EFBChat = EFBChat(self.channel)
-        self.MISSING_GROUP.chat_uid = "__error__"
-        self.MISSING_GROUP.chat_type = ChatType.Group
-        self.MISSING_GROUP.chat_name = self._("Chat Missing")
-        self.MISSING_GROUP.chat_alias = None
+        self.MISSING_GROUP: EFBChat = EFBChat(
+            channel=self.channel,
+            chat_uid="__error__",
+            chat_type=ChatType.Group,
+            chat_name=self._("Chat Missing"),
+            chat_alias=None
+        )
 
-        self.MISSING_USER: EFBChat = EFBChat(self.channel)
-        self.MISSING_USER.chat_uid = "__error__"
-        self.MISSING_USER.chat_type = ChatType.User
-        self.MISSING_USER.chat_name = self._("Chat Missing")
-        self.MISSING_USER.chat_alias = None
+        self.MISSING_CHAT: EFBChat = EFBChat(
+            channel=self.channel,
+            chat_uid="__error__",
+            chat_type=ChatType.User,
+            chat_name=self._("Chat Missing"),
+            chat_alias=None
+        )
 
         self.efb_chat_objs: Dict[Tuple[str, Optional[str]], EFBChat] = {}
         # Cached EFBChat objects. Key: tuple(chat PUID, group PUID or None)
@@ -227,8 +231,8 @@ class ChatManager:
             'is_muted':
                 raw.get('Statues', 0) == self.CHAT_ROOM_NOTIFY_CLOSE if is_room_contact
                 else bool(contact_flag & self.CONTACT_FLAG_NOTIFY_CLOSE_CONTACT),
-                # WTF is ``statues``?!!? Seriously, you have spelt “status” correctly in the message object,
-                # why can’t you do it this time?
+            # WTF is ``statues``?!!? Seriously, you have spelt “status” correctly in the message object,
+            # why can’t you do it this time?
             'is_top': bool(contact_flag & self.CONTACT_FLAG_TOP_CONTACT),
             'has_photo_album': bool(raw.get('SnsFlag', 0)),
         }

@@ -8,6 +8,7 @@ import tempfile
 import threading
 from gettext import translation
 from json import JSONDecodeError
+from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import IO, Any, Dict, Optional, List, Tuple, Callable
 from uuid import uuid4
@@ -233,7 +234,7 @@ class WeChatChannel(EFBChannel):
             qr_url = "https://login.weixin.qq.com/l/" + uuid
             QRCode(qr_url).png(file, scale=10)
             msg.text = self._("QR code expired, please scan the new one.")
-            msg.path = file.name
+            msg.path = Path(file.name)
             msg.file = file
             msg.mime = 'image/png'
         if status in (200, 201) or uuid != self.qr_uuid:
@@ -382,12 +383,12 @@ class WeChatChannel(EFBChannel):
                         img = img.convert('RGB').convert('P', palette=Image.ADAPTIVE, colors=255)
                         img.paste(255, mask)
                         img.save(f, transparency=255)
-                        msg.path = f.name
+                        msg.path = Path(f.name)
                         self.logger.debug('[%s] Image converted from %s to GIF', msg.uid, msg.mime)
                         file.close()
-                        f.seek(0)
-                        if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
+                        if f.seek(0, 2) > self.MAX_FILE_SIZE:
                             raise EFBMessageError(self._("Image size is too large. (IS02)"))
+                        f.seek(0)
                         r.append(self._bot_send_image(chat, f.name, f))
                     finally:
                         if not file.closed:
@@ -399,20 +400,21 @@ class WeChatChannel(EFBChannel):
                         out = Image.new("RGBA", img.size, (255, 255, 255, 255))
                         out.paste(img, img)
                         out.convert('RGB').save(f)
-                        msg.path = f.name
+                        msg.path = Path(f.name)
                         self.logger.debug('[%s] Image converted from %s to JPEG', msg.uid, msg.mime)
                         file.close()
-                        f.seek(0)
-                        if os.fstat(f.fileno()).st_size > self.MAX_FILE_SIZE:
+                        if f.seek(0, 2) > self.MAX_FILE_SIZE:
                             raise EFBMessageError(self._("Image size is too large. (IS02)"))
+                        f.seek(0)
                         r.append(self._bot_send_image(chat, f.name, f))
                     finally:
                         if not file.closed:
                             file.close()
             else:
                 try:
-                    if os.fstat(file.fileno()).st_size > self.MAX_FILE_SIZE:
+                    if file.seek(0, 2) > self.MAX_FILE_SIZE:
                         raise EFBMessageError(self._("Image size is too large. (IS01)"))
+                    file.seek(0)
                     self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
                     r.append(self._bot_send_image(chat, msg.path, file))
                 finally:
