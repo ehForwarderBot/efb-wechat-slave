@@ -261,8 +261,8 @@ EWS 的 \ ``EFBChat``\  提供了以下的 \ ``vendor_specific``\  项
 
 EWS 使用了 `GNU Affero General Public License 3.0`_ 或更新版本作为其开源许可::
 
-    EFB WeChat Slave Channel: An master channel for EH Forwarder Bot.
-    Copyright (C) 2016 - 2019 Eana Hufwe, and the EFB WeChat Slave Channel contributors
+    EFB WeChat Slave Channel: A slave channel for EH Forwarder Bot.
+    Copyright (C) 2016 - 2020 Eana Hufwe, and the EFB WeChat Slave Channel contributors
     All rights reserved.
 
     This program is free software: you can redistribute it and/or modify

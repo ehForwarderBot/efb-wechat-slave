@@ -299,8 +299,8 @@ EWS is licensed under `GNU Affero General Public License 3.0
 
 ::
 
-   EFB WeChat Slave Channel: An slave channel for EH Forwarder Bot.
-   Copyright (C) 2016 - 2019 Eana Hufwe, and the EFB WeChat Slave Channel contributors
+   EFB WeChat Slave Channel: A slave channel for EH Forwarder Bot.
+   Copyright (C) 2016 - 2020 Eana Hufwe, and the EFB WeChat Slave Channel contributors
    All rights reserved.
 
    This program is free software: you can redistribute it and/or modify
