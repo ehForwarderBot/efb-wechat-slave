@@ -6,6 +6,7 @@ import uuid
 import threading
 import re
 import json
+from pathlib import Path
 from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict, List
 from xml.etree.ElementTree import Element
 
@@ -444,7 +445,7 @@ class SlaveMessageManager:
         ])
         return efb_msg
 
-    def save_file(self, msg: wxpy.Message, app_message: Optional[str] = None) -> Tuple[str, str, IO[bytes]]:
+    def save_file(self, msg: wxpy.Message, app_message: Optional[str] = None) -> Tuple[Path, str, IO[bytes]]:
         """
         Args:
             msg: the WXPY message object
@@ -487,7 +488,7 @@ class SlaveMessageManager:
         if isinstance(mime, bytes):
             mime = mime.decode()
         self.logger.debug("[%s] File downloaded: %s (%s)", msg.id, file.name, mime)
-        return file.name, mime, file
+        return Path(file.name), mime, file
 
     @staticmethod
     def get_node_text(root: Element, path: str, fallback: str) -> str:

@@ -1,16 +1,17 @@
 import logging
-try:
-    import Queue as queue
-except ImportError:
-    import queue
+import queue
+from queue import _T
+from typing import Optional
 
 from .templates import AttributeDict
 
 logger = logging.getLogger('itchat')
 
+
 class Queue(queue.Queue):
-    def put(self, message):
-        queue.Queue.put(self, Message(message))
+    def put(self, item: dict, block: bool = True, timeout: Optional[float] = None) -> None:
+        super().put(Message(item), block, timeout)
+
 
 class Message(AttributeDict):
     def download(self, fileName):
@@ -18,15 +19,18 @@ class Message(AttributeDict):
             return self.text(fileName)
         else:
             return b''
+
     def __getitem__(self, value):
         if value in ('isAdmin', 'isAt'):
-            v = value[0].upper() + value[1:] # ''[1:] == ''
+            v = value[0].upper() + value[1:]  # ''[1:] == ''
             logger.debug('%s is expired in 1.3.0, use %s instead.' % (value, v))
             value = v
         return super(Message, self).__getitem__(value)
+
     def __str__(self):
         return '{%s}' % ', '.join(
-            ['%s: %s' % (repr(k),repr(v)) for k,v in self.items()])
+            ['%s: %s' % (repr(k), repr(v)) for k, v in self.items()])
+
     def __repr__(self):
         return '<%s: %s>' % (self.__class__.__name__.split('.')[-1],
-            self.__str__())
+                             self.__str__())

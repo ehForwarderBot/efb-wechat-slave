@@ -10,11 +10,7 @@ import time
 from pprint import pformat
 from threading import Thread
 
-try:
-    import queue
-except ImportError:
-    # noinspection PyUnresolvedReferences,PyPep8Naming
-    import Queue as queue
+import queue
 
 from ... import itchat
 

@@ -1,5 +1,6 @@
 import glob
 import subprocess
+from contextlib import suppress
 from pathlib import Path
 
 from doit.action import CmdAction

@@ -26,7 +26,7 @@ from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageErro
     EFBOperationNotSupported
 from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
 from ehforwarderbot.status import EFBMessageRemoval
-from ehforwarderbot.types import MessageID
+from ehforwarderbot.types import MessageID, ModuleID, InstanceID
 from ehforwarderbot.utils import extra
 from . import utils as ews_utils
 from .__version__ import __version__
@@ -48,7 +48,7 @@ class WeChatChannel(EFBChannel):
 
     channel_name = "WeChat Slave"
     channel_emoji = "💬"
-    channel_id = 'blueset.wechat'
+    channel_id = ModuleID('blueset.wechat')
     channel_type = ChannelType.Slave
 
     __version__ = __version__
@@ -136,7 +136,7 @@ class WeChatChannel(EFBChannel):
     # Constants
     MAX_FILE_SIZE: int = 5 * 2 ** 20
 
-    def __init__(self, instance_id: str = None):
+    def __init__(self, instance_id: InstanceID = None):
         """
         Initialize the channel
 
@@ -311,7 +311,7 @@ class WeChatChannel(EFBChannel):
 
         send_text_only = False
         self.logger.debug('[%s] Is edited: %s', msg.uid, msg.edit)
-        if msg.edit:
+        if msg.edit and msg.uid:
             if self.flag('delete_on_edit'):
                 msg_ids = json.loads(msg.uid)
                 if not msg.edit_media:
@@ -416,7 +416,9 @@ class WeChatChannel(EFBChannel):
                         raise EFBMessageError(self._("Image size is too large. (IS01)"))
                     file.seek(0)
                     self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
-                    r.append(self._bot_send_image(chat, msg.path, file))
+                    filename = msg.filename or (msg.path and msg.path.name)
+                    assert filename
+                    r.append(self._bot_send_image(chat, filename, file))
                 finally:
                     if not file.closed:
                         file.close()
@@ -425,16 +427,22 @@ class WeChatChannel(EFBChannel):
         elif msg.type in (MsgType.File, MsgType.Audio):
             self.logger.info("[%s] Sending %s to WeChat\nFileName: %s\nPath: %s\nFilename: %s",
                              msg.uid, msg.type, msg.text, msg.path, msg.filename)
-            r.append(self._bot_send_file(chat, msg.filename, file=msg.file))
+            filename = msg.filename or (msg.path and msg.path.name)
+            assert filename and msg.file
+            r.append(self._bot_send_file(chat, filename, file=msg.file))
             if msg.text:
                 self._bot_send_msg(chat, msg.text)
-            msg.file.close()
+            if not msg.file.closed:
+                msg.file.close()
         elif msg.type == MsgType.Video:
             self.logger.info("[%s] Sending video to WeChat\nFileName: %s\nPath: %s", msg.uid, msg.text, msg.path)
-            r.append(self._bot_send_video(chat, msg.path, file=msg.file))
+            filename = msg.filename or (msg.path and msg.path.name)
+            assert filename and msg.file
+            r.append(self._bot_send_video(chat, filename, file=msg.file))
             if msg.text:
                 r.append(self._bot_send_msg(chat, msg.text))
-            msg.file.close()
+            if not msg.file.closed:
+                msg.file.close()
         else:
             raise EFBMessageTypeNotSupported()
 
@@ -446,10 +454,13 @@ class WeChatChannel(EFBChannel):
         if isinstance(status, EFBMessageRemoval):
             if not status.message.author.is_self:
                 raise EFBOperationNotSupported(self._('You can only recall your own messages.'))
-            try:
-                msg_ids = json.loads(status.message.uid)
-            except JSONDecodeError:
-                raise EFBMessageError(self._("ID of the message to recall is invalid."))
+            if status.message.uid:
+                try:
+                    msg_ids = json.loads(status.message.uid)
+                except JSONDecodeError:
+                    raise EFBMessageError(self._("ID of the message to recall is invalid."))
+            else:
+                raise EFBMessageError(self._("ID of the message to recall is not found."))
             failed = 0
             if any(len(i) == 1 for i in msg_ids):  # Message is not sent through EWS
                 raise EFBOperationNotSupported(
@@ -468,7 +479,7 @@ class WeChatChannel(EFBChannel):
                         len(msg_ids)
                     ).format(failed=failed, total=len(msg_ids)))
             else:
-                val = [status.message.uid, len(msg_ids)]
+                val = (status.message.uid, len(msg_ids))
                 for i in msg_ids:
                     self.slave_message.recall_msg_id_conversion[str(i[1])] = val
         else:
@@ -545,7 +556,7 @@ class WeChatChannel(EFBChannel):
             else:
                 cid, alias = param
         else:
-            return self.set_alias.desc
+            return self.set_alias.desc  # type: ignore
 
         chat = self.bot.search(cid)
 

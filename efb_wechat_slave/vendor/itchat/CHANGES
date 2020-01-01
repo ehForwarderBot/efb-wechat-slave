@@ -18,6 +18,8 @@ Changes from Eana Hufwe
 - Download multiple videos in batch will produce duplicated contents
 - Raise `ConnectionError` instead of exit when failed to connect at beginning, [ews#50]
 - Add thread names to threads
+- Add type hints (partially)
+- Remove Python 2 compatibility code
 
 
 [jjkkoo/ea0704f]: https://github.com/littlecodersh/ItChat/commit/ea0704ffbd814f888fbe48109bd764541807e523

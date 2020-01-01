@@ -68,6 +68,7 @@ from .api.consts import FEMALE, MALE
 from .api.messages import Article, Message, Messages, SentMessage
 from .exceptions import ResponseError
 from .utils import BaseRequest, detect_freq_limit, dont_raise_response_error, embed, ensure_one, mutual_friends
+from logging import NullHandler
 
 __title__ = 'wxpy'
 __version__ = '0.3.9.8.mod.EWS'
@@ -75,15 +76,6 @@ __author__ = 'Youfou'
 __license__ = 'MIT'
 __copyright__ = '2017, Youfou'
 
-version_details = 'wxpy {ver} from {path} (python {pv.major}.{pv.minor}.{pv.micro})'.format(
-    ver=__version__, path=__path__[0], pv=sys.version_info)
-
-try:
-    # Python 2.7+
-    from logging import NullHandler
-except ImportError:
-    class NullHandler(logging.Handler):
-        def emit(self, record):
-            pass
+version_details = f'wxpy {__version__} (python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro})'
 
 logging.getLogger(__name__).addHandler(NullHandler())

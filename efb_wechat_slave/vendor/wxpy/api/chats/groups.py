@@ -1,6 +1,8 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
+from typing import List
+
 from ...utils import ensure_list, match_attributes, match_name
 from .user import User
 
@@ -15,8 +17,8 @@ class Groups(list):
     # valid group 直接通过
     # 其他的需要确认是否包含机器人自身，并再分类到上面两种群中
 
-    shadow_group_user_names = list()
-    valid_group_user_names = list()
+    shadow_group_user_names: List[str] = []
+    valid_group_user_names: List[str] = []
 
     def __init__(self, group_list=None):
         if group_list:
@@ -40,7 +42,7 @@ class Groups(list):
 
             super(Groups, self).__init__(groups_to_init)
 
-    def search(self, keywords=None, users=None, **attributes):
+    def search(self, keywords=None, users=None, **attributes) -> 'Groups':
         """
         在群聊合集中，根据给定的条件进行搜索
 

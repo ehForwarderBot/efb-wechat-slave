@@ -283,6 +283,7 @@ class PuidMap(object):
                         self.log("Potential common attribute match: %s -> %s", old, new)
                     return False
             return True
+        return False
 
     @staticmethod
     def merge_captions(old: Optional[Caption], new: Caption) -> Caption:
@@ -290,7 +291,7 @@ class PuidMap(object):
         if not old:
             return new
         else:
-            cap: Caption = tuple(new[i] or old[i] for i in range(4))
+            cap: Caption = (new[0] or old[0], new[1] or old[1], new[2] or old[2], new[3] or old[3])
             return cap
 
 

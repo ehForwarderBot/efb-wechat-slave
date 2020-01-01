@@ -2,7 +2,6 @@ import logging
 
 
 class LogSystem(object):
-    handlerList = []
     showOnCmd = True
     loggingLevel = logging.INFO
     loggingFile = None

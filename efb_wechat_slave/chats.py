@@ -26,15 +26,15 @@ class ChatManager:
 
         self.MISSING_GROUP: EFBChat = EFBChat(
             channel=self.channel,
-            chat_uid="__error__",
+            chat_uid=ChatID("__error__"),
             chat_type=ChatType.Group,
-            chat_name=self._("Chat Missing"),
+            chat_name=self._("Group Missing"),
             chat_alias=None
         )
 
         self.MISSING_CHAT: EFBChat = EFBChat(
             channel=self.channel,
-            chat_uid="__error__",
+            chat_uid=ChatID("__error__"),
             chat_type=ChatType.User,
             chat_name=self._("Chat Missing"),
             chat_alias=None
@@ -74,7 +74,7 @@ class ChatManager:
                 chat = wxpy.ensure_one(self.bot.search(puid=puid))
                 return self.wxpy_chat_to_efb_chat(chat)
             except ValueError:
-                return self.MISSING_USER
+                return self.MISSING_CHAT
 
     def get_wxpy_chat_by_uid(self, uid: str) -> wxpy.Chat:
         if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
@@ -135,9 +135,11 @@ class ChatManager:
                 efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
         elif isinstance(chat, wxpy.Group):
             efb_chat.chat_type = ChatType.Group
+            members = []
             for i in chat.members:
-                efb_chat.members.append(self.wxpy_chat_to_efb_chat(i, False))
-                efb_chat.members[-1].group = efb_chat
+                members.append(self.wxpy_chat_to_efb_chat(i, False))
+                members[-1].group = efb_chat
+            efb_chat.members = members
         elif isinstance(chat, wxpy.MP):
             efb_chat.chat_type = ChatType.User
             efb_chat.vendor_specific['is_mp'] = True
