@@ -173,7 +173,7 @@ class Message(object):
         """
         当消息来自群聊，且被 @ 时，为 True
         """
-        return self.raw.get('IsAt') or self.raw.get('isAt')
+        return self.raw.get('IsAt')
 
     # misc
 

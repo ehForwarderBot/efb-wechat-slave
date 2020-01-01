@@ -59,23 +59,6 @@ class ChatManager:
     def bot(self):
         return self.channel.bot
 
-    def get_chat_by_puid(self, puid: str) -> EFBChat:
-        if puid in wxpy.Chat.SYSTEM_ACCOUNTS:
-            efb_chat = self.wxpy_chat_to_efb_chat(wxpy.Chat(wxpy.utils.wrap_user_name(puid), self.bot))
-            assert efb_chat is not None
-            efb_chat.chat_type = ChatType.System
-            return efb_chat
-        try:
-            chat: wxpy.Chat = wxpy.ensure_one(self.bot.search(puid=puid))
-            return self.wxpy_chat_to_efb_chat(chat)
-        except ValueError:
-            try:
-                self.bot.chats(update=True)
-                chat = wxpy.ensure_one(self.bot.search(puid=puid))
-                return self.wxpy_chat_to_efb_chat(chat)
-            except ValueError:
-                return self.MISSING_CHAT
-
     def get_wxpy_chat_by_uid(self, uid: str) -> wxpy.Chat:
         if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
             return wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
@@ -131,6 +114,7 @@ class ChatManager:
         if isinstance(chat, wxpy.Member):
             efb_chat.chat_type = ChatType.User
             efb_chat.is_chat = False
+            efb_chat.has_self = False
             if recursive:
                 efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
         elif isinstance(chat, wxpy.Group):
@@ -163,6 +147,7 @@ class ChatManager:
         return l
 
     def search_chat(self, uid: str, refresh: bool = False) -> EFBChat:
+        """Search chat by temporary UserName."""
         try:
             if refresh:
                 self.bot.chats(True)

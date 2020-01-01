@@ -321,7 +321,7 @@ class WeChatChannel(EFBChannel):
                 failed = 0
                 for i in msg_ids:
                     try:
-                        ews_utils.message_to_dummy_message(i, self).recall()
+                        ews_utils.message_id_to_dummy_message(i, self).recall()
                     except wxpy.ResponseError as e:
                         self.logger.error("[%s] Trying to recall message but failed: %s", msg.uid, e)
                         failed += 1
@@ -468,7 +468,7 @@ class WeChatChannel(EFBChannel):
                 )
             for i in msg_ids:
                 try:
-                    ews_utils.message_to_dummy_message(i, self).recall()
+                    ews_utils.message_id_to_dummy_message(i, self).recall()
                 except wxpy.ResponseError:
                     failed += 1
             if failed:
@@ -581,7 +581,7 @@ class WeChatChannel(EFBChannel):
         self.exit_callback()
         return self._("Done.")
 
-    # Command functions
+    # region [Command functions]
 
     def reauth(self, command=False):
         msg = self._("Preparing to log in...")
@@ -591,6 +591,8 @@ class WeChatChannel(EFBChannel):
 
         threading.Thread(target=self.authenticate, args=(qr_reload,), name="EWS reauth thread").start()
         return msg
+
+    # endregion [Command functions]
 
     def authenticate(self, qr_reload, first_start=False):
         qr_callback = getattr(self, qr_reload, self.master_qr_code)

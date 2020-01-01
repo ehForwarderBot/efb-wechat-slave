@@ -1,28 +1,28 @@
 # coding: utf-8
 
-import logging
-import tempfile
-import uuid
-import threading
-import re
 import json
+import logging
+import re
+import tempfile
+import threading
+import uuid
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict, List
+from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict
+from xml.etree import ElementTree as ETree
 from xml.etree.ElementTree import Element
 
 import magic
 import requests
-from xml.etree import ElementTree as ETree
 from PIL import Image
 
 from ehforwarderbot import EFBMsg, MsgType, EFBChat, coordinator
-from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.message import EFBMsgLocationAttribute, EFBMsgLinkAttribute, EFBMsgCommands, EFBMsgCommand, \
     EFBMsgSubstitutions
+from ehforwarderbot.status import EFBMessageRemoval
 from ehforwarderbot.types import MessageID
 from . import constants
 from . import utils as ews_utils
-from .vendor import wxpy, itchat
+from .vendor import wxpy
 from .vendor.wxpy.api import consts
 
 if TYPE_CHECKING:

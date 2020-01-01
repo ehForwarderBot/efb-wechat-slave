@@ -1,6 +1,5 @@
 import logging
 import queue
-from queue import _T
 from typing import Optional
 
 from .templates import AttributeDict
