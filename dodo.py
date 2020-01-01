@@ -128,7 +128,7 @@ def task_bump_version():
 
 
 def task_mypy():
-    actions = [f"mypy -p {PACKAGE}"]
+    actions = [f"mypy -p {PACKAGE} --ignore-missing-imports"]
     sources = glob.glob(f"./{PACKAGE}/**/*.py", recursive=True)
     sources = [i for i in sources if "__version__.py" not in i]
     return {
@@ -138,15 +138,14 @@ def task_mypy():
 
 
 def task_test():
-    # Unit test is not yet available for EWS
-    # sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
-    # sources = [i for i in sources if "__version__.py" not in i]
+    sources = glob.glob("./{package}/**/*.py".format(package=PACKAGE), recursive=True)
+    sources = [i for i in sources if "__version__.py" not in i]
     return {
         "actions": [
-            # "coverage run --source ./{} -m pytest".format(PACKAGE),
-            # "coverage report"
+            "coverage run --source ./{} -m pytest".format(PACKAGE),
+            "coverage report"
         ],
-        # "file_dep": sources
+        "file_dep": sources
     }
 
 
