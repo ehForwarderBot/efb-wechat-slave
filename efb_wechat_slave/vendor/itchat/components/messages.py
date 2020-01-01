@@ -1,15 +1,18 @@
-import os, time, re, io
+import hashlib
+import io
 import json
-import mimetypes, hashlib
 import logging
+import mimetypes
+import os
+import re
+import time
+from urllib.parse import quote
 from collections import OrderedDict
 
-import requests
-
+from .contact import update_local_uin
 from .. import config, utils
 from ..returnvalues import ReturnValue
 from ..storage import templates
-from .contact import update_local_uin
 
 logger = logging.getLogger('itchat')
 
@@ -373,9 +376,9 @@ def upload_chunk_file(core, fileDir, fileSymbol, fileSize,
         ('uploadmediarequest', (None, uploadMediaRequest)),
         ('webwx_data_ticket', (None, cookiesList['webwx_data_ticket'])),
         ('pass_ticket', (None, core.loginInfo['pass_ticket'])),
-        ('filename', (utils.quote(fileName), file_.read(524288), 'application/octet-stream'))])
+        ('filename', (quote(fileName), file_.read(524288), 'application/octet-stream'))])
     if chunks == 1:
-        del files['chunk'];
+        del files['chunk']
         del files['chunks']
     else:
         files['chunk'], files['chunks'] = (None, str(chunk)), (None, str(chunks))

@@ -5,7 +5,7 @@ import logging
 import re
 import time
 
-from .. import config, utils
+from .. import utils
 from ..returnvalues import ReturnValue
 from ..storage import contact_change
 from ..utils import update_info_dict
