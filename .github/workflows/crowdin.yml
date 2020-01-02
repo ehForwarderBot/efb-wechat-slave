@@ -1,11 +1,10 @@
 name: Update strings to Crowdin
 
-on: push
-#on:
-#  push:
-#    paths:
-#      - 'efb_wechat_slave/**.py'
-#      - 'readme_translations/en_US.rst'
+on:
+  push:
+    paths:
+      - 'efb_wechat_slave/**.py'
+      - 'readme_translations/en_US.rst'
 
 jobs:
   crowdin:

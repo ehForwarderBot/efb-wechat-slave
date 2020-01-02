@@ -1,17 +1,16 @@
 name: Tests
 
-on: push
-#on:
-#  push:
-#    paths:
-#      - 'efb_wechat_slave/**.py'
-#      - 'tests/**.py'
-#      - 'setup.py'
-#  pull_request:
-#    paths:
-#      - 'efb_wechat_slave/**.py'
-#      - 'tests/**.py'
-#      - 'setup.py'
+on:
+  push:
+    paths:
+      - 'efb_wechat_slave/**.py'
+      - 'tests/**.py'
+      - 'setup.py'
+  pull_request:
+    paths:
+      - 'efb_wechat_slave/**.py'
+      - 'tests/**.py'
+      - 'setup.py'
 
 jobs:
   tests:

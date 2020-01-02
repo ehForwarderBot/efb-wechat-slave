@@ -2,17 +2,20 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 ============================================
 
 .. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg
-   :alt: PyPI release
+   :alt: PyPI 发布
    :target: https://pypi.org/project/efb-wechat-slave/
+.. image:: https://github.com/blueset/efb-wechat-slave/workflows/Tests/badge.svg
+   :alt: 测试状态
+   :target: https://github.com/blueset/efb-wechat-slave/actions
 .. image:: https://pepy.tech/badge/efb-wechat-slave/month
-   :alt: Downloads per month
+   :alt: 每月下载量
    :target: https://pepy.tech/project/efb-wechat-slave
 .. image:: https://d322cqt584bo4o.cloudfront.net/ehforwarderbot/localized.svg
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 
 .. image:: https://github.com/blueset/efb-wechat-slave/raw/master/banner.png
-   :alt: Banner
+   :alt: 头图
 
 .. image:: https://i.imgur.com/dCZfh14.png
    :alt: This project proudly supports #SayNoToWeChat campaign.
