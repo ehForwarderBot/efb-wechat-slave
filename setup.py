@@ -8,6 +8,7 @@ __version__ = ""
 exec(open('efb_wechat_slave/__version__.py').read())
 
 long_description = open('README.rst').read()
+tests_require = ["pytest", "mypy"]
 
 setup(
     name='efb-wechat-slave',
@@ -46,6 +47,10 @@ setup(
         "bullet",
         "cjkwrap"
     ],
+    extras_require={
+        'tests': tests_require
+    },
+    tests_require=tests_require,
     entry_points={
         'ehforwarderbot.slave': 'blueset.wechat = efb_wechat_slave:WeChatChannel',
         'ehforwarderbot.wizard': 'blueset.wechat = efb_wechat_slave.wizard:wizard'

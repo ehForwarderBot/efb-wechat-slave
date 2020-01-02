@@ -1,0 +1,49 @@
+name: Update strings to Crowdin
+
+on: push
+#on:
+#  push:
+#    paths:
+#      - 'efb_wechat_slave/**.py'
+#      - 'readme_translations/en_US.rst'
+
+jobs:
+  crowdin:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install '.[test]'
+        pip install sphinx sphinx-intl pandoc doit
+        pip install https://github.com/blueset/restbuilder/archive/master.zip
+    - name: Install binary dependencies
+      run: |
+        wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
+        sudo dpkg -i crowdin.deb
+        sudo apt-get update
+        sudo apt-get install -y gettext
+    - name: Setup directories
+      shell: bash
+      run: |
+        mkdir .cache
+        mkdir -p EFBChannels/efb-wechat-slave
+        find . -mindepth 1 -maxdepth 1 '!' -name EFBChannels -exec mv '{}' EFBChannels/efb-wechat-slave/ ';'
+    - name: Setup configuration file
+      env:
+        CROWDIN_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
+      run: |
+        config=$HOME/.crowdin.yaml
+        here=$(pwd)
+        echo project_identifier: ehforwarderbot > $config
+        echo api_key: $CROWDIN_TOKEN >> $config
+        echo base_path: $here >> $config
+    - name: Upload translations
+      run: |
+        cd EFBChannels/efb-wechat-slave
+        doit run --verbosity=2 crowdin
