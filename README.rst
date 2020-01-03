@@ -262,26 +262,24 @@ EWS 的 \ ``EFBChat``\  提供了以下的 \ ``vendor_specific``\  项
 开源许可
 --------
 
-EWS 使用了 `GNU Affero General Public License 3.0`_ 或更新版本作为其开源许可::
+EWS 使用了 \ `GNU Affero 通用公共许可协议 3.0`_\ （GNU Affero General Public
+License 3.0）或更新版本作为其开源许可::
 
-    EFB WeChat Slave Channel: A slave channel for EH Forwarder Bot.
-    Copyright (C) 2016 - 2020 Eana Hufwe, and the EFB WeChat Slave Channel contributors
-    All rights reserved.
+    EFB 微信从端：一个适用于 EH Forwarder Bot 的从端
+    Copyright (C) 2016 - 2020 Eana Hufwe 和 EFB 微信从端贡献者
+    保留所有权利。
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or any later version.
+    此程序是一个自由软件；您可以在遵守由自由软件基金会发布的第三版或更新
+    版本的 GNU Affero 通用公共许可协议的情况下重新分发并和/或修改软件。
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    我们本着可为人所用的意愿分发此软件，但并不提供任何保证；甚至没有商业
+    性的或对特定目的适用性的暗指。更多细节请参看 GNU Affero 通用公共许可
+    协议。
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    您应该已经随收到一份 GNU Affero 通用公共许可协议；如果没有，请查阅
+    <http://www.gnu.org/licenses/>。
 
-.. _GNU Affero General Public License 3.0: https://www.gnu.org/licenses/agpl-3.0.txt
+.. _GNU Affero 通用公共许可协议 3.0: https://www.gnu.org/licenses/agpl-3.0.txt
 
 翻译界面
 --------
