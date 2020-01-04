@@ -82,11 +82,11 @@ Install and Enable
 
        pip3 install efb-wechat-slave
 
-3. Enable EWS in ``config.yaml`` of the current profile.
+3. Enable EWS using the *EFB configuration wizard* or in ``config.yaml`` of the current profile.
 
    The config directory may vary based on your settings.
 
-   **(In EFB 2.0.0a1, the default configuration directory is**
+   **(In EFB 2, the default configuration directory is**
    ``~/.ehforwarderbot/profiles/default`` **)**
 
 Alternative installation methods

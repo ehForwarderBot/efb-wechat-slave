@@ -78,11 +78,11 @@ Alpha 版本
 
        pip3 install efb-wechat-slave
 
-3. 在当前配置文件夹（Profile）的 \ ``config.yaml``\  中启用 EWS。
+3. 使用 \ *EFB 配置向导*\ ，或在当前配置档案（Profile）目录的 \ ``config.yaml``\  文件中启用 EWS。
 
    当前配置文件夹的位置会根据用户的设定而改变。
 
-   **(EFB 2.0.0a1 中，默认的配置文件夹位于** 
+   **(EFB 2 中，默认的配置档案目录位于** 
    ``~/.ehforwarderbot/profiles/default``\  **)**
 
 
