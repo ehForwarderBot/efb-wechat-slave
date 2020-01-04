@@ -74,6 +74,8 @@ class WeChatChannel(EFBChannel):
     _: Callable = translator.gettext
     ngettext: Callable = translator.ngettext
 
+    # Constants
+    MAX_FILE_SIZE: int = 5 * 2 ** 20
     SYSTEM_ACCOUNTS: Final = {
         # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'filehelper': _('filehelper'),
@@ -132,9 +134,8 @@ class WeChatChannel(EFBChannel):
         # TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
         'userexperience_alarm': _('userexperience_alarm'),
     }
-
-    # Constants
-    MAX_FILE_SIZE: int = 5 * 2 ** 20
+    MEDIA_MSG_TYPES: Final = {MsgType.Voice, MsgType.Video, MsgType.Animation,
+                              MsgType.Image, MsgType.Sticker, MsgType.File}
 
     def __init__(self, instance_id: InstanceID = None):
         """
@@ -314,7 +315,7 @@ class WeChatChannel(EFBChannel):
         if msg.edit and msg.uid:
             if self.flag('delete_on_edit'):
                 msg_ids = json.loads(msg.uid)
-                if not msg.edit_media:
+                if msg.type in self.MEDIA_MSG_TYPES and not msg.edit_media:
                     # Treat message as text message to prevent resend of media
                     msg_ids = msg_ids[1:]
                     send_text_only = True
