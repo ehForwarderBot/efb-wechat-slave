@@ -123,7 +123,7 @@ def task_bump_version():
                 ]
             }
         ],
-        "task_dep": ["test", "mypy", "commit_lang_file"]
+        "task_dep": ["mypy", "test", "commit_lang_file"]
     }
 
 
@@ -157,7 +157,7 @@ def task_build():
             f"rm -rf build {PACKAGE}.egg-info",
             f"mv {PACKAGE}.egg-info.bak {PACKAGE}.egg-info",
         ],
-        "task_dep": ["test", "msgfmt", "bump_version"]
+        "task_dep": ["mypy", "test", "msgfmt", "bump_version"]
     }
 
 
