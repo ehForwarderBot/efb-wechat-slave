@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 import logging
 
+from typing import List
+
 from ...utils import ensure_list, get_user_name, handle_response, wrap_user_name
 from .chat import Chat
 from .chats import Chats
@@ -25,11 +27,11 @@ class Group(Chat):
         return self.raw.get('MemberList', list())
 
     @property
-    def members(self):
+    def members(self) -> 'Chats[Member]':
         """
         群聊的成员列表
         """
-        ret = Chats(source=self)
+        ret: 'Chats[Member]' = Chats(source=self)
         ret.extend(map(
             lambda x: Member(x, self),
             self.raw_member_list() or self.raw_member_list(True)
@@ -37,7 +39,7 @@ class Group(Chat):
         return ret
 
     @property
-    def nick_name(self):
+    def nick_name(self) -> str:
         """
         该聊天对象的昵称 (好友、群员的昵称，或群名称)
         """
@@ -45,11 +47,12 @@ class Group(Chat):
             return super(Group, self).nick_name
         elif self.members:
             names = sorted(i.nick_name for i in self.members)
+            name = ", ".join(names)
             if len(names) > 5:
-                names = names[:5] + ["..."]
-            return ", ".join(names)
+                name += f"..."
+            return name
         else:
-            return
+            return self.puid
 
     def __contains__(self, user):
         user_name = get_user_name(user)

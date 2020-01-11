@@ -3,14 +3,13 @@
 import io
 import json
 import logging
-import os
 import tempfile
 import threading
 from gettext import translation
 from json import JSONDecodeError
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import IO, Any, Dict, Optional, List, Tuple, Callable
+from typing import Any, Dict, Optional, List, Tuple, Callable, BinaryIO, IO
 from uuid import uuid4
 
 import yaml
@@ -19,14 +18,15 @@ from pkg_resources import resource_filename
 from pyqrcode import QRCode
 from typing_extensions import Final
 
-from ehforwarderbot import EFBChannel, EFBMsg, MsgType, ChannelType, \
-    ChatType, EFBStatus, EFBChat, coordinator
+from ehforwarderbot import Message, MsgType, Status, Chat, coordinator
 from ehforwarderbot import utils as efb_utils
+from ehforwarderbot.channel import SlaveChannel
+from ehforwarderbot.chat import SystemChat, SelfChatMember
 from ehforwarderbot.exceptions import EFBMessageTypeNotSupported, EFBMessageError, EFBChatNotFound, \
     EFBOperationNotSupported
-from ehforwarderbot.message import EFBMsgCommands, EFBMsgCommand
-from ehforwarderbot.status import EFBMessageRemoval
-from ehforwarderbot.types import MessageID, ModuleID, InstanceID
+from ehforwarderbot.message import MessageCommands, MessageCommand
+from ehforwarderbot.status import MessageRemoval
+from ehforwarderbot.types import MessageID, ModuleID, InstanceID, ChatID
 from ehforwarderbot.utils import extra
 from . import utils as ews_utils
 from .__version__ import __version__
@@ -38,7 +38,7 @@ from .vendor.wxpy import ResponseError
 from .vendor.wxpy.utils import PuidMap
 
 
-class WeChatChannel(EFBChannel):
+class WeChatChannel(SlaveChannel):
     """
     EFB Channel - WeChat Slave Channel
     Based on wxpy (itchat), WeChat Web Client
@@ -49,7 +49,6 @@ class WeChatChannel(EFBChannel):
     channel_name = "WeChat Slave"
     channel_emoji = "💬"
     channel_id = ModuleID('blueset.wechat')
-    channel_type = ChannelType.Slave
 
     __version__ = __version__
 
@@ -57,7 +56,6 @@ class WeChatChannel(EFBChannel):
                                MsgType.File, MsgType.Video, MsgType.Link, MsgType.Voice,
                                MsgType.Animation}
     logger: logging.Logger = logging.getLogger("plugins.%s.WeChatChannel" % channel_id)
-    qr_uuid: Tuple[str, int] = ('', 0)
     done_reauth: threading.Event = threading.Event()
     _stop_polling_event: threading.Event = threading.Event()
 
@@ -152,11 +150,17 @@ class WeChatChannel(EFBChannel):
 
         self.flag: ExperimentalFlagsManager = ExperimentalFlagsManager(self)
 
+        self.qr_uuid: Tuple[str, int] = ('', 0)
+        self.master_qr_picture_id: Optional[str] = None
+
         self.authenticate('console_qr_code')
 
         # Managers
         self.slave_message: SlaveMessageManager = SlaveMessageManager(self)
         self.chats: ChatManager = ChatManager(self)
+        self.user_auth_chat = SystemChat(channel=self,
+                                         name=self._("EWS User Auth"),
+                                         id=ChatID("__ews_user_auth__"))
 
     def load_config(self):
         """
@@ -215,20 +219,22 @@ class WeChatChannel(EFBChannel):
             return
         self.qr_uuid = (uuid, status)
 
-        msg = EFBMsg()
-        msg.uid = f"ews_auth_{uuid}_{status}"
-        msg.type = MsgType.Text
-        msg.chat = EFBChat(self).system()
-        msg.chat.chat_name = self._("EWS User Auth")
-        msg.author = msg.chat
-        msg.deliver_to = coordinator.master
+        msg = Message(
+            uid=f"ews_auth_{uuid}_{status}_{uuid4()}",
+            type=MsgType.Text,
+            chat=self.user_auth_chat,
+            author=self.user_auth_chat.other,
+            deliver_to=coordinator.master,
+        )
 
         if status == 201:
             msg.type = MsgType.Text
             msg.text = self._('Confirm on your phone.')
+            self.master_qr_picture_id = None
         elif status == 200:
             msg.type = MsgType.Text
             msg.text = self._("Successfully logged in.")
+            self.master_qr_picture_id = None
         elif uuid != self.qr_uuid:
             msg.type = MsgType.Image
             file = NamedTemporaryFile(suffix=".png")
@@ -238,6 +244,12 @@ class WeChatChannel(EFBChannel):
             msg.path = Path(file.name)
             msg.file = file
             msg.mime = 'image/png'
+            if self.master_qr_picture_id is not None:
+                msg.edit = True
+                msg.edit_media = True
+                msg.uid = self.master_qr_picture_id
+            else:
+                self.master_qr_picture_id = msg.uid
         if status in (200, 201) or uuid != self.qr_uuid:
             coordinator.send_message(msg)
 
@@ -248,21 +260,20 @@ class WeChatChannel(EFBChannel):
         self.logger.debug('Calling exit callback...')
         if self._stop_polling_event.is_set():
             return
-        msg = EFBMsg()
-        chat = EFBChat(self).system()
-        chat.chat_type = ChatType.System
-        chat.chat_name = self._("EWS User Auth")
-        msg.chat = msg.author = chat
-        msg.deliver_to = coordinator.master
-        msg.text = self._("WeChat server has logged you out. Please log in again when you are ready.")
-        msg.uid = f"__reauth__.{uuid4()}"
-        msg.type = MsgType.Text
+        msg = Message(
+            chat=self.user_auth_chat,
+            author=self.user_auth_chat.other,
+            deliver_to=coordinator.master,
+            text=self._("WeChat server has logged you out. Please log in again when you are ready."),
+            uid=f"__reauth__.{uuid4()}",
+            type=MsgType.Text,
+        )
         on_log_out = self.flag("on_log_out")
         on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
         if on_log_out == "command":
             msg.type = MsgType.Text
-            msg.commands = EFBMsgCommands(
-                [EFBMsgCommand(name=self._("Log in again"), callable_name="reauth", kwargs={"command": True})])
+            msg.commands = MessageCommands(
+                [MessageCommand(name=self._("Log in again"), callable_name="reauth", kwargs={"command": True})])
         elif on_log_out == "reauth":
             if self.flag("qr_reload") == "console_qr_code":
                 msg.text += "\n" + self._("Please check your log to continue.")
@@ -279,20 +290,42 @@ class WeChatChannel(EFBChannel):
         #         self.done_reauth.clear()
         self.logger.debug("%s (%s) gracefully stopped.", self.channel_name, self.channel_id)
 
-    def send_message(self, msg: EFBMsg) -> EFBMsg:
+    def send_message(self, msg: Message) -> Message:
         """Send a message to WeChat.
         Supports text, image, sticker, and file.
 
         Args:
-            msg (channel.EFBMsg): Message Object to be sent.
+            msg (channel.Message): Message Object to be sent.
 
         Returns:
             This method returns nothing.
 
         Raises:
-            EFBMessageTypeNotSupported: Raised when message type is not supported by the channel.
+            EFBChatNotFound:
+                Raised when a chat required is not found.
+
+            EFBMessageTypeNotSupported:
+                Raised when the message type sent is not supported by the
+                channel.
+
+            EFBOperationNotSupported:
+                Raised when an message edit request is sent, but not
+                supported by the channel.
+
+            EFBMessageNotFound:
+                Raised when an existing message indicated is not found.
+                E.g.: The message to be edited, the message referred
+                in the :attr:`msg.target <.Message.target>`
+                attribute.
+
+            EFBMessageError:
+                Raised when other error occurred while sending or editing the
+                message.
         """
-        chat: wxpy.Chat = self.chats.get_wxpy_chat_by_uid(msg.chat.chat_uid)
+        if msg.chat == self.user_auth_chat:
+            raise EFBChatNotFound
+
+        chat: wxpy.Chat = self.chats.get_wxpy_chat_by_uid(msg.chat.id)
 
         # List of "SentMessage" response for all messages sent
         r: List[wxpy.SentMessage] = []
@@ -303,7 +336,7 @@ class WeChatChannel(EFBChannel):
                          "Type: %s\n"
                          "Text: %s",
                          msg.uid,
-                         msg.chat.chat_uid, chat.user_name, chat.name, msg.type, msg.text)
+                         msg.chat.id, chat.user_name, chat.name, msg.type, msg.text)
 
         try:
             chat.mark_as_read()
@@ -338,7 +371,7 @@ class WeChatChannel(EFBChannel):
             else:
                 raise EFBOperationNotSupported()
         if send_text_only or msg.type in [MsgType.Text, MsgType.Link]:
-            if isinstance(msg.target, EFBMsg):
+            if isinstance(msg.target, Message):
                 max_length = self.flag("max_quote_length")
                 qt_txt = msg.target.text or msg.target.type.name
                 if max_length > 0:
@@ -351,7 +384,7 @@ class WeChatChannel(EFBChannel):
                     tgt_text = qt_txt
                 else:
                     tgt_text = ""
-                if isinstance(chat, wxpy.Group) and not msg.target.author.is_self:
+                if isinstance(chat, wxpy.Group) and not isinstance(msg.target.author, SelfChatMember):
                     tgt_alias = "@%s\u2005：" % msg.target.author.display_name
                 else:
                     tgt_alias = ""
@@ -451,9 +484,9 @@ class WeChatChannel(EFBChannel):
         self.logger.debug('WeChat message is assigned with unique ID: %s', msg.uid)
         return msg
 
-    def send_status(self, status: EFBStatus):
-        if isinstance(status, EFBMessageRemoval):
-            if not status.message.author.is_self:
+    def send_status(self, status: Status):
+        if isinstance(status, MessageRemoval):
+            if not isinstance(status.message.author, SelfChatMember):
                 raise EFBOperationNotSupported(self._('You can only recall your own messages.'))
             if status.message.uid:
                 try:
@@ -486,15 +519,15 @@ class WeChatChannel(EFBChannel):
         else:
             raise EFBOperationNotSupported()
 
-    def get_chat_picture(self, chat: EFBChat) -> IO[bytes]:
-        uid = chat.chat_uid
+    def get_chat_picture(self, chat: Chat) -> BinaryIO:
+        uid = chat.id
         if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
             wxpy_chat: wxpy.Chat = wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
         else:
             wxpy_chat = wxpy.utils.ensure_one(self.bot.search(puid=uid))
-        f = None
+        f: BinaryIO = None  # type: ignore
         try:
-            f = tempfile.NamedTemporaryFile(suffix='.jpg')
+            f: BinaryIO = tempfile.NamedTemporaryFile(suffix='.jpg')  # type: ignore
             data = wxpy_chat.get_avatar(None)
             if not data:
                 raise EFBOperationNotSupported()
@@ -596,6 +629,7 @@ class WeChatChannel(EFBChannel):
     # endregion [Command functions]
 
     def authenticate(self, qr_reload, first_start=False):
+        self.master_qr_picture_id = None
         qr_callback = getattr(self, qr_reload, self.master_qr_code)
         if getattr(self, 'bot', None):  # if a bot exists
             self.bot.cleanup()
@@ -632,25 +666,18 @@ class WeChatChannel(EFBChannel):
             return self._("Error occurred while processing (AF02).") + "n\n{}: {!r}".format(r.err_code, r.err_msg)
         return self._("Request accepted.")
 
-    def get_chats(self) -> List[EFBChat]:
+    def get_chats(self) -> List[Chat]:
         """
         Get all chats available from WeChat
         """
         return self.chats.get_chats()
 
-    def get_chat(self, chat_uid: str, member_uid: Optional[str] = None) -> EFBChat:
-        if member_uid:
-            chat = self.chats.search_member(uid=chat_uid, member_id=member_uid)
-            if not chat:
-                raise EFBChatNotFound()
-            else:
-                return chat
+    def get_chat(self, chat_uid: str) -> Chat:
+        chat = self.chats.search_chat(uid=chat_uid)
+        if not chat:
+            raise EFBChatNotFound()
         else:
-            chat = self.chats.search_chat(uid=chat_uid)
-            if not chat:
-                raise EFBChatNotFound()
-            else:
-                return chat
+            return chat
 
     def stop_polling(self):
         self.bot.cleanup()
@@ -713,5 +740,5 @@ class WeChatChannel(EFBChannel):
                 )
         return err
 
-    def get_message_by_id(self, chat: EFBChat, msg_id: MessageID) -> Optional['EFBMsg']:
+    def get_message_by_id(self, chat: Chat, msg_id: MessageID) -> Optional['Message']:
         raise EFBOperationNotSupported()

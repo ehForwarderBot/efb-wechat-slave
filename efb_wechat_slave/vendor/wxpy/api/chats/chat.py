@@ -369,7 +369,7 @@ class Chat(object):
         return self.alias or self.uin or None
 
     @property
-    def user_name(self):
+    def user_name(self) -> str:
         """
         该聊天对象的内部 ID，通常不需要用到
 

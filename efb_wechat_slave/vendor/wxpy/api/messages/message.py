@@ -5,7 +5,9 @@ import logging
 import os
 import tempfile
 import weakref
+from contextlib import suppress
 from datetime import datetime
+from typing import Union, Optional
 from xml.etree import ElementTree as ETree
 
 try:
@@ -337,7 +339,7 @@ class Message(object):
             return self.sender
 
     @property
-    def sender(self):
+    def sender(self) -> Union[User, Group]:
         """
         消息的发送者
 
@@ -347,7 +349,7 @@ class Message(object):
         return self._get_chat_by_user_name(self.raw.get('FromUserName'))
 
     @property
-    def author(self):
+    def author(self) -> Union[User, Group, Member]:
         """
         消息的实际发送者（群成员或私聊）
 
@@ -356,7 +358,7 @@ class Message(object):
         return self.member or self.sender
 
     @property
-    def receiver(self):
+    def receiver(self) -> Union[User, Group]:
         """
         消息的接收者
 
@@ -366,7 +368,7 @@ class Message(object):
         return self._get_chat_by_user_name(self.raw.get('ToUserName'))
 
     @property
-    def member(self):
+    def member(self) -> Optional[Member]:
         """
         * 若消息来自群聊，则此属性为消息的实际发送人(具体的群成员)
         * 若消息来自其他聊天对象(非群聊)，则此属性为 None
@@ -386,20 +388,20 @@ class Message(object):
                     UserName=actual_user_name,
                     NickName=self.raw.get('ActualNickName')
                 ), self.chat)
+        return None
 
     # Other attributes
 
     @property
-    def app_name(self):
+    def app_name(self) -> Optional[str]:
         """
         Name of the WeChat app the message is sent with, if available
         """
-        try:
+        with suppress(TypeError, KeyError, ValueError, ETree.ParseError):
             ret = ETree.fromstring(self.raw['Content']).find('./appinfo/appname')
             if ret:
                 return ret.text
-        except (TypeError, KeyError, ValueError, ETree.ParseError):
-            pass
+        return None
 
     def _get_chat_by_user_name(self, user_name):
         """

@@ -4,9 +4,7 @@
 """
 wxpy forked by Eana Hufwe (github/blueset) for EFB WeChat Slave
 
-Changes:
-    * Identifies more system accounts.
-    * Allow to send file by IO[bytes] objects with newer itchat
+Changes: See CHANGES file.
 
 登陆微信::
 

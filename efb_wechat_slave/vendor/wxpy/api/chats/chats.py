@@ -5,13 +5,19 @@ import logging
 import time
 from collections import Counter
 
+from typing import List, TYPE_CHECKING, TypeVar
+
 from ...utils import match_attributes, match_name
 from ...compatible import *
 
+if TYPE_CHECKING:
+    from ..chats.chat import Chat
+
 logger = logging.getLogger(__name__)
+_T = TypeVar("_T", bound='Chat')
 
 
-class Chats(list):
+class Chats(List[_T]):
     """
     多个聊天对象的合集，可用于搜索或统计
     """

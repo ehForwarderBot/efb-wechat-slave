@@ -224,7 +224,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 供应商特定选项（``vendor_specific``）
 =====================================
 
-EWS 的 ``EFBChat`` 提供了以下的 ``vendor_specific`` 项目：
+EWS 的 ``Chat`` 提供了以下的 ``vendor_specific`` 项目：
 
 * ``is_mp`` *(bool)* 该会话是否为公众号。
 

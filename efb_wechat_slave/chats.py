@@ -2,10 +2,10 @@
 
 import logging
 from typing import Optional, List, TYPE_CHECKING, Dict, Any, Tuple
+from uuid import uuid4
 
-from ehforwarderbot import EFBChat
-from ehforwarderbot.chat import EFBChatNotificationState
-from ehforwarderbot.constants import ChatType
+from ehforwarderbot import Chat
+from ehforwarderbot.chat import ChatNotificationState, GroupChat, PrivateChat, SelfChatMember, SystemChat
 from ehforwarderbot.exceptions import EFBChatNotFound
 from ehforwarderbot.types import ChatID
 from . import utils as ews_utils
@@ -24,27 +24,23 @@ class ChatManager:
         # noinspection PyProtectedMember
         self._ = self.channel._
 
-        self.MISSING_GROUP: EFBChat = EFBChat(
+        self.MISSING_GROUP: GroupChat = GroupChat(
             channel=self.channel,
-            chat_uid=ChatID("__error__"),
-            chat_type=ChatType.Group,
-            chat_name=self._("Group Missing"),
-            chat_alias=None
+            id=ChatID("__error_group__"),
+            name=self._("Group Missing")
         )
 
-        self.MISSING_CHAT: EFBChat = EFBChat(
+        self.MISSING_CHAT: PrivateChat = PrivateChat(
             channel=self.channel,
-            chat_uid=ChatID("__error__"),
-            chat_type=ChatType.User,
-            chat_name=self._("Chat Missing"),
-            chat_alias=None
+            id=ChatID("__error_chat__"),
+            name=self._("Chat Missing")
         )
 
-        self.efb_chat_objs: Dict[Tuple[str, Optional[str]], EFBChat] = {}
-        # Cached EFBChat objects. Key: tuple(chat PUID, group PUID or None)
+        self.efb_chat_objs: Dict[str, Chat] = {}
+        # Cached Chat objects. Key: tuple(chat PUID, group PUID or None)
 
         # Load system chats
-        self.system_chats: List[EFBChat] = []
+        self.system_chats: List[Chat] = []
         for i in channel.flag('system_chats_to_include'):
             self.system_chats.append(
                 self.wxpy_chat_to_efb_chat(
@@ -72,81 +68,90 @@ class ChatManager:
             except ValueError:
                 return wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
 
-    def wxpy_chat_to_efb_chat(self, chat: wxpy.Chat, recursive=True) -> EFBChat:
+    @staticmethod
+    def get_name_alias(chat: wxpy.Chat) -> Tuple[str, Optional[str]]:
+        chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
+        chat_alias = getattr(chat, 'display_name', None) or getattr(chat, 'remark_name', None)
+        if chat_alias:
+            chat_alias = ews_utils.wechat_string_unescape(chat_alias)
+        # Remove alias if its same as chat name
+        if chat_alias == chat_name:
+            chat_alias = None
+        return chat_name, chat_alias
+
+    def wxpy_chat_to_efb_chat(self, chat: wxpy.Chat) -> Chat:
         # self.logger.debug("Converting WXPY chat %r, %sin recursive mode", chat, '' if recursive else 'not ')
         # self.logger.debug("WXPY chat with ID: %s, name: %s, alias: %s;", chat.puid, chat.nick_name, chat.alias)
         if chat is None:
             return self.MISSING_USER
 
-        # Use chat puid and group puid as key, update cache if name is changed.
-        if isinstance(chat, wxpy.Member):
-            # noinspection PyBroadException
-            try:
-                cache_key = (chat.puid, chat.group.puid)
-            except Exception:
-                # [Note] chat.group might not be available, and raises `Exception`.
-                # Need to deal with this option.
-                cache_key = (chat.puid, None)
-        else:
-            cache_key = (chat.puid, None)
+        cache_key = chat.puid
 
-        # if chat name or alias changes, update cache immediately
-        chat_name = ews_utils.wechat_string_unescape(chat.nick_name)
-        chat_alias = getattr(chat, 'display_name', None) or getattr(chat, 'remark_name', None)
-        cached_obj: Optional[EFBChat] = None
-        if chat_alias:
-            chat_alias = ews_utils.wechat_string_unescape(chat_alias)
+        chat_name, chat_alias = self.get_name_alias(chat)
+
+        cached_obj: Optional[Chat] = None
         if cache_key in self.efb_chat_objs:
             cached_obj = self.efb_chat_objs[cache_key]
-            if chat_name == cached_obj.chat_name and chat_alias == cached_obj.chat_alias:
+            if chat_name == cached_obj.name and chat_alias == cached_obj.alias:
                 return cached_obj
 
-        # Remove alias if its same as chat name
-        if chat_alias == chat_name:
-            chat_alias = None
+        # if chat name or alias changes, update cache
+        efb_chat: Chat
+        chat_id = ChatID(chat.puid or f"__invalid_{uuid4()}__")
+        if cached_obj:
+            efb_chat = cached_obj
+            efb_chat.id = chat_id
+            efb_chat.name = chat_name
+            efb_chat.alias = chat_alias
+            efb_chat.vendor_specific = {'is_mp': isinstance(chat, wxpy.MP)}
 
-        efb_chat: EFBChat = cached_obj or EFBChat(self.channel)
-        efb_chat.chat_uid = ChatID(chat.puid or "__invalid__")
-        efb_chat.chat_name = chat_name
-        efb_chat.chat_alias = chat_alias
-        efb_chat.chat_type = ChatType.System
-        efb_chat.vendor_specific = {'is_mp': False}
-        if isinstance(chat, wxpy.Member):
-            efb_chat.chat_type = ChatType.User
-            efb_chat.is_chat = False
-            efb_chat.has_self = False
-            if recursive:
-                efb_chat.group = self.wxpy_chat_to_efb_chat(chat.group, False)
+            if isinstance(chat, wxpy.Group):
+                # Update members if necessary
+                remote_puids = {i.puid for i in chat.members}
+                local_ids = {i.id for i in efb_chat.members if not isinstance(i, SelfChatMember)}
+                # Remove disappeared members
+                efb_chat.members = [m for m in efb_chat.members if m.id not in (local_ids - remote_puids)]
+                # Add missing members
+                missing_puids = remote_puids - local_ids
+                for member in chat.members:
+                    if member.puid in missing_puids:
+                        member_name, member_alias = self.get_name_alias(member)
+                        efb_chat.add_member(name=member_name, alias=member_alias, id=member.puid,
+                                            vendor_specific={'is_mp': False})
+        elif chat == chat.bot.self:
+            efb_chat = PrivateChat(channel=self.channel, id=chat_id, name=chat_name,
+                                   alias=chat_alias, vendor_specific={'is_mp': True}, other_is_self=True)
         elif isinstance(chat, wxpy.Group):
-            efb_chat.chat_type = ChatType.Group
-            members = []
+            efb_chat = GroupChat(channel=self.channel, id=chat_id, name=chat_name,
+                                 alias=chat_alias, vendor_specific={'is_mp': False})
             for i in chat.members:
-                members.append(self.wxpy_chat_to_efb_chat(i, False))
-                members[-1].group = efb_chat
-            efb_chat.members = members
+                member_name, member_alias = self.get_name_alias(i)
+                efb_chat.add_member(name=member_name, alias=member_alias, id=i.puid, vendor_specific={'is_mp': False})
         elif isinstance(chat, wxpy.MP):
-            efb_chat.chat_type = ChatType.User
-            efb_chat.vendor_specific['is_mp'] = True
+            efb_chat = PrivateChat(channel=self.channel, id=chat_id, name=chat_name,
+                                   alias=chat_alias, vendor_specific={'is_mp': True})
         elif isinstance(chat, wxpy.User):
-            efb_chat.chat_type = ChatType.User
-        if chat == chat.bot.self:
-            efb_chat.self()
+            efb_chat = PrivateChat(channel=self.channel, id=chat_id, name=chat_name,
+                                   alias=chat_alias, vendor_specific={'is_mp': False})
+        else:
+            efb_chat = SystemChat(channel=self.channel, id=chat_id, name=chat_name,
+                                  alias=chat_alias, vendor_specific={'is_mp': False})
 
         efb_chat.vendor_specific.update(self.generate_vendor_specific(chat))
         if efb_chat.vendor_specific.get('is_muted', False):
-            efb_chat.notification = EFBChatNotificationState.MENTIONS
+            efb_chat.notification = ChatNotificationState.MENTIONS
 
         self.efb_chat_objs[cache_key] = efb_chat
 
         return efb_chat
 
-    def get_chats(self) -> List[EFBChat]:
+    def get_chats(self) -> List[Chat]:
         l = self.system_chats.copy()
         for i in self.bot.chats(self.channel.flag('refresh_friends')):
             l.append(self.wxpy_chat_to_efb_chat(i))
         return l
 
-    def search_chat(self, uid: str, refresh: bool = False) -> EFBChat:
+    def search_chat(self, uid: str, refresh: bool = False) -> Chat:
         """Search chat by temporary UserName."""
         try:
             if refresh:
@@ -162,7 +167,7 @@ class ChatManager:
             else:
                 raise EFBChatNotFound()
 
-    def search_member(self, uid: str, member_id: str, refresh: bool = False) -> EFBChat:
+    def search_member(self, uid: str, member_id: str, refresh: bool = False) -> Chat:
         group = self.search_chat(uid)
         if not isinstance(group, wxpy.Group):
             raise EFBChatNotFound()

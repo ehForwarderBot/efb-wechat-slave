@@ -266,7 +266,7 @@ disappear at any time. Use at your own risk.
 ``vendor_specific``
 ===================
 
-``EFBChat`` from EWS provides the following ``vendor_specific`` items:
+``Chat`` from EWS provides the following ``vendor_specific`` items:
 
 * ``is_mp`` *(bool)* If the chat is an «Official Account».
 
