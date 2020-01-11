@@ -6,6 +6,10 @@ EFB 微信从端
    :target: https://pypi.org/project/efb-wechat-slave/
    :alt: PyPI release
 
+.. image:: https://github.com/blueset/efb-wechat-slave/workflows/Tests/badge.svg
+   :target: https://github.com/blueset/efb-wechat-slave/actions
+   :alt: Tests status
+
 .. image:: https://pepy.tech/badge/efb-wechat-slave/month
    :target: https://pepy.tech/project/efb-wechat-slave
    :alt: Downloads per month
@@ -40,11 +44,11 @@ Alpha 版本
 注意
 ====
 
-自 2016 年中旬以来，陆续有用户报告称其微信的网页端被封禁。多数用户在1天至3个月内被解封。当被封禁的用户尝试登陆网页端时，会弹出提示称
-“当前登录环境异常。为了你的账号安全，暂时不能登录 Web 微信。你可以通过手机客户端或 Windows 微信登录” 。
+自 2016
+年中旬以来，陆续有用户报告称其微信的网页端被封禁。多数用户在 1 天至 3 个月内被解封。当被封禁的用户尝试登陆网页端时，会弹出提示称「当前登录环境异常。为了你的账号安全，暂时不能登录 Web 微信。你可以通过手机客户端或 Windows 微信登录」。
 
-另外，有报告称，在 2016 年年中之后注册的微信帐户 “出于安全原因” 无法使用网页版微信。在设置 EWS
-之前，请确认您的账号是否可以使用 `网页版微信 <https://web.wechat.com/>`_ 。
+另外，有报告称，在 2016 年年中之后注册的微信帐户「出于安全原因」无法使用网页版微信。在设置 EWS 之前，请确认您的账号是否可以使用
+`网页版微信 <https://web.wechat.com/>`_ 。
 
 该封禁不影响其他客户端的登录。目前封禁的原因尚不明确。
 
@@ -76,11 +80,12 @@ Alpha 版本
     ::
        pip3 install efb-wechat-slave
 
-3. 在当前配置档案（Profile）的 ``config.yaml`` 中启用 EWS。
+3. Enable EWS using the *EFB configuration wizard* or in
+    ``config.yaml`` of the current profile.
 
     当前配置文件夹的位置会根据用户的设定而改变。
 
-    **(EFB 2.0.0a1 中，默认的配置文件夹位于**
+    **(In EFB 2, the default configuration directory is**
     ``~/.ehforwarderbot/profiles/default`` **)**
 
 
@@ -224,7 +229,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 供应商特定选项（``vendor_specific``）
 =====================================
 
-EWS 的 ``Chat`` 提供了以下的 ``vendor_specific`` 项目：
+``Chat`` from EWS provides the following ``vendor_specific`` items:
 
 * ``is_mp`` *(bool)* 该会话是否为公众号。
 

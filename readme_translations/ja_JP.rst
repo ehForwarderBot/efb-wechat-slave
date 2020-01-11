@@ -6,6 +6,10 @@ EFB WeChat Slave Channel
    :target: https://pypi.org/project/efb-wechat-slave/
    :alt: PyPI release
 
+.. image:: https://github.com/blueset/efb-wechat-slave/workflows/Tests/badge.svg
+   :target: https://github.com/blueset/efb-wechat-slave/actions
+   :alt: Tests status
+
 .. image:: https://pepy.tech/badge/efb-wechat-slave/month
    :target: https://pepy.tech/project/efb-wechat-slave
    :alt: Downloads per month
@@ -86,11 +90,12 @@ Install and Enable
     ::
        pip3 install efb-wechat-slave
 
-3. Enable EWS in ``config.yaml`` of the current profile.
+3. Enable EWS using the *EFB configuration wizard* or in
+    ``config.yaml`` of the current profile.
 
     The config directory may vary based on your settings.
 
-    **(In EFB 2.0.0a1, the default configuration directory is**
+    **(In EFB 2, the default configuration directory is**
     ``~/.ehforwarderbot/profiles/default`` **)**
 
 
