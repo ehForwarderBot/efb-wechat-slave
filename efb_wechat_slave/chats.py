@@ -26,13 +26,13 @@ class ChatManager:
 
         self.MISSING_GROUP: GroupChat = GroupChat(
             channel=self.channel,
-            id=ChatID("__error_group__"),
+            uid=ChatID("__error_group__"),
             name=self._("Group Missing")
         )
 
         self.MISSING_CHAT: PrivateChat = PrivateChat(
             channel=self.channel,
-            id=ChatID("__error_chat__"),
+            uid=ChatID("__error_chat__"),
             name=self._("Chat Missing")
         )
 
@@ -100,7 +100,7 @@ class ChatManager:
         chat_id = ChatID(chat.puid or f"__invalid_{uuid4()}__")
         if cached_obj:
             efb_chat = cached_obj
-            efb_chat.id = chat_id
+            efb_chat.uid = chat_id
             efb_chat.name = chat_name
             efb_chat.alias = chat_alias
             efb_chat.vendor_specific = {'is_mp': isinstance(chat, wxpy.MP)}
@@ -108,35 +108,35 @@ class ChatManager:
             if isinstance(chat, wxpy.Group):
                 # Update members if necessary
                 remote_puids = {i.puid for i in chat.members}
-                local_ids = {i.id for i in efb_chat.members if not isinstance(i, SelfChatMember)}
+                local_ids = {i.uid for i in efb_chat.members if not isinstance(i, SelfChatMember)}
                 # Remove disappeared members
-                efb_chat.members = [m for m in efb_chat.members if m.id not in (local_ids - remote_puids)]
+                efb_chat.members = [m for m in efb_chat.members if m.uid not in (local_ids - remote_puids)]
                 # Add missing members
                 missing_puids = remote_puids - local_ids
                 for member in chat.members:
                     if member.puid in missing_puids:
                         member_name, member_alias = self.get_name_alias(member)
-                        efb_chat.add_member(name=member_name, alias=member_alias, id=member.puid,
+                        efb_chat.add_member(name=member_name, alias=member_alias, uid=member.puid,
                                             vendor_specific={'is_mp': False})
         elif chat == chat.bot.self:
-            efb_chat = PrivateChat(channel=self.channel, id=chat_id, name=chat_name,
+            efb_chat = PrivateChat(channel=self.channel, uid=chat_id, name=chat_name,
                                    alias=chat_alias, vendor_specific={'is_mp': True}, other_is_self=True)
         elif isinstance(chat, wxpy.Group):
-            efb_chat = GroupChat(channel=self.channel, id=chat_id, name=chat_name,
+            efb_chat = GroupChat(channel=self.channel, uid=chat_id, name=chat_name,
                                  alias=chat_alias, vendor_specific={'is_mp': False})
             for i in chat.members:
                 if i.user_name == self.bot.self.user_name:
                     continue
                 member_name, member_alias = self.get_name_alias(i)
-                efb_chat.add_member(name=member_name, alias=member_alias, id=i.puid, vendor_specific={'is_mp': False})
+                efb_chat.add_member(name=member_name, alias=member_alias, uid=i.puid, vendor_specific={'is_mp': False})
         elif isinstance(chat, wxpy.MP):
-            efb_chat = PrivateChat(channel=self.channel, id=chat_id, name=chat_name,
+            efb_chat = PrivateChat(channel=self.channel, uid=chat_id, name=chat_name,
                                    alias=chat_alias, vendor_specific={'is_mp': True})
         elif isinstance(chat, wxpy.User):
-            efb_chat = PrivateChat(channel=self.channel, id=chat_id, name=chat_name,
+            efb_chat = PrivateChat(channel=self.channel, uid=chat_id, name=chat_name,
                                    alias=chat_alias, vendor_specific={'is_mp': False})
         else:
-            efb_chat = SystemChat(channel=self.channel, id=chat_id, name=chat_name,
+            efb_chat = SystemChat(channel=self.channel, uid=chat_id, name=chat_name,
                                   alias=chat_alias, vendor_specific={'is_mp': False})
 
         efb_chat.vendor_specific.update(self.generate_vendor_specific(chat))

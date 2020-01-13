@@ -161,7 +161,7 @@ class WeChatChannel(SlaveChannel):
         self.chats: ChatManager = ChatManager(self)
         self.user_auth_chat = SystemChat(channel=self,
                                          name=self._("EWS User Auth"),
-                                         id=ChatID("__ews_user_auth__"))
+                                         uid=ChatID("__ews_user_auth__"))
 
     def load_config(self):
         """
@@ -331,7 +331,7 @@ class WeChatChannel(SlaveChannel):
         if msg.chat == self.user_auth_chat:
             raise EFBChatNotFound
 
-        chat: wxpy.Chat = self.chats.get_wxpy_chat_by_uid(msg.chat.id)
+        chat: wxpy.Chat = self.chats.get_wxpy_chat_by_uid(msg.chat.uid)
 
         # List of "SentMessage" response for all messages sent
         r: List[wxpy.SentMessage] = []
@@ -342,7 +342,7 @@ class WeChatChannel(SlaveChannel):
                          "Type: %s\n"
                          "Text: %s",
                          msg.uid,
-                         msg.chat.id, chat.user_name, chat.name, msg.type, msg.text)
+                         msg.chat.uid, chat.user_name, chat.name, msg.type, msg.text)
 
         try:
             chat.mark_as_read()
@@ -543,7 +543,7 @@ class WeChatChannel(SlaveChannel):
             raise EFBOperationNotSupported()
 
     def get_chat_picture(self, chat: Chat) -> BinaryIO:
-        uid = chat.id
+        uid = chat.uid
         if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
             wxpy_chat: wxpy.Chat = wxpy.Chat(
                 wxpy.utils.wrap_user_name(uid), self.bot)
