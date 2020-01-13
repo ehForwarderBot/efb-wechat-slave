@@ -41,7 +41,7 @@ setup(
         "python-magic",
         "pillow",
         "pyqrcode",
-        "PyYaml",
+        "PyYaml>=5.3",
         "requests>=2.22.0",
         "typing_extensions",
         "bullet",

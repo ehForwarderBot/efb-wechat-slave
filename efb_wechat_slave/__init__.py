@@ -551,8 +551,7 @@ class WeChatChannel(SlaveChannel):
             wxpy_chat = wxpy.utils.ensure_one(self.bot.search(puid=uid))
         f: BinaryIO = None  # type: ignore
         try:
-            f: BinaryIO = tempfile.NamedTemporaryFile(
-                suffix='.jpg')  # type: ignore
+            f = tempfile.NamedTemporaryFile(suffix='.jpg')  # type: ignore
             data = wxpy_chat.get_avatar(None)
             if not data:
                 raise EFBOperationNotSupported()

@@ -19,7 +19,7 @@ from ehforwarderbot import Message, MsgType, Chat, coordinator
 from ehforwarderbot.chat import ChatMember, SystemChatMember
 from ehforwarderbot.message import LocationAttribute, LinkAttribute, MessageCommands, MessageCommand, \
     Substitutions
-from ehforwarderbot.status import MessageRemoval
+from ehforwarderbot.status import MessageRemoval, ChatUpdates
 from ehforwarderbot.types import MessageID
 from . import constants
 from . import utils as ews_utils
@@ -161,6 +161,30 @@ class SlaveMessageManager:
         )
         return efb_msg
 
+    NEW_CHAT_PATTERNS = {
+        "invited you to a group", "グループチャットに参加しました",
+        "现在可以开始聊天了。", "Start chatting!", "チャットを始めましょう!"
+        "You've joined this group chat.",
+        "邀请你加入了群聊", "邀请你和", "invited you and",
+        "invited you to a group chat with"
+    }
+    CHAT_UPDATE_PATTERNS = {
+        "修改群名为", "changed the group name to"
+    }
+    NEW_CHAT_MEMBER_PATTERNS = {
+        "グループチャットに招待しました", "to the group chat"
+    }
+    CHAT_MEMBER_UPDATE_PATTERNS = {
+        "グループマネージャーになりました",
+    }
+    REMOVE_CHAT_MEMBER_PATTERNS = {
+        "移出了群聊"
+    }
+    CHAT_AND_MEMBER_UPDATE_PATTERNS = (
+            CHAT_UPDATE_PATTERNS | NEW_CHAT_MEMBER_PATTERNS |
+            CHAT_MEMBER_UPDATE_PATTERNS | REMOVE_CHAT_MEMBER_PATTERNS
+    )
+
     @Decorators.wechat_msg_meta
     def wechat_system_msg(self, msg: wxpy.Message) -> Optional[Message]:
         if msg.recalled_message_id:
@@ -192,6 +216,17 @@ class SlaveMessageManager:
             author = chat.get_member(SystemChatMember.SYSTEM_ID)
         except KeyError:
             author = chat.add_system_member()
+        if any(i in msg.text for i in self.NEW_CHAT_PATTERNS):
+            coordinator.send_status(ChatUpdates(
+                channel=self.channel,
+                new_chats=(chat.uid,)
+            ))
+        elif any(i in msg.text for i in self.NEW_CHAT_MEMBER_PATTERNS):
+            # TODO: detect actual member changes from message text
+            coordinator.send_status(ChatUpdates(
+                channel=self.channel,
+                modified_chats=(chat.uid,)
+            ))
         return Message(
             text=msg.text,
             type=MsgType.Text,
