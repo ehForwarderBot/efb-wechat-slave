@@ -55,7 +55,8 @@ class WeChatChannel(SlaveChannel):
     supported_message_types = {MsgType.Text, MsgType.Sticker, MsgType.Image,
                                MsgType.File, MsgType.Video, MsgType.Link, MsgType.Voice,
                                MsgType.Animation}
-    logger: logging.Logger = logging.getLogger("plugins.%s.WeChatChannel" % channel_id)
+    logger: logging.Logger = logging.getLogger(
+        "plugins.%s.WeChatChannel" % channel_id)
     done_reauth: threading.Event = threading.Event()
     _stop_polling_event: threading.Event = threading.Event()
 
@@ -172,7 +173,7 @@ class WeChatChannel(SlaveChannel):
         if not config_path.exists():
             return
         with config_path.open() as f:
-            d = yaml.load(f)
+            d = yaml.full_load(f)
             if not d:
                 return
             self.config: Dict[str, Any] = d
@@ -206,7 +207,8 @@ class WeChatChannel(SlaveChannel):
                 qr_file = io.BytesIO()
                 qr_obj.png(qr_file, scale=10)
                 qr_file.seek(0)
-                qr += ews_utils.imgcat(qr_file, f"{self.channel_id}_QR_{uuid}.png")
+                qr += ews_utils.imgcat(qr_file,
+                                       f"{self.channel_id}_QR_{uuid}.png")
             else:
                 qr += qr_obj.terminal()
             qr += "\n" + self._("If the QR code was not shown correctly, please visit:\n"
@@ -256,7 +258,8 @@ class WeChatChannel(SlaveChannel):
     def exit_callback(self):
         # Don't send prompt if there's nowhere to send.
         if not getattr(coordinator, 'master', None):
-            raise Exception(self._("Web WeChat logged your account out before master channel is ready."))
+            raise Exception(
+                self._("Web WeChat logged your account out before master channel is ready."))
         self.logger.debug('Calling exit callback...')
         if self._stop_polling_event.is_set():
             return
@@ -264,12 +267,14 @@ class WeChatChannel(SlaveChannel):
             chat=self.user_auth_chat,
             author=self.user_auth_chat.other,
             deliver_to=coordinator.master,
-            text=self._("WeChat server has logged you out. Please log in again when you are ready."),
+            text=self._(
+                "WeChat server has logged you out. Please log in again when you are ready."),
             uid=f"__reauth__.{uuid4()}",
             type=MsgType.Text,
         )
         on_log_out = self.flag("on_log_out")
-        on_log_out = on_log_out if on_log_out in ("command", "idle", "reauth") else "command"
+        on_log_out = on_log_out if on_log_out in (
+            "command", "idle", "reauth") else "command"
         if on_log_out == "command":
             msg.type = MsgType.Text
             msg.commands = MessageCommands(
@@ -288,7 +293,8 @@ class WeChatChannel(SlaveChannel):
         #     if not self.bot.alive:
         #         self.done_reauth.wait()
         #         self.done_reauth.clear()
-        self.logger.debug("%s (%s) gracefully stopped.", self.channel_name, self.channel_id)
+        self.logger.debug("%s (%s) gracefully stopped.",
+                          self.channel_name, self.channel_id)
 
     def send_message(self, msg: Message) -> Message:
         """Send a message to WeChat.
@@ -341,7 +347,8 @@ class WeChatChannel(SlaveChannel):
         try:
             chat.mark_as_read()
         except wxpy.ResponseError as e:
-            self.logger.exception("[%s] Error occurred while marking chat as read. (%s)", msg.uid, e)
+            self.logger.exception(
+                "[%s] Error occurred while marking chat as read. (%s)", msg.uid, e)
 
         send_text_only = False
         self.logger.debug('[%s] Is edited: %s', msg.uid, msg.edit)
@@ -357,7 +364,8 @@ class WeChatChannel(SlaveChannel):
                     try:
                         ews_utils.message_id_to_dummy_message(i, self).recall()
                     except wxpy.ResponseError as e:
-                        self.logger.error("[%s] Trying to recall message but failed: %s", msg.uid, e)
+                        self.logger.error(
+                            "[%s] Trying to recall message but failed: %s", msg.uid, e)
                         failed += 1
                 if failed:
                     raise EFBMessageError(
@@ -390,7 +398,8 @@ class WeChatChannel(SlaveChannel):
                     tgt_alias = ""
                 msg.text = f"「{tgt_alias}{tgt_text}」\n- - - - - - - - - - - - - - -\n{msg.text}"
             r.append(self._bot_send_msg(chat, msg.text))
-            self.logger.debug('[%s] Sent as a text message. %s', msg.uid, msg.text)
+            self.logger.debug(
+                '[%s] Sent as a text message. %s', msg.uid, msg.text)
         elif msg.type in (MsgType.Image, MsgType.Sticker, MsgType.Animation):
             self.logger.info("[%s] Image/GIF/Sticker %s", msg.uid, msg.type)
 
@@ -411,17 +420,21 @@ class WeChatChannel(SlaveChannel):
                         img = Image.open(file)
                         try:
                             alpha = img.split()[3]
-                            mask = Image.eval(alpha, lambda a: 255 if a <= 128 else 0)
+                            mask = Image.eval(
+                                alpha, lambda a: 255 if a <= 128 else 0)
                         except IndexError:
                             mask = Image.eval(img.split()[0], lambda a: 0)
-                        img = img.convert('RGB').convert('P', palette=Image.ADAPTIVE, colors=255)
+                        img = img.convert('RGB').convert(
+                            'P', palette=Image.ADAPTIVE, colors=255)
                         img.paste(255, mask)
                         img.save(f, transparency=255)
                         msg.path = Path(f.name)
-                        self.logger.debug('[%s] Image converted from %s to GIF', msg.uid, msg.mime)
+                        self.logger.debug(
+                            '[%s] Image converted from %s to GIF', msg.uid, msg.mime)
                         file.close()
                         if f.seek(0, 2) > self.MAX_FILE_SIZE:
-                            raise EFBMessageError(self._("Image size is too large. (IS02)"))
+                            raise EFBMessageError(
+                                self._("Image size is too large. (IS02)"))
                         f.seek(0)
                         r.append(self._bot_send_image(chat, f.name, f))
                     finally:
@@ -435,10 +448,12 @@ class WeChatChannel(SlaveChannel):
                         out.paste(img, img)
                         out.convert('RGB').save(f)
                         msg.path = Path(f.name)
-                        self.logger.debug('[%s] Image converted from %s to JPEG', msg.uid, msg.mime)
+                        self.logger.debug(
+                            '[%s] Image converted from %s to JPEG', msg.uid, msg.mime)
                         file.close()
                         if f.seek(0, 2) > self.MAX_FILE_SIZE:
-                            raise EFBMessageError(self._("Image size is too large. (IS02)"))
+                            raise EFBMessageError(
+                                self._("Image size is too large. (IS02)"))
                         f.seek(0)
                         r.append(self._bot_send_image(chat, f.name, f))
                     finally:
@@ -447,9 +462,11 @@ class WeChatChannel(SlaveChannel):
             else:
                 try:
                     if file.seek(0, 2) > self.MAX_FILE_SIZE:
-                        raise EFBMessageError(self._("Image size is too large. (IS01)"))
+                        raise EFBMessageError(
+                            self._("Image size is too large. (IS01)"))
                     file.seek(0)
-                    self.logger.debug("[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
+                    self.logger.debug(
+                        "[%s] Sending %s (image) to WeChat.", msg.uid, msg.path)
                     filename = msg.filename or (msg.path and msg.path.name)
                     assert filename
                     r.append(self._bot_send_image(chat, filename, file))
@@ -469,7 +486,8 @@ class WeChatChannel(SlaveChannel):
             if not msg.file.closed:
                 msg.file.close()
         elif msg.type == MsgType.Video:
-            self.logger.info("[%s] Sending video to WeChat\nFileName: %s\nPath: %s", msg.uid, msg.text, msg.path)
+            self.logger.info(
+                "[%s] Sending video to WeChat\nFileName: %s\nPath: %s", msg.uid, msg.text, msg.path)
             filename = msg.filename or (msg.path and msg.path.name)
             assert filename and msg.file
             r.append(self._bot_send_video(chat, filename, file=msg.file))
@@ -481,20 +499,24 @@ class WeChatChannel(SlaveChannel):
             raise EFBMessageTypeNotSupported()
 
         msg.uid = ews_utils.generate_message_uid(r)
-        self.logger.debug('WeChat message is assigned with unique ID: %s', msg.uid)
+        self.logger.debug(
+            'WeChat message is assigned with unique ID: %s', msg.uid)
         return msg
 
     def send_status(self, status: Status):
         if isinstance(status, MessageRemoval):
             if not isinstance(status.message.author, SelfChatMember):
-                raise EFBOperationNotSupported(self._('You can only recall your own messages.'))
+                raise EFBOperationNotSupported(
+                    self._('You can only recall your own messages.'))
             if status.message.uid:
                 try:
                     msg_ids = json.loads(status.message.uid)
                 except JSONDecodeError:
-                    raise EFBMessageError(self._("ID of the message to recall is invalid."))
+                    raise EFBMessageError(
+                        self._("ID of the message to recall is invalid."))
             else:
-                raise EFBMessageError(self._("ID of the message to recall is not found."))
+                raise EFBMessageError(
+                    self._("ID of the message to recall is not found."))
             failed = 0
             if any(len(i) == 1 for i in msg_ids):  # Message is not sent through EWS
                 raise EFBOperationNotSupported(
@@ -515,19 +537,22 @@ class WeChatChannel(SlaveChannel):
             else:
                 val = (status.message.uid, len(msg_ids))
                 for i in msg_ids:
-                    self.slave_message.recall_msg_id_conversion[str(i[1])] = val
+                    self.slave_message.recall_msg_id_conversion[str(
+                        i[1])] = val
         else:
             raise EFBOperationNotSupported()
 
     def get_chat_picture(self, chat: Chat) -> BinaryIO:
         uid = chat.id
         if uid in wxpy.Chat.SYSTEM_ACCOUNTS:
-            wxpy_chat: wxpy.Chat = wxpy.Chat(wxpy.utils.wrap_user_name(uid), self.bot)
+            wxpy_chat: wxpy.Chat = wxpy.Chat(
+                wxpy.utils.wrap_user_name(uid), self.bot)
         else:
             wxpy_chat = wxpy.utils.ensure_one(self.bot.search(puid=uid))
         f: BinaryIO = None  # type: ignore
         try:
-            f: BinaryIO = tempfile.NamedTemporaryFile(suffix='.jpg')  # type: ignore
+            f: BinaryIO = tempfile.NamedTemporaryFile(
+                suffix='.jpg')  # type: ignore
             data = wxpy_chat.get_avatar(None)
             if not data:
                 raise EFBOperationNotSupported()
@@ -559,7 +584,8 @@ class WeChatChannel(SlaveChannel):
             alias = ews_utils.wechat_string_unescape(getattr(i, 'remark_name', '') or
                                                      getattr(i, 'display_name', ''))
             name = ews_utils.wechat_string_unescape(i.nick_name)
-            display_name = "%s (%s)" % (alias, name) if alias and alias != name else name
+            display_name = "%s (%s)" % (
+                alias, name) if alias and alias != name else name
             chat_type = "?"
             if isinstance(i, wxpy.MP):
                 # TRANSLATORS: Acronym for MP accounts
@@ -623,7 +649,8 @@ class WeChatChannel(SlaveChannel):
         if command and qr_reload == "console_qr_code":
             msg += "\n" + self._("Please check your log to continue.")
 
-        threading.Thread(target=self.authenticate, args=(qr_reload,), name="EWS reauth thread").start()
+        threading.Thread(target=self.authenticate, args=(
+            qr_reload,), name="EWS reauth thread").start()
         return msg
 
     # endregion [Command functions]
@@ -652,7 +679,8 @@ class WeChatChannel(SlaveChannel):
         if not username:
             return self._("Empty username (UE02).")
         try:
-            self.bot.add_friend(user=username, verify_content=verify_information)
+            self.bot.add_friend(
+                user=username, verify_content=verify_information)
         except wxpy.ResponseError as r:
             return self._("Error occurred while processing (AF01).") + "\n\n{}: {!r}".format(r.err_code, r.err_msg)
         return self._("Request sent.")
@@ -661,7 +689,8 @@ class WeChatChannel(SlaveChannel):
         if not username:
             return self._("Empty username (UE03).")
         try:
-            self.bot.accept_friend(user=username, verify_content=verify_information)
+            self.bot.accept_friend(
+                user=username, verify_content=verify_information)
         except wxpy.ResponseError as r:
             return self._("Error occurred while processing (AF02).") + "n\n{}: {!r}".format(r.err_code, r.err_msg)
         return self._("Request accepted.")
@@ -728,7 +757,8 @@ class WeChatChannel(SlaveChannel):
                     issue_url=issue_url
                 )
             elif err.err_code == 1204:
-                err.err_msg = self._("You don’t have access to the chat that you are trying to send message to.")
+                err.err_msg = self._(
+                    "You don’t have access to the chat that you are trying to send message to.")
             elif err.err_code == 1205:
                 err.err_msg = self._("You might have sent your messages too fast. Please try to slow down "
                                      "and retry after a while.")
