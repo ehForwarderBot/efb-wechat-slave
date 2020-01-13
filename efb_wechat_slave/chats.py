@@ -125,6 +125,8 @@ class ChatManager:
             efb_chat = GroupChat(channel=self.channel, id=chat_id, name=chat_name,
                                  alias=chat_alias, vendor_specific={'is_mp': False})
             for i in chat.members:
+                if i.user_name == self.bot.self.user_name:
+                    continue
                 member_name, member_alias = self.get_name_alias(i)
                 efb_chat.add_member(name=member_name, alias=member_alias, id=i.puid, vendor_specific={'is_mp': False})
         elif isinstance(chat, wxpy.MP):

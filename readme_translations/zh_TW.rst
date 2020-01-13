@@ -44,8 +44,13 @@ Alpha 版本
 注意
 ====
 
-自 2016
-年中旬以来，陆续有用户报告称其微信的网页端被封禁。多数用户在 1 天至 3 个月内被解封。当被封禁的用户尝试登陆网页端时，会弹出提示称「当前登录环境异常。为了你的账号安全，暂时不能登录 Web 微信。你可以通过手机客户端或 Windows 微信登录」。
+Since mid-2016, we have received feedback where some users’ access to
+Web WeChat was banned. Most of the users were unbanned within 1 day to
+3 months. When a user is banned for Web WeChat access, a pop up would
+be shown when they try to use it, stating that they “cannot use Web
+WeChat temporary”, and are recommended to use mobile app or
+Windows/macOS instead. By observation, only less than 10% of the users
+are being banned from Web WeChat during their usage.
 
 另外，有报告称，在 2016 年年中之后注册的微信帐户「出于安全原因」无法使用网页版微信。在设置 EWS 之前，请确认您的账号是否可以使用
 `网页版微信 <https://web.wechat.com/>`_ 。
