@@ -51,7 +51,8 @@ Web WeChat was banned. Most of the users were unbanned within 1 day to
 3 months. When a user is banned for Web WeChat access, a pop up would
 be shown when they try to use it, stating that they “cannot use Web
 WeChat temporary”, and are recommended to use mobile app or
-Windows/macOS instead”.
+Windows/macOS instead. By observation, only less than 10% of the users
+are being banned from Web WeChat during their usage.
 
 Meanwhile, it is reported that WeChat accounts registered after
 mid-2016 cannot use Web WeChat “for security reason”. Please confirm
