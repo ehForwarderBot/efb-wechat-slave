@@ -221,7 +221,7 @@ class SlaveMessageManager:
                 channel=self.channel,
                 new_chats=(chat.uid,)
             ))
-        elif any(i in msg.text for i in self.NEW_CHAT_MEMBER_PATTERNS):
+        elif any(i in msg.text for i in self.CHAT_AND_MEMBER_UPDATE_PATTERNS):
             # TODO: detect actual member changes from message text
             coordinator.send_status(ChatUpdates(
                 channel=self.channel,
