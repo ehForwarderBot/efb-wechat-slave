@@ -154,7 +154,7 @@ class WeChatChannel(SlaveChannel):
         self.qr_uuid: Tuple[str, int] = ('', 0)
         self.master_qr_picture_id: Optional[str] = None
 
-        self.authenticate('console_qr_code')
+        self.authenticate('console_qr_code', first_start=True)
 
         # Managers
         self.slave_message: SlaveMessageManager = SlaveMessageManager(self)
