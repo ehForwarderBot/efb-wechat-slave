@@ -57,7 +57,12 @@ class SlaveMessageManager:
         if msg.author.user_name == self.bot.self.user_name and chat.self:
             author = chat.self
         else:
-            author = chat.get_member(msg.author.puid)
+            try:
+                author = chat.get_member(msg.author.puid)
+            except KeyError:
+                # Enrol the new member to cache on the spot.
+                name, alias = self.channel.chats.get_name_alias(msg.author)
+                author = chat.add_member(uid=msg.author.puid, name=name, alias=alias, vendor_specific={'is_mp': False})
         return chat, author
 
     class Decorators:

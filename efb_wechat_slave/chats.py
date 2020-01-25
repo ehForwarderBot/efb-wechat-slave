@@ -109,8 +109,6 @@ class ChatManager:
                 # Update members if necessary
                 remote_puids = {i.puid for i in chat.members}
                 local_ids = {i.uid for i in efb_chat.members if not isinstance(i, SelfChatMember)}
-                # Remove disappeared members
-                efb_chat.members = [m for m in efb_chat.members if m.uid not in (local_ids - remote_puids)]
                 # Add missing members
                 missing_puids = remote_puids - local_ids
                 for member in chat.members:
