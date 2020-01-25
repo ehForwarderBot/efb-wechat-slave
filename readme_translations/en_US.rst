@@ -35,14 +35,8 @@ Some source code in this repository was adapted from
 .. _youfou/wxpy: https://github.com/youfou/wxpy
 .. _littlecodersh/ItChat:  https://github.com/littlecodersh/ItChat/
 
-Alpha Version
--------------
-
-This is an unstable alpha version, and its functionality may change at any
-time.
-
-Attention
----------
+Read before use
+---------------
 
 Since mid-2016, we have received feedback where some users’ access to Web
 WeChat was banned. Most of the users were unbanned within 1 day to 3 months.

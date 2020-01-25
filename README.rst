@@ -35,11 +35,6 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微�
 .. _youfou/wxpy: https://github.com/youfou/wxpy
 .. _littlecodersh/ItChat:  https://github.com/littlecodersh/ItChat/
 
-Alpha 版本
-----------
-
-本项目目前仍是 Alpha 版本，仍不稳定，且功能可能随时变更。
-
 
 使用前须知
 ----------
