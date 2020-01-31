@@ -8,7 +8,7 @@ from doit.action import CmdAction
 
 PACKAGE = "efb_wechat_slave"
 README_BASE = "./readme_translations/en_US.rst"
-DEFAULT_BUMP_MODE = "alpha"
+DEFAULT_BUMP_MODE = "patch"
 # major, minor, patch, alpha, beta, dev, post
 DOIT_CONFIG = {
     "default_tasks": ["msgfmt"]
@@ -107,7 +107,7 @@ def task_bump_version():
         "actions": [CmdAction(gen_bump_version)],
         "params": [
             {
-                "name": "Version bump mode",
+                "name": "mode",
                 "short": "b",
                 "long": "bump",
                 "default": DEFAULT_BUMP_MODE,
