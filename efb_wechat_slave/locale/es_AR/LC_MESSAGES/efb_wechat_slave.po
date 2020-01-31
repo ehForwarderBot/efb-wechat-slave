@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 08:48+0000\n"
-"PO-Revision-Date: 2020-01-25 02:55\n"
+"POT-Creation-Date: 2020-01-25 02:59+0000\n"
+"PO-Revision-Date: 2020-01-28 06:59\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish, Argentina\n"
 "Language: es_AR\n"
@@ -23,54 +23,54 @@ msgstr ""
 msgid "Chat Missing"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:155
+#: efb_wechat_slave/slave_message.py:160
 msgid "[Incoming audio/video call, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:293
+#: efb_wechat_slave/slave_message.py:298
 msgid "[Unsupported message, please check your phone.]"
 msgstr "[Mensaje no confirmado, por favor verifique su teléfono]"
 
-#: efb_wechat_slave/slave_message.py:300 efb_wechat_slave/slave_message.py:311
+#: efb_wechat_slave/slave_message.py:305 efb_wechat_slave/slave_message.py:316
 #, python-brace-format
 msgid "Via {source}"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:396
+#: efb_wechat_slave/slave_message.py:401
 msgid "[Failed to download the picture, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:416
+#: efb_wechat_slave/slave_message.py:421
 msgid "[Failed to download the sticker, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:429
+#: efb_wechat_slave/slave_message.py:434
 #, python-brace-format
 msgid "{file_name} sent via {app_name}"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:434
+#: efb_wechat_slave/slave_message.py:439
 msgid "[Failed to download the file, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:445
+#: efb_wechat_slave/slave_message.py:450
 msgid "[Failed to download the voice message, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:459
+#: efb_wechat_slave/slave_message.py:464
 msgid "[Failed to download the video message, please check your phone.]"
 msgstr ""
 
 #. TRANSLATORS: Gender of contact
-#: efb_wechat_slave/slave_message.py:465 efb_wechat_slave/slave_message.py:485
+#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
 msgid "M"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:465 efb_wechat_slave/slave_message.py:485
+#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
 msgid "F"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:466 efb_wechat_slave/slave_message.py:486
+#: efb_wechat_slave/slave_message.py:471 efb_wechat_slave/slave_message.py:491
 #, python-brace-format
 msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
@@ -78,11 +78,11 @@ msgid "Card: {user.nick_name}\n"
 "Gender: {gender}"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:476
+#: efb_wechat_slave/slave_message.py:481
 msgid "Send friend request"
 msgstr "Enviar solicitud de amigo"
 
-#: efb_wechat_slave/slave_message.py:496
+#: efb_wechat_slave/slave_message.py:501
 msgid "Accept friend request"
 msgstr "Aceptar solicitud de amigo"
 

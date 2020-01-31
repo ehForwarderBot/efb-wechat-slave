@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 08:48+0000\n"
-"PO-Revision-Date: 2020-01-25 02:54\n"
+"POT-Creation-Date: 2020-01-25 02:59+0000\n"
+"PO-Revision-Date: 2020-01-31 08:59\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -23,54 +23,54 @@ msgstr "不明群组"
 msgid "Chat Missing"
 msgstr "会话未找到"
 
-#: efb_wechat_slave/slave_message.py:155
+#: efb_wechat_slave/slave_message.py:160
 msgid "[Incoming audio/video call, please check your phone.]"
 msgstr "[视音频来电，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:293
+#: efb_wechat_slave/slave_message.py:298
 msgid "[Unsupported message, please check your phone.]"
 msgstr "[消息类型不支持，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:300 efb_wechat_slave/slave_message.py:311
+#: efb_wechat_slave/slave_message.py:305 efb_wechat_slave/slave_message.py:316
 #, python-brace-format
 msgid "Via {source}"
 msgstr "发送自 {source}"
 
-#: efb_wechat_slave/slave_message.py:396
+#: efb_wechat_slave/slave_message.py:401
 msgid "[Failed to download the picture, please check your phone.]"
 msgstr "[图片无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:416
+#: efb_wechat_slave/slave_message.py:421
 msgid "[Failed to download the sticker, please check your phone.]"
 msgstr "[表情图片无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:429
+#: efb_wechat_slave/slave_message.py:434
 #, python-brace-format
 msgid "{file_name} sent via {app_name}"
 msgstr "{file_name} 通过 {app_name} 发送"
 
-#: efb_wechat_slave/slave_message.py:434
+#: efb_wechat_slave/slave_message.py:439
 msgid "[Failed to download the file, please check your phone.]"
 msgstr "[文件无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:445
+#: efb_wechat_slave/slave_message.py:450
 msgid "[Failed to download the voice message, please check your phone.]"
 msgstr "[语音无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:459
+#: efb_wechat_slave/slave_message.py:464
 msgid "[Failed to download the video message, please check your phone.]"
 msgstr "[视频无法接收，请转到手机微信查看]"
 
 #. TRANSLATORS: Gender of contact
-#: efb_wechat_slave/slave_message.py:465 efb_wechat_slave/slave_message.py:485
+#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
 msgid "M"
 msgstr "男"
 
-#: efb_wechat_slave/slave_message.py:465 efb_wechat_slave/slave_message.py:485
+#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
 msgid "F"
 msgstr "女"
 
-#: efb_wechat_slave/slave_message.py:466 efb_wechat_slave/slave_message.py:486
+#: efb_wechat_slave/slave_message.py:471 efb_wechat_slave/slave_message.py:491
 #, python-brace-format
 msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
@@ -81,11 +81,11 @@ msgstr "名片: {user.nick_name}\n"
 "签名: {user.signature}\n"
 "性别: {gender}"
 
-#: efb_wechat_slave/slave_message.py:476
+#: efb_wechat_slave/slave_message.py:481
 msgid "Send friend request"
 msgstr "发送好友请求"
 
-#: efb_wechat_slave/slave_message.py:496
+#: efb_wechat_slave/slave_message.py:501
 msgid "Accept friend request"
 msgstr "接受好友请求"
 

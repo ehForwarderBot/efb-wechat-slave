@@ -35,22 +35,11 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网�
 <https://github.com/littlecodersh/ItChat/>`_。
 
 
-Alpha 版本
+使用前阅读
 ==========
 
-该从端非稳定版本，且其功能随时可能会被更改。
-
-
-注意
-====
-
-Since mid-2016, we have received feedback where some users’ access to
-Web WeChat was banned. Most of the users were unbanned within 1 day to
-3 months. When a user is banned for Web WeChat access, a pop up would
-be shown when they try to use it, stating that they “cannot use Web
-WeChat temporary”, and are recommended to use mobile app or
-Windows/macOS instead. By observation, only less than 10% of the users
-are being banned from Web WeChat during their usage.
+自 2016
+年中旬以来，陆续有用户报告称其微信的网页端被封禁。多数用户在 1 天至 3 个月内被解封。当被封禁的用户尝试登陆网页端时，会弹出提示称「当前登录环境异常。为了你的账号安全，暂时不能登录网页版微信。你可以通过手机客户端或 Windows 微信登录」。据观察，只有不到一成的用户在使用期间被禁止使用网页版微信。
 
 另外，有报告称，在 2016 年年中之后注册的微信帐户「出于安全原因」无法使用网页版微信。在设置 EWS 之前，请确认您的账号是否可以使用
 `网页版微信 <https://web.wechat.com/>`_ 。
@@ -85,13 +74,12 @@ are being banned from Web WeChat during their usage.
     ::
        pip3 install efb-wechat-slave
 
-3. Enable EWS using the *EFB configuration wizard* or in
-    ``config.yaml`` of the current profile.
+3. 使用 *EFB 配置向导* 或当前配置档案的 ``config.yaml`` 启用 EWS。
 
     当前配置文件夹的位置会根据用户的设定而改变。
 
-    **(In EFB 2, the default configuration directory is**
-    ``~/.ehforwarderbot/profiles/default`` **)**
+    **(在 EFB 2 中，默认的配置文件夹位于** ``~/.ehforwarderbot/profiles/default``
+    **）**
 
 
 其他安装方式
@@ -234,7 +222,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
 供应商特定选项（``vendor_specific``）
 =====================================
 
-``Chat`` from EWS provides the following ``vendor_specific`` items:
+EWS 中的 ``Chat`` 提供了以下 ``vendor_specific`` 数据：
 
 * ``is_mp`` *(bool)* 该会话是否为公众号。
 
