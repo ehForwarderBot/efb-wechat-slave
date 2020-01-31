@@ -38,7 +38,7 @@ Some source code in this repository was adapted from
 Read before use
 ---------------
 
-Since mid-2016, we have received feedback where some users’ access to Web
+Since mid-2017, we have received feedback where some users’ access to Web
 WeChat was banned. Most of the users were unbanned within 1 day to 3 months.
 When a user is banned for Web WeChat access, a pop up would be shown when
 they try to use it, stating that they “cannot use Web WeChat temporary”, and
@@ -46,7 +46,7 @@ are recommended to use mobile app or Windows/macOS instead. By observation,
 only less than 10% of the users are being banned from Web WeChat during their
 usage.
 
-Meanwhile, it is reported that WeChat accounts registered after mid-2016
+Meanwhile, it is reported that WeChat accounts registered after mid-2017
 cannot use Web WeChat “for security reason”. Please confirm that you can
 use `Web WeChat`_ with your account before setting up EWS.
 
