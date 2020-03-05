@@ -1,5 +1,7 @@
-import pickle, os
+import pickle
+import os
 import logging
+import secrets
 
 import requests
 
@@ -19,19 +21,23 @@ def load_hotreload(core):
 
 def dump_login_status(self, fileDir=None):
     fileDir = fileDir or self.hotReloadDir
-    try:
-        with open(fileDir, 'w') as f:
-            f.write('itchat - DELETE THIS')
-        os.remove(fileDir)
-    except:
-        raise Exception('Incorrect fileDir')
     status = {
         'version': VERSION,
         'loginInfo': self.loginInfo,
         'cookies': self.s.cookies.get_dict(),
         'storage': self.storageClass.dumps()}
-    with open(fileDir, 'wb') as f:
-        pickle.dump(status, f)
+
+    # Safe dump
+    if not os.path.exists(fileDir):
+        with open(fileDir, "wb") as f:
+            pickle.dump(status, f)
+    else:
+        temp_path = f"{fileDir}.{secrets.token_urlsafe(8)}"
+        with open(temp_path, "wb") as f:
+            pickle.dump(status, f)
+        os.unlink(fileDir)
+        os.rename(temp_path, fileDir)
+
     logger.debug('Dump login status for hot reload successfully.')
 
 

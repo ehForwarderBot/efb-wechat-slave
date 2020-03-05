@@ -7,3 +7,4 @@
 - Add attribute Message.app_name
 - Add type hints (partially)
 - Remove Python 2 compatibility code
+- Safely overwrite PUID storage to mitigate loss of data caused by improper termination

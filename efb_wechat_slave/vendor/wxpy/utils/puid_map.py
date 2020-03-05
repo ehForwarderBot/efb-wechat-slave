@@ -4,12 +4,12 @@ from __future__ import unicode_literals
 import atexit
 import os
 import pickle
+import secrets
 import logging
 import logging.handlers
 
 import threading
 from typing import Optional, TYPE_CHECKING, Tuple
-from typing_extensions import Final
 from collections import UserDict
 
 if TYPE_CHECKING:
@@ -231,8 +231,18 @@ class PuidMap(object):
         """
         保存映射数据
         """
-        with open(self.path, 'wb') as fp:
-            pickle.dump((self.user_names, self.wxids, self.remark_names, self.captions), fp)
+
+        # Safe dump
+        data = (self.user_names, self.wxids, self.remark_names, self.captions)
+        if not os.path.exists(self.path):
+            with open(self.path, "wb") as f:
+                pickle.dump(data, f)
+        else:
+            temp_path = f"{self.path}.{secrets.token_urlsafe(8)}"
+            with open(temp_path, "wb") as f:
+                pickle.dump(data, f)
+            os.unlink(self.path)
+            os.rename(temp_path, self.path)
 
         if self._dump_task:
             self._dump_task = None
