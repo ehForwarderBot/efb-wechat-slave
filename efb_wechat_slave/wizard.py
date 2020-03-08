@@ -91,7 +91,7 @@ flags_settings = {
            '        Note: QR code might change frequently.'
            )),
     "on_log_out":
-        ("command", 'choices', ['idle', 'reauth', 'command'],
+        (2, 'choices', ['idle', 'reauth', 'command'],
          _('Behavior when WeChat server logged your account out.\n'
            '\n'
            'Options:\n'
@@ -111,7 +111,7 @@ flags_settings = {
            'disabled by default.'
            )),
     "app_shared_link_mode":
-        ('ignore', 'choices', ['ignore', 'upload', 'image'],
+        (0, 'choices', ['ignore', 'upload', 'image'],
          _('Behavior to deal with thumbnails when a message shared by 3rd '
            'party apps is received.\n'
            '\n'

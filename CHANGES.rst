@@ -27,6 +27,7 @@ Removed
 
 Fixed
 -----
+- Experimental features config wizard breaks on multiple choices.
 
 Known issue
 -----------
