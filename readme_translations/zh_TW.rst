@@ -38,11 +38,18 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网�
 使用前阅读
 ==========
 
-自 2017
-年中旬以来，陆续有用户报告称其微信的网页端被封禁。多数用户在 1 天至 3 个月内被解封。当被封禁的用户尝试登陆网页端时，会弹出提示称「当前登录环境异常。为了你的账号安全，暂时不能登录网页版微信。你可以通过手机客户端或 Windows 微信登录」。据观察，只有不到一成的用户在使用期间被禁止使用网页版微信。
+Since mid-2017, we have received feedback where some users’ access to
+Web WeChat was banned. Most of the users were unbanned within 1 day to
+3 months. When a user is banned for Web WeChat access, a pop up would
+be shown when they try to use it, stating that they “cannot use Web
+WeChat temporary”, and are recommended to use mobile app or
+Windows/macOS instead. By observation, only less than 10% of the users
+are being banned from Web WeChat during their usage.
 
-另外，有报告称，在 2017 年年中之后注册的微信帐户「出于安全原因」无法使用网页版微信。在设置 EWS 之前，请确认您的账号是否可以使用
-`网页版微信 <https://web.wechat.com/>`_ 。
+Meanwhile, it is reported that WeChat accounts registered after
+mid-2017 cannot use Web WeChat “for security reason”. Please confirm
+that you can use `Web WeChat <https://web.wechat.com/>`_ with your
+account before setting up EWS.
 
 该封禁不影响其他客户端的登录。目前封禁的原因尚不明确。
 
