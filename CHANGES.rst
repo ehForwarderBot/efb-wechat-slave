@@ -16,14 +16,26 @@ Unreleased
 
 Added
 -----
-- Safely overwrite session files to mitigate loss of data caused by improper
-  termination of EWS
 
 Changed
 -------
 
 Removed
 -------
+
+Fixed
+-----
+
+Known issue
+-----------
+
+2.0.1_ - 2020-03-19
+===================
+
+Added
+-----
+- Safely overwrite session files to mitigate loss of data caused by improper
+  termination of EWS
 
 Fixed
 -----
