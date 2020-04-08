@@ -51,6 +51,23 @@ def get_download_fn(core, url, msgId):
     return download_fn
 
 
+def get_attachment_download_fn(core, url, params, headers):
+    def download_atta(attaDir=None):
+        print("Download atta", url, params)
+        r = core.s.get(url, params=params, stream=True, headers=headers)
+        tempStorage = io.BytesIO()
+        for block in r.iter_content(1024):
+            tempStorage.write(block)
+        if attaDir is None:
+            return tempStorage.getvalue()
+        with open(attaDir, 'wb') as f:
+            f.write(tempStorage.getvalue())
+        return ReturnValue({'BaseResponse': {
+            'ErrMsg': 'Successfully downloaded',
+            'Ret': 0, }})
+    return download_atta
+
+
 def produce_msg(core, msgList):
     """ for messages types
      * 40 msg, 43 videochat, 50 VOIPMSG, 52 voipnotifymsg
@@ -168,18 +185,7 @@ def produce_msg(core, msgList):
                     'webwx_data_ticket': cookiesList['webwx_data_ticket'], }
                 headers = {'User-Agent': core.user_agent}
 
-                def download_atta(attaDir=None):
-                    r = core.s.get(url, params=params, stream=True, headers=headers)
-                    tempStorage = io.BytesIO()
-                    for block in r.iter_content(1024):
-                        tempStorage.write(block)
-                    if attaDir is None:
-                        return tempStorage.getvalue()
-                    with open(attaDir, 'wb') as f:
-                        f.write(tempStorage.getvalue())
-                    return ReturnValue({'BaseResponse': {
-                        'ErrMsg': 'Successfully downloaded',
-                        'Ret': 0, }})
+                download_atta = get_attachment_download_fn(core, url, params, headers)
 
                 msg = {
                     'Type': 'Attachment',
