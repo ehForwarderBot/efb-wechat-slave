@@ -26,6 +26,7 @@ Removed
 Fixed
 -----
 - Files may appear with the same content when received at the same time from WeChat
+- Wizard should return int instead of float
 
 Known issue
 -----------
