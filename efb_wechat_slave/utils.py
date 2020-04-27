@@ -107,6 +107,7 @@ WC_EMOTICON_CONVERSION = {
     '[Pup]': '🐶',
     '[吃瓜]': '🙄\u200d🍉',
     '[加油]': '💪\u200d😁',
+    '[加油加油]': '💪\u200d😷',
     '[汗]': '😓',
     '[天啊]': '😱',
     '[Emm]': '🤔',
@@ -131,7 +132,8 @@ class ExperimentalFlagsManager:
         'puid_logs': None,
         'send_stickers_and_gif_as_jpeg': False,
         'system_chats_to_include': ['filehelper'],
-        'user_agent': None
+        'user_agent': None,
+        'text_post_processing': True,
     }
 
     def __init__(self, channel: 'WeChatChannel'):

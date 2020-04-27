@@ -38,6 +38,7 @@ Added
 -----
 - Safely overwrite session files to mitigate loss of data caused by improper
   termination of EWS
+- ``text_post_processing`` experimental flag
 
 Fixed
 -----

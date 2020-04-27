@@ -133,9 +133,13 @@ class SlaveMessageManager:
         if msg.text.startswith("http://weixin.qq.com/cgi-bin/redirectforward?args="):
             return self.wechat_location_msg(msg)
         chat, author = self.get_chat_and_author(msg)
+        if self.channel.flag("text_post_processing"):
+            text = ews_utils.wechat_string_unescape(msg.text)
+        else:
+            text = msg.text or ""
         efb_msg = Message(
             chat=chat, author=author,
-            text=ews_utils.wechat_string_unescape(msg.text),
+            text=text,
             type=MsgType.Text
         )
         if msg.is_at and chat.self:
