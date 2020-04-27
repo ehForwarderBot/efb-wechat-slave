@@ -43,6 +43,7 @@ Added
 Fixed
 -----
 - Experimental features config wizard breaks on multiple choices.
+- Use the new 🧧 emoji for ``[红包]`` mapping.
 
 Known issue
 -----------
