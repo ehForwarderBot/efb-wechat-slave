@@ -19,6 +19,7 @@ Added
 
 Changed
 -------
+- Some changes to the translation of WeChat emoticon to emoji.
 
 Removed
 -------
