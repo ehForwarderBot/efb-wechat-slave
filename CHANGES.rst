@@ -19,18 +19,27 @@ Added
 
 Changed
 -------
-- Some changes to the translation of WeChat emoticon to emoji.
 
 Removed
 -------
 
 Fixed
 -----
-- Files may appear with the same content when received at the same time from WeChat
-- Wizard should return int instead of float
 
 Known issue
 -----------
+
+2.0.2_ - 2020-07-09
+===================
+
+Changed
+-------
+- Some changes to the translation of WeChat emoticon to emoji.
+
+Fixed
+-----
+- Files may appear with the same content when received at the same time from WeChat
+- Wizard should return int instead of float
 
 2.0.1_ - 2020-03-19
 ===================
@@ -55,3 +64,4 @@ First release.
 
 .. _2.0.0: https://ews.1a23.studio/releases/tag/v2.0.0
 .. _2.0.1: https://ews.1a23.studio/compare/v2.0.0...v2.0.1
+.. _2.0.2: https://ews.1a23.studio/compare/v2.0.1...v2.0.2
