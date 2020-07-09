@@ -7,7 +7,7 @@ import tempfile
 import threading
 import uuid
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, Optional, Tuple, IO, Dict, BinaryIO
+from typing import TYPE_CHECKING, Callable, Optional, Tuple, Dict, BinaryIO
 from xml.etree import ElementTree as ETree
 from xml.etree.ElementTree import Element
 
@@ -468,15 +468,19 @@ class SlaveMessageManager:
             efb_msg.text += self._("[Failed to download the video message, please check your phone.]")
         return efb_msg
 
-    @Decorators.wechat_msg_meta
-    def wechat_card_msg(self, msg: wxpy.Message) -> Message:
-        # TRANSLATORS: Gender of contact
+    def generate_card_info(self, msg: wxpy.Message) -> str:
         gender = {1: self._("M"), 2: self._("F")}.get(msg.card.sex, msg.card.sex)
         txt = (self._("Card: {user.nick_name}\n"
                       "From: {user.province}, {user.city}\n"
                       "Bio: {user.signature}\n"
                       "Gender: {gender}"))
         txt = txt.format(user=msg.card, gender=gender)
+        return txt
+
+    @Decorators.wechat_msg_meta
+    def wechat_card_msg(self, msg: wxpy.Message) -> Message:
+        # TRANSLATORS: Gender of contact
+        txt = self.generate_card_info(msg)
         return Message(
             text=txt,
             type=MsgType.Text,
@@ -491,12 +495,8 @@ class SlaveMessageManager:
 
     @Decorators.wechat_msg_meta
     def wechat_friend_msg(self, msg: wxpy.Message) -> Message:
-        gender = {1: self._("M"), 2: self._("F")}.get(msg.card.sex, msg.card.sex)
-        txt = (self._("Card: {user.nick_name}\n"
-                      "From: {user.province}, {user.city}\n"
-                      "Bio: {user.signature}\n"
-                      "Gender: {gender}"))
-        txt = txt.format(user=msg.card, gender=gender)
+        # TRANSLATORS: Gender of contact
+        txt = self.generate_card_info(msg)
         return Message(
             text=txt,
             type=MsgType.Text,
