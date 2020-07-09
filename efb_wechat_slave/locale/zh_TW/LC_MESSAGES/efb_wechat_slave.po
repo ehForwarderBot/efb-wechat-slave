@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-05 15:41+0000\n"
-"PO-Revision-Date: 2020-03-19 11:03\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-07-09 09:09+0000\n"
+"PO-Revision-Date: 2020-07-09 09:14\n"
+"Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -12,108 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: ehforwarderbot\n"
+"X-Crowdin-Project-ID: 299617\n"
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/efb_wechat_slave.pot\n"
-
-#. TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
-#: efb_wechat_slave/wizard.py:48
-msgid "# ===========================================\n"
-"# EFB WeChat Slave Channel Configuration File\n"
-"# ===========================================\n"
-"#\n"
-"# This file can help you to adjust some experimental features provided in\n"
-"# EWS. It is not required to have this file for EWS to work.\n"
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:71
-msgid "Force refresh the entire chat list every time when queried."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:75
-msgid "Send only the first article link when a message contains multiple articles."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:80
-msgid "Length limit of quoted message. Set to 0 to disable quotation. Set to -1 to include the full quoted message"
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:86
-msgid "Method to log in when you are logged out while EWS is running.\n"
-"Options:\n\n"
-"-  \"console_qr_code\": Send QR code to standard output (stdout).\n"
-"-  \"master_qr_code\": Send QR code to master channel. \n"
-"        Note: QR code might change frequently."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:95
-msgid "Behavior when WeChat server logged your account out.\n\n"
-"Options:\n"
-"-  \"idle\": Only notify the user.\n"
-"-  \"reauth\": Notify the user and start log in immediately.\n"
-"-  \"command\": Notify the user, and wait for user to start log in manually."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:105
-msgid "Use iTerm2 image protocol to show QR code. This is only applicable to iTerm 2 users."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:110
-msgid "Turn on to edit message by recall and resend. Edit message is disabled by default."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:115
-msgid "Behavior to deal with thumbnails when a message shared by 3rd party apps is received.\n\n"
-"-  \"ignore\": Ignore thumbnail\n"
-"-  \"upload\": Upload to public image hosting (https://sm.ms), and output its delete link to the log.\n"
-"-  \"image\": Send thumbnail as image (not recommended)."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:126
-msgid "Output PUID related log to the path indicated. Please use absolute path. In case of high volume of messages and chats, PUID log may occupy a large amount of space."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:132
-msgid "Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker limits as a workaround."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:138
-msgid "List of system chats to show in the default chat list. It must be zero to four of the following: filehelper (File Helper), fmessage (Friend suggestions), newsapp (Tencent News) and, weixin (WeChat Team)."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:145
-msgid "Choose the User Agent string to use when accessing Web Wechat. Leave undefined to use the default value provided by itchat."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:153
-msgid "EWS does not require any configuration, you only need to scan a QR code when you start up EH Forwarder Bot. It’s as simple as that.\n\n"
-"We has provided some experimental features that you can use. They are not required to be enabled for EWS to work. If you do not want to enable these feature, just press ENTER, and you are good to go."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:162
-msgid "Do you want to config experimental features? "
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:199
-msgid "Skipped."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:201
-msgid "Saving configurations..."
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:203
-msgid "OK"
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:210
-msgid "=====================================\n"
-"EFB WeChat Slave Channel Setup Wizard\n"
-"=====================================\n"
-msgstr ""
-
-#: efb_wechat_slave/wizard.py:223
-msgid "Congratulations! You have finished the setup wizard for EFB WeChat Slave channel."
-msgstr ""
+"X-Crowdin-File-ID: 115\n"
 
 #: efb_wechat_slave/chats.py:30
 msgid "Group Missing"
@@ -498,54 +400,53 @@ msgstr ""
 msgid "This is an unknown error from Web WeChat which we know nothing about why this is happening. If you have seen a pattern or if you happen to know the reason for this error code, please leave a comment at {issue_url} ."
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:160
+#: efb_wechat_slave/slave_message.py:164
 msgid "[Incoming audio/video call, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:298
+#: efb_wechat_slave/slave_message.py:302
 msgid "[Unsupported message, please check your phone.]"
 msgstr "[不支持的消息類型，請在手機微信查看]"
 
-#: efb_wechat_slave/slave_message.py:305 efb_wechat_slave/slave_message.py:316
+#: efb_wechat_slave/slave_message.py:309 efb_wechat_slave/slave_message.py:320
 #, python-brace-format
 msgid "Via {source}"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:401
+#: efb_wechat_slave/slave_message.py:405
 msgid "[Failed to download the picture, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:421
+#: efb_wechat_slave/slave_message.py:425
 msgid "[Failed to download the sticker, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:434
+#: efb_wechat_slave/slave_message.py:438
 #, python-brace-format
 msgid "{file_name} sent via {app_name}"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:439
+#: efb_wechat_slave/slave_message.py:443
 msgid "[Failed to download the file, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:450
+#: efb_wechat_slave/slave_message.py:454
 msgid "[Failed to download the voice message, please check your phone.]"
 msgstr ""
 
-#: efb_wechat_slave/slave_message.py:464
+#: efb_wechat_slave/slave_message.py:468
 msgid "[Failed to download the video message, please check your phone.]"
 msgstr ""
 
-#. TRANSLATORS: Gender of contact
-#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
+#: efb_wechat_slave/slave_message.py:472
 msgid "M"
 msgstr "男"
 
-#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
+#: efb_wechat_slave/slave_message.py:472
 msgid "F"
 msgstr "女"
 
-#: efb_wechat_slave/slave_message.py:471 efb_wechat_slave/slave_message.py:491
+#: efb_wechat_slave/slave_message.py:473
 #, python-brace-format
 msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
@@ -556,11 +457,115 @@ msgstr "名片: {user.nick_name}\n"
 "簽名: {user.signature}\n"
 "性別: {gender}"
 
-#: efb_wechat_slave/slave_message.py:481
+#: efb_wechat_slave/slave_message.py:489
 msgid "Send friend request"
 msgstr "發送好友請求"
 
-#: efb_wechat_slave/slave_message.py:501
+#: efb_wechat_slave/slave_message.py:505
 msgid "Accept friend request"
 msgstr "接受好友請求"
+
+#. TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
+#: efb_wechat_slave/wizard.py:48
+msgid "# ===========================================\n"
+"# EFB WeChat Slave Channel Configuration File\n"
+"# ===========================================\n"
+"#\n"
+"# This file can help you to adjust some experimental features provided in\n"
+"# EWS. It is not required to have this file for EWS to work.\n"
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:70
+msgid "Force refresh the entire chat list every time when queried."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:74
+msgid "Send only the first article link when a message contains multiple articles."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:79
+msgid "Length limit of quoted message. Set to 0 to disable quotation. Set to -1 to include the full quoted message"
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:85
+msgid "Method to log in when you are logged out while EWS is running.\n"
+"Options:\n\n"
+"-  \"console_qr_code\": Send QR code to standard output (stdout).\n"
+"-  \"master_qr_code\": Send QR code to master channel. \n"
+"        Note: QR code might change frequently."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:94
+msgid "Behavior when WeChat server logged your account out.\n\n"
+"Options:\n"
+"-  \"idle\": Only notify the user.\n"
+"-  \"reauth\": Notify the user and start log in immediately.\n"
+"-  \"command\": Notify the user, and wait for user to start log in manually."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:104
+msgid "Use iTerm2 image protocol to show QR code. This is only applicable to iTerm 2 users."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:109
+msgid "Turn on to edit message by recall and resend. Edit message is disabled by default."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:114
+msgid "Behavior to deal with thumbnails when a message shared by 3rd party apps is received.\n\n"
+"-  \"ignore\": Ignore thumbnail\n"
+"-  \"upload\": Upload to public image hosting (https://sm.ms), and output its delete link to the log.\n"
+"-  \"image\": Send thumbnail as image (not recommended)."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:125
+msgid "Output PUID related log to the path indicated. Please use absolute path. In case of high volume of messages and chats, PUID log may occupy a large amount of space."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:131
+msgid "Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker limits as a workaround."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:137
+msgid "List of system chats to show in the default chat list. It must be zero to four of the following: filehelper (File Helper), fmessage (Friend suggestions), newsapp (Tencent News) and, weixin (WeChat Team)."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:144
+msgid "Choose the User Agent string to use when accessing Web Wechat. Leave undefined to use the default value provided by itchat."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:149
+msgid "Determine whether to post-process text of messages received from WeChat."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:157
+msgid "EWS does not require any configuration, you only need to scan a QR code when you start up EH Forwarder Bot. It’s as simple as that.\n\n"
+"We have provided some experimental features that you can use. They are not required to be enabled for EWS to work. If you do not want to enable these feature, just press ENTER, and you are good to go."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:166
+msgid "Do you want to config experimental features? "
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:215
+msgid "Skipped."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:217
+msgid "Saving configurations..."
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:219
+msgid "OK"
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:226
+msgid "=====================================\n"
+"EFB WeChat Slave Channel Setup Wizard\n"
+"=====================================\n"
+msgstr ""
+
+#: efb_wechat_slave/wizard.py:239
+msgid "Congratulations! You have finished the setup wizard for EFB WeChat Slave channel."
+msgstr ""
 

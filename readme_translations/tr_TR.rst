@@ -261,6 +261,11 @@ disappear at any time. Use at your own risk.
   Choose the User Agent string to use when accessing Web Wechat. Leave
   undefined to use the default value provided by ``itchat``.
 
+* ``text_post_processing`` *(bool)* [Default: ``true``]
+
+  Determine whether to post-process text of messages received from
+  WeChat.
+
 
 ``vendor_specific``
 ===================

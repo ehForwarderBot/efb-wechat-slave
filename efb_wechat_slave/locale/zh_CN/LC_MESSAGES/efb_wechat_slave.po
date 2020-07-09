@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-05 15:41+0000\n"
-"PO-Revision-Date: 2020-03-19 11:03\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-07-09 09:09+0000\n"
+"PO-Revision-Date: 2020-07-09 09:13\n"
+"Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -12,125 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: ehforwarderbot\n"
+"X-Crowdin-Project-ID: 299617\n"
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/efb_wechat_slave.pot\n"
-
-#. TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
-#: efb_wechat_slave/wizard.py:48
-msgid "# ===========================================\n"
-"# EFB WeChat Slave Channel Configuration File\n"
-"# ===========================================\n"
-"#\n"
-"# This file can help you to adjust some experimental features provided in\n"
-"# EWS. It is not required to have this file for EWS to work.\n"
-msgstr "# ===========================\n"
-"# EFB 微信从端（EWS）设置向导\n"
-"# ===========================\n"
-"#\n"
-"# 此文件可以用来配置 EWS 中提供的试验性功能。EWS 的正常工作并\n"
-"# 不依赖此文件的存在。\n"
-
-#: efb_wechat_slave/wizard.py:71
-msgid "Force refresh the entire chat list every time when queried."
-msgstr "每次查询时强制刷新整个聊天列表。"
-
-#: efb_wechat_slave/wizard.py:75
-msgid "Send only the first article link when a message contains multiple articles."
-msgstr "当消息包含多个文章时，仅发送第一篇文章的链接。"
-
-#: efb_wechat_slave/wizard.py:80
-msgid "Length limit of quoted message. Set to 0 to disable quotation. Set to -1 to include the full quoted message"
-msgstr "引用消息的长度限制。设置为 0 以禁用引用。设置为 -1 以包含全部引用的消息"
-
-#: efb_wechat_slave/wizard.py:86
-msgid "Method to log in when you are logged out while EWS is running.\n"
-"Options:\n\n"
-"-  \"console_qr_code\": Send QR code to standard output (stdout).\n"
-"-  \"master_qr_code\": Send QR code to master channel. \n"
-"        Note: QR code might change frequently."
-msgstr "重新登录时使用的登录方式。选项：\n\n"
-"- \"console_qr_code\": 将二维码和提示输出到系统标准输出（stdout）。\n"
-"- \"master_qr_code\": 将二维码和提示发送到主端。 \n"
-"        注意：登录时二维码会频繁刷新，请注意二维码可能会导致刷屏"
-
-#: efb_wechat_slave/wizard.py:95
-msgid "Behavior when WeChat server logged your account out.\n\n"
-"Options:\n"
-"-  \"idle\": Only notify the user.\n"
-"-  \"reauth\": Notify the user and start log in immediately.\n"
-"-  \"command\": Notify the user, and wait for user to start log in manually."
-msgstr "微信服务器将用户登出时的操作。 选项：\n"
-"- \"idle\": 仅通知用户。\n"
-"- \"reauth\": 通知用户，并立即开始重新登录。\n"
-"- \"command\": 通知用户，并等待用户启动重新登录过程。"
-
-#: efb_wechat_slave/wizard.py:105
-msgid "Use iTerm2 image protocol to show QR code. This is only applicable to iTerm 2 users."
-msgstr "使用 iTerm2 图像协议 显示二维码。本功能只适用于 iTerm2 用户。"
-
-#: efb_wechat_slave/wizard.py:110
-msgid "Turn on to edit message by recall and resend. Edit message is disabled by default."
-msgstr "以撤回并重新发送的方式代替编辑消息。默认禁止编辑消息。"
-
-#: efb_wechat_slave/wizard.py:115
-msgid "Behavior to deal with thumbnails when a message shared by 3rd party apps is received.\n\n"
-"-  \"ignore\": Ignore thumbnail\n"
-"-  \"upload\": Upload to public image hosting (https://sm.ms), and output its delete link to the log.\n"
-"-  \"image\": Send thumbnail as image (not recommended)."
-msgstr "在收到第三方合作应用分享给微信的链接时，其附带的预览图以何种形式发送。\n\n"
-"- \"ignore\"：忽略附带的缩略图\n"
-"- \"upload\"：将缩略图上传到公开图床（https://sm.ms），并在日志中输出图片的删除链接。\n"
-"- \"image\"：将消息以图片形式发送（不推荐）"
-
-#: efb_wechat_slave/wizard.py:126
-msgid "Output PUID related log to the path indicated. Please use absolute path. In case of high volume of messages and chats, PUID log may occupy a large amount of space."
-msgstr "输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据会话数量和消息吞吐量而占用大量存储空间。"
-
-#: efb_wechat_slave/wizard.py:132
-msgid "Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker limits as a workaround."
-msgstr "以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。"
-
-#: efb_wechat_slave/wizard.py:138
-msgid "List of system chats to show in the default chat list. It must be zero to four of the following: filehelper (File Helper), fmessage (Friend suggestions), newsapp (Tencent News) and, weixin (WeChat Team)."
-msgstr "在默认会话列表中显示的特殊系统会话。其内容仅能为 filehelper（文件传输助手）、fmessage（朋友推荐消息）、newsapp（腾讯新闻）、weixin（微信团队）其中零到四个选项。"
-
-#: efb_wechat_slave/wizard.py:145
-msgid "Choose the User Agent string to use when accessing Web Wechat. Leave undefined to use the default value provided by itchat."
-msgstr "指定访问网页版微信时使用的用户代理（user agent）字符串。不指定时则使用 itchat 提供的默认值。"
-
-#: efb_wechat_slave/wizard.py:153
-msgid "EWS does not require any configuration, you only need to scan a QR code when you start up EH Forwarder Bot. It’s as simple as that.\n\n"
-"We has provided some experimental features that you can use. They are not required to be enabled for EWS to work. If you do not want to enable these feature, just press ENTER, and you are good to go."
-msgstr "EWS 不需要任何配置，你只需要在启动 EH Forwarder Bot 时扫描二维码就可以简单开始。\n\n"
-"我们提供了一些额外的实验功能。启用 EWS 不要求配置这些功能。如果您不想启用这些功能，请按回车键以完成设置。"
-
-#: efb_wechat_slave/wizard.py:162
-msgid "Do you want to config experimental features? "
-msgstr "您想要配置实验功能吗？"
-
-#: efb_wechat_slave/wizard.py:199
-msgid "Skipped."
-msgstr "已跳过。"
-
-#: efb_wechat_slave/wizard.py:201
-msgid "Saving configurations..."
-msgstr "正在保存配置..."
-
-#: efb_wechat_slave/wizard.py:203
-msgid "OK"
-msgstr "OK"
-
-#: efb_wechat_slave/wizard.py:210
-msgid "=====================================\n"
-"EFB WeChat Slave Channel Setup Wizard\n"
-"=====================================\n"
-msgstr "===========================\n"
-"EFB 微信从端（EWS）设置向导\n"
-"===========================\n"
-
-#: efb_wechat_slave/wizard.py:223
-msgid "Congratulations! You have finished the setup wizard for EFB WeChat Slave channel."
-msgstr "恭喜！您已完成了 EFB 微信从端的设置向导。"
+"X-Crowdin-File-ID: 115\n"
 
 #: efb_wechat_slave/chats.py:30
 msgid "Group Missing"
@@ -515,54 +400,53 @@ msgstr "您发送消息的速度可能太快。坐下来休息一下，稍后重
 msgid "This is an unknown error from Web WeChat which we know nothing about why this is happening. If you have seen a pattern or if you happen to know the reason for this error code, please leave a comment at {issue_url} ."
 msgstr "这是一个来自网页版微信的未知错误，我们该错误的成因一无所知。如果您有发现相关规律，或了解这个错误的原因。请您前往 {issue_url} 进行反馈。"
 
-#: efb_wechat_slave/slave_message.py:160
+#: efb_wechat_slave/slave_message.py:164
 msgid "[Incoming audio/video call, please check your phone.]"
 msgstr "[视音频来电，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:298
+#: efb_wechat_slave/slave_message.py:302
 msgid "[Unsupported message, please check your phone.]"
 msgstr "[消息类型不支持，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:305 efb_wechat_slave/slave_message.py:316
+#: efb_wechat_slave/slave_message.py:309 efb_wechat_slave/slave_message.py:320
 #, python-brace-format
 msgid "Via {source}"
 msgstr "发送自 {source}"
 
-#: efb_wechat_slave/slave_message.py:401
+#: efb_wechat_slave/slave_message.py:405
 msgid "[Failed to download the picture, please check your phone.]"
 msgstr "[图片无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:421
+#: efb_wechat_slave/slave_message.py:425
 msgid "[Failed to download the sticker, please check your phone.]"
 msgstr "[表情图片无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:434
+#: efb_wechat_slave/slave_message.py:438
 #, python-brace-format
 msgid "{file_name} sent via {app_name}"
 msgstr "{file_name} 通过 {app_name} 发送"
 
-#: efb_wechat_slave/slave_message.py:439
+#: efb_wechat_slave/slave_message.py:443
 msgid "[Failed to download the file, please check your phone.]"
 msgstr "[文件无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:450
+#: efb_wechat_slave/slave_message.py:454
 msgid "[Failed to download the voice message, please check your phone.]"
 msgstr "[语音无法接收，请转到手机微信查看]"
 
-#: efb_wechat_slave/slave_message.py:464
+#: efb_wechat_slave/slave_message.py:468
 msgid "[Failed to download the video message, please check your phone.]"
 msgstr "[视频无法接收，请转到手机微信查看]"
 
-#. TRANSLATORS: Gender of contact
-#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
+#: efb_wechat_slave/slave_message.py:472
 msgid "M"
 msgstr "男"
 
-#: efb_wechat_slave/slave_message.py:470 efb_wechat_slave/slave_message.py:490
+#: efb_wechat_slave/slave_message.py:472
 msgid "F"
 msgstr "女"
 
-#: efb_wechat_slave/slave_message.py:471 efb_wechat_slave/slave_message.py:491
+#: efb_wechat_slave/slave_message.py:473
 #, python-brace-format
 msgid "Card: {user.nick_name}\n"
 "From: {user.province}, {user.city}\n"
@@ -573,11 +457,132 @@ msgstr "名片: {user.nick_name}\n"
 "签名: {user.signature}\n"
 "性别: {gender}"
 
-#: efb_wechat_slave/slave_message.py:481
+#: efb_wechat_slave/slave_message.py:489
 msgid "Send friend request"
 msgstr "发送好友请求"
 
-#: efb_wechat_slave/slave_message.py:501
+#: efb_wechat_slave/slave_message.py:505
 msgid "Accept friend request"
 msgstr "接受好友请求"
+
+#. TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
+#: efb_wechat_slave/wizard.py:48
+msgid "# ===========================================\n"
+"# EFB WeChat Slave Channel Configuration File\n"
+"# ===========================================\n"
+"#\n"
+"# This file can help you to adjust some experimental features provided in\n"
+"# EWS. It is not required to have this file for EWS to work.\n"
+msgstr "# ===========================\n"
+"# EFB 微信从端（EWS）设置向导\n"
+"# ===========================\n"
+"#\n"
+"# 此文件可以用来配置 EWS 中提供的试验性功能。EWS 的正常工作并\n"
+"# 不依赖此文件的存在。\n"
+
+#: efb_wechat_slave/wizard.py:70
+msgid "Force refresh the entire chat list every time when queried."
+msgstr "每次查询时强制刷新整个聊天列表。"
+
+#: efb_wechat_slave/wizard.py:74
+msgid "Send only the first article link when a message contains multiple articles."
+msgstr "当消息包含多个文章时，仅发送第一篇文章的链接。"
+
+#: efb_wechat_slave/wizard.py:79
+msgid "Length limit of quoted message. Set to 0 to disable quotation. Set to -1 to include the full quoted message"
+msgstr "引用消息的长度限制。设置为 0 以禁用引用。设置为 -1 以包含全部引用的消息"
+
+#: efb_wechat_slave/wizard.py:85
+msgid "Method to log in when you are logged out while EWS is running.\n"
+"Options:\n\n"
+"-  \"console_qr_code\": Send QR code to standard output (stdout).\n"
+"-  \"master_qr_code\": Send QR code to master channel. \n"
+"        Note: QR code might change frequently."
+msgstr "重新登录时使用的登录方式。选项：\n\n"
+"- \"console_qr_code\": 将二维码和提示输出到系统标准输出（stdout）。\n"
+"- \"master_qr_code\": 将二维码和提示发送到主端。 \n"
+"        注意：登录时二维码会频繁刷新，请注意二维码可能会导致刷屏"
+
+#: efb_wechat_slave/wizard.py:94
+msgid "Behavior when WeChat server logged your account out.\n\n"
+"Options:\n"
+"-  \"idle\": Only notify the user.\n"
+"-  \"reauth\": Notify the user and start log in immediately.\n"
+"-  \"command\": Notify the user, and wait for user to start log in manually."
+msgstr "微信服务器将用户登出时的操作。 选项：\n"
+"- \"idle\": 仅通知用户。\n"
+"- \"reauth\": 通知用户，并立即开始重新登录。\n"
+"- \"command\": 通知用户，并等待用户启动重新登录过程。"
+
+#: efb_wechat_slave/wizard.py:104
+msgid "Use iTerm2 image protocol to show QR code. This is only applicable to iTerm 2 users."
+msgstr "使用 iTerm2 图像协议 显示二维码。本功能只适用于 iTerm2 用户。"
+
+#: efb_wechat_slave/wizard.py:109
+msgid "Turn on to edit message by recall and resend. Edit message is disabled by default."
+msgstr "以撤回并重新发送的方式代替编辑消息。默认禁止编辑消息。"
+
+#: efb_wechat_slave/wizard.py:114
+msgid "Behavior to deal with thumbnails when a message shared by 3rd party apps is received.\n\n"
+"-  \"ignore\": Ignore thumbnail\n"
+"-  \"upload\": Upload to public image hosting (https://sm.ms), and output its delete link to the log.\n"
+"-  \"image\": Send thumbnail as image (not recommended)."
+msgstr "在收到第三方合作应用分享给微信的链接时，其附带的预览图以何种形式发送。\n\n"
+"- \"ignore\"：忽略附带的缩略图\n"
+"- \"upload\"：将缩略图上传到公开图床（https://sm.ms），并在日志中输出图片的删除链接。\n"
+"- \"image\"：将消息以图片形式发送（不推荐）"
+
+#: efb_wechat_slave/wizard.py:125
+msgid "Output PUID related log to the path indicated. Please use absolute path. In case of high volume of messages and chats, PUID log may occupy a large amount of space."
+msgstr "输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据会话数量和消息吞吐量而占用大量存储空间。"
+
+#: efb_wechat_slave/wizard.py:131
+msgid "Send stickers and GIF images as JPEG to bypass Web WeChat custom sticker limits as a workaround."
+msgstr "以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。"
+
+#: efb_wechat_slave/wizard.py:137
+msgid "List of system chats to show in the default chat list. It must be zero to four of the following: filehelper (File Helper), fmessage (Friend suggestions), newsapp (Tencent News) and, weixin (WeChat Team)."
+msgstr "在默认会话列表中显示的特殊系统会话。其内容仅能为 filehelper（文件传输助手）、fmessage（朋友推荐消息）、newsapp（腾讯新闻）、weixin（微信团队）其中零到四个选项。"
+
+#: efb_wechat_slave/wizard.py:144
+msgid "Choose the User Agent string to use when accessing Web Wechat. Leave undefined to use the default value provided by itchat."
+msgstr "指定访问网页版微信时使用的用户代理（user agent）字符串。不指定时则使用 itchat 提供的默认值。"
+
+#: efb_wechat_slave/wizard.py:149
+msgid "Determine whether to post-process text of messages received from WeChat."
+msgstr "是否对从微信接收到的消息进行后处理。"
+
+#: efb_wechat_slave/wizard.py:157
+msgid "EWS does not require any configuration, you only need to scan a QR code when you start up EH Forwarder Bot. It’s as simple as that.\n\n"
+"We have provided some experimental features that you can use. They are not required to be enabled for EWS to work. If you do not want to enable these feature, just press ENTER, and you are good to go."
+msgstr "EWS 不需要任何配置，你只需要在启动 EH Forwarder Bot 时扫描二维码就可以简单开始。\n\n"
+"我们提供了一些额外的实验功能。启用 EWS 不要求配置这些功能。如果您不想启用这些功能，请按回车键以完成设置。"
+
+#: efb_wechat_slave/wizard.py:166
+msgid "Do you want to config experimental features? "
+msgstr "您想要配置实验功能吗？"
+
+#: efb_wechat_slave/wizard.py:215
+msgid "Skipped."
+msgstr "已跳过。"
+
+#: efb_wechat_slave/wizard.py:217
+msgid "Saving configurations..."
+msgstr "正在保存配置..."
+
+#: efb_wechat_slave/wizard.py:219
+msgid "OK"
+msgstr "OK"
+
+#: efb_wechat_slave/wizard.py:226
+msgid "=====================================\n"
+"EFB WeChat Slave Channel Setup Wizard\n"
+"=====================================\n"
+msgstr "===========================\n"
+"EFB 微信从端（EWS）设置向导\n"
+"===========================\n"
+
+#: efb_wechat_slave/wizard.py:239
+msgid "Congratulations! You have finished the setup wizard for EFB WeChat Slave channel."
+msgstr "恭喜！您已完成了 EFB 微信从端的设置向导。"
 
