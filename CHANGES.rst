@@ -25,6 +25,8 @@ Removed
 
 Fixed
 -----
+- Attempt to fix issue where new chat is not properly recognised without
+  verification (`#108`_)
 
 Known issue
 -----------
@@ -65,3 +67,4 @@ First release.
 .. _2.0.0: https://ews.1a23.studio/releases/tag/v2.0.0
 .. _2.0.1: https://ews.1a23.studio/compare/v2.0.0...v2.0.1
 .. _2.0.2: https://ews.1a23.studio/compare/v2.0.1...v2.0.2
+.. _#108: https://github.com/blueset/efb-wechat-slave/issues/108

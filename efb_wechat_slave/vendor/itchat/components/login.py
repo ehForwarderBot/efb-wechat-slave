@@ -265,10 +265,6 @@ def start_receiving(self, exitCallback=None, getReceivingFnOnly=False):
                     pass
                 else:
                     msgList, contactList = self.get_msg()
-                    if msgList:
-                        msgList = produce_msg(self, msgList)
-                        for msg in msgList:
-                            self.msgList.put(msg)
                     if contactList:
                         chatroomList, otherList = [], []
                         for contact in contactList:
@@ -280,6 +276,10 @@ def start_receiving(self, exitCallback=None, getReceivingFnOnly=False):
                         chatroomMsg['User'] = self.loginInfo['User']
                         self.msgList.put(chatroomMsg)
                         update_local_friends(self, otherList)
+                    if msgList:
+                        msgList = produce_msg(self, msgList)
+                        for msg in msgList:
+                            self.msgList.put(msg)
                 retryCount = 0
             except requests.exceptions.ReadTimeout:
                 pass
