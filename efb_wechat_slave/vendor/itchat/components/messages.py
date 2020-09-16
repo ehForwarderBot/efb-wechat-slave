@@ -29,11 +29,12 @@ def load_messages(core):
 
 
 def get_download_fn(core, url, msgId):
+    params = {
+        'msgid': msgId,
+        'skey': core.loginInfo['skey'], }
+    headers = {'User-Agent': core.user_agent}
+
     def download_fn(downloadDir=None):
-        params = {
-            'msgid': msgId,
-            'skey': core.loginInfo['skey'], }
-        headers = {'User-Agent': core.user_agent}
         r = core.s.get(url, params=params, stream=True, headers=headers)
         tempStorage = io.BytesIO()
         for block in r.iter_content(1024):
@@ -53,7 +54,6 @@ def get_download_fn(core, url, msgId):
 
 def get_attachment_download_fn(core, url, params, headers):
     def download_atta(attaDir=None):
-        print("Download atta", url, params)
         r = core.s.get(url, params=params, stream=True, headers=headers)
         tempStorage = io.BytesIO()
         for block in r.iter_content(1024):
@@ -150,18 +150,7 @@ def produce_msg(core, msgList):
                 'skey': core.loginInfo['skey'], }
             headers = {'Range': 'bytes=0-', 'User-Agent': core.user_agent}
 
-            def download_video(videoDir=None):
-                r = core.s.get(url, params=params, headers=headers, stream=True)
-                tempStorage = io.BytesIO()
-                for block in r.iter_content(1024):
-                    tempStorage.write(block)
-                if videoDir is None:
-                    return tempStorage.getvalue()
-                with open(videoDir, 'wb') as f:
-                    f.write(tempStorage.getvalue())
-                return ReturnValue({'BaseResponse': {
-                    'ErrMsg': 'Successfully downloaded',
-                    'Ret': 0, }})
+            download_video = get_attachment_download_fn(core, url, params, headers)
 
             msg = {
                 'Type': 'Video',

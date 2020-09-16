@@ -522,7 +522,7 @@ class SlaveMessageManager:
         """
         file: BinaryIO = tempfile.NamedTemporaryFile()  # type: ignore
         try:
-            if msg.type == consts.ATTACHMENT:
+            if msg.type in [consts.ATTACHMENT, consts.VIDEO]:
                 with self.file_download_mutex_lock:
                     msg.get_file(file.name)
             else:

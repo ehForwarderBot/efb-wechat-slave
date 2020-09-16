@@ -27,6 +27,7 @@ Fixed
 -----
 - Attempt to fix issue where new chat is not properly recognised without
   verification (`#108`_)
+- Yet another attempt to fix batch incoming files / videos duplication
 
 Known issue
 -----------
