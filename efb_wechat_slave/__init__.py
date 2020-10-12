@@ -381,22 +381,21 @@ class WeChatChannel(SlaveChannel):
         if send_text_only or msg.type in [MsgType.Text, MsgType.Link]:
             if isinstance(msg.target, Message):
                 max_length = self.flag("max_quote_length")
-                qt_txt = msg.target.text or msg.target.type.name
-                if max_length > 0:
-                    if len(qt_txt) >= max_length:
-                        tgt_text = qt_txt[:max_length]
-                        tgt_text += "…"
-                    else:
+                if max_length != 0:
+                    qt_txt = msg.target.text or msg.target.type.name
+                    if max_length > 0:
+                        if len(qt_txt) >= max_length:
+                            tgt_text = qt_txt[:max_length]
+                            tgt_text += "…"
+                        else:
+                            tgt_text = qt_txt
+                    else:  # tgt_text < 0
                         tgt_text = qt_txt
-                elif max_length < 0:
-                    tgt_text = qt_txt
-                else:
-                    tgt_text = ""
-                if isinstance(chat, wxpy.Group) and not isinstance(msg.target.author, SelfChatMember):
-                    tgt_alias = "@%s\u2005：" % msg.target.author.display_name
-                else:
-                    tgt_alias = ""
-                msg.text = f"「{tgt_alias}{tgt_text}」\n- - - - - - - - - - - - - - -\n{msg.text}"
+                    if isinstance(chat, wxpy.Group) and not isinstance(msg.target.author, SelfChatMember):
+                        tgt_alias = "@%s\u2005：" % msg.target.author.display_name
+                    else:
+                        tgt_alias = ""
+                    msg.text = f"「{tgt_alias}{tgt_text}」\n- - - - - - - - - - - - - - -\n{msg.text}"
             r.append(self._bot_send_msg(chat, msg.text))
             self.logger.debug(
                 '[%s] Sent as a text message. %s', msg.uid, msg.text)
