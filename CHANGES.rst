@@ -16,7 +16,6 @@ Unreleased
 
 Added
 -----
-- Step-by-step logging for session file and PUID mapping overwrite
 
 Changed
 -------
@@ -26,13 +25,23 @@ Removed
 
 Fixed
 -----
+
+Known issue
+-----------
+
+2.0.3_ - 2020-11-23
+===================
+
+Added
+-----
+- Step-by-step logging for session file and PUID mapping overwrite
+
+Fixed
+-----
 - Attempt to fix issue where new chat is not properly recognised without
   verification (`#108`_)
 - Yet another attempt to fix batch incoming files / videos duplication
 - Hide quotation marks when ``max_quote_length`` is set to 0
-
-Known issue
------------
 
 2.0.2_ - 2020-07-09
 ===================
@@ -70,4 +79,5 @@ First release.
 .. _2.0.0: https://ews.1a23.studio/releases/tag/v2.0.0
 .. _2.0.1: https://ews.1a23.studio/compare/v2.0.0...v2.0.1
 .. _2.0.2: https://ews.1a23.studio/compare/v2.0.1...v2.0.2
+.. _2.0.3: https://ews.1a23.studio/compare/v2.0.2...v2.0.3
 .. _#108: https://github.com/blueset/efb-wechat-slave/issues/108
