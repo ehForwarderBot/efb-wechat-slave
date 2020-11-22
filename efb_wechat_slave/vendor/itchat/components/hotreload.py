@@ -32,11 +32,16 @@ def dump_login_status(self, fileDir=None):
         with open(fileDir, "wb") as f:
             pickle.dump(status, f)
     else:
+        logger.debug("Attempting to overwrite session file.")
         temp_path = f"{fileDir}.{secrets.token_urlsafe(8)}"
+        logger.debug(f"Write session file to {temp_path}.")
         with open(temp_path, "wb") as f:
             pickle.dump(status, f)
+        logger.debug(f"Remove old session file at {fileDir}")
         os.unlink(fileDir)
+        logger.debug(f"Move new session file from {temp_path} to {fileDir}")
         os.rename(temp_path, fileDir)
+        logger.debug(f"Session file overwrite completed.")
 
     logger.debug('Dump login status for hot reload successfully.')
 

@@ -45,6 +45,8 @@ PuidMap 中包含 4 个 dict，分别为
 # Type definitions
 Caption = Tuple[str, Optional[str], Optional[str], Optional[str]]
 
+file_io_logger: logging.Logger = logging.getLogger(__name__)
+
 
 class PuidMap(object):
 
@@ -238,11 +240,16 @@ class PuidMap(object):
             with open(self.path, "wb") as f:
                 pickle.dump(data, f)
         else:
+            file_io_logger.debug("Attempting to overwrite PUID mapping.")
             temp_path = f"{self.path}.{secrets.token_urlsafe(8)}"
+            file_io_logger.debug(f"Write PUID mapping to {temp_path}.")
             with open(temp_path, "wb") as f:
                 pickle.dump(data, f)
+            file_io_logger.debug(f"Remove old PUID mapping at {self.path}")
             os.unlink(self.path)
+            file_io_logger.debug(f"Move new PUID mapping from {temp_path} to {self.path}")
             os.rename(temp_path, self.path)
+            file_io_logger.debug(f"PUID mapping overwrite completed.")
 
         if self._dump_task:
             self._dump_task = None

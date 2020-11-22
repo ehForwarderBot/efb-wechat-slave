@@ -16,6 +16,7 @@ Unreleased
 
 Added
 -----
+- Step-by-step logging for session file and PUID mapping overwrite
 
 Changed
 -------
@@ -28,6 +29,7 @@ Fixed
 - Attempt to fix issue where new chat is not properly recognised without
   verification (`#108`_)
 - Yet another attempt to fix batch incoming files / videos duplication
+- Hide quotation marks when ``max_quote_length`` is set to 0
 
 Known issue
 -----------
