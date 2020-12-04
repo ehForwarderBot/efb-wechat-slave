@@ -164,8 +164,8 @@ def setup_experimental_flags(data):
     ))
 
     widget = YesNo(prompt=_("Do you want to config experimental features? "),
-                   prompt_prefix="[yN] ")
-    if not widget.launch(default="n"):
+                   prompt_prefix="[yN] ", default="n")
+    if not widget.launch():
         return
 
     for key, value in flags_settings.items():
@@ -178,8 +178,9 @@ def setup_experimental_flags(data):
         if cat == 'bool':
             prompt_prefix = '[Yn] ' if default else '[yN] '
             ans = YesNo(prompt=f"{key}? ",
-                        prompt_prefix=prompt_prefix) \
-                .launch(default='y' if default else 'n')
+                        prompt_prefix=prompt_prefix,
+                        default='y' if default else 'n') \
+                .launch()
 
             data.data['flags'][key] = ans
         elif cat == 'int':
