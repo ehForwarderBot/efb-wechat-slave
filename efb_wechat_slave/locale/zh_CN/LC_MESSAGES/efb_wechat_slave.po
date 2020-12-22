@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ehforwarderbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-22 16:26+0000\n"
-"PO-Revision-Date: 2020-11-22 16:30\n"
+"POT-Creation-Date: 2020-12-04 15:49+0000\n"
+"PO-Revision-Date: 2020-12-22 17:19\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -16,14 +16,6 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /EFBChannels/efb-wechat-slave/efb_wechat_slave/locale/efb_wechat_slave.pot\n"
 "X-Crowdin-File-ID: 115\n"
-
-#: efb_wechat_slave/chats.py:30
-msgid "Group Missing"
-msgstr "不明群组"
-
-#: efb_wechat_slave/chats.py:36
-msgid "Chat Missing"
-msgstr "会话未找到"
 
 #. TRANSLATORS: Translate this to the corresponding display name of the WeChat system account. Guessed names are not accepted.
 #: efb_wechat_slave/__init__.py:80
@@ -400,6 +392,79 @@ msgstr "您发送消息的速度可能太快。坐下来休息一下，稍后重
 msgid "This is an unknown error from Web WeChat which we know nothing about why this is happening. If you have seen a pattern or if you happen to know the reason for this error code, please leave a comment at {issue_url} ."
 msgstr "这是一个来自网页版微信的未知错误，我们该错误的成因一无所知。如果您有发现相关规律，或了解这个错误的原因。请您前往 {issue_url} 进行反馈。"
 
+#: efb_wechat_slave/slave_message.py:164
+msgid "[Incoming audio/video call, please check your phone.]"
+msgstr "[视音频来电，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:302
+msgid "[Unsupported message, please check your phone.]"
+msgstr "[消息类型不支持，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:309 efb_wechat_slave/slave_message.py:320
+#, python-brace-format
+msgid "Via {source}"
+msgstr "发送自 {source}"
+
+#: efb_wechat_slave/slave_message.py:405
+msgid "[Failed to download the picture, please check your phone.]"
+msgstr "[图片无法接收，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:425
+msgid "[Failed to download the sticker, please check your phone.]"
+msgstr "[表情图片无法接收，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:438
+#, python-brace-format
+msgid "{file_name} sent via {app_name}"
+msgstr "{file_name} 通过 {app_name} 发送"
+
+#: efb_wechat_slave/slave_message.py:443
+msgid "[Failed to download the file, please check your phone.]"
+msgstr "[文件无法接收，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:454
+msgid "[Failed to download the voice message, please check your phone.]"
+msgstr "[语音无法接收，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:468
+msgid "[Failed to download the video message, please check your phone.]"
+msgstr "[视频无法接收，请转到手机微信查看]"
+
+#: efb_wechat_slave/slave_message.py:472
+msgid "M"
+msgstr "男"
+
+#: efb_wechat_slave/slave_message.py:472
+msgid "F"
+msgstr "女"
+
+#: efb_wechat_slave/slave_message.py:473
+#, python-brace-format
+msgid "Card: {user.nick_name}\n"
+"From: {user.province}, {user.city}\n"
+"Bio: {user.signature}\n"
+"Gender: {gender}"
+msgstr "名片: {user.nick_name}\n"
+"来自: {user.province}, {user.city}\n"
+"签名: {user.signature}\n"
+"性别: {gender}"
+
+#: efb_wechat_slave/slave_message.py:489
+msgid "Send friend request"
+msgstr "发送好友请求"
+
+#: efb_wechat_slave/slave_message.py:505
+msgid "Accept friend request"
+msgstr "接受好友请求"
+
+#: efb_wechat_slave/chats.py:30
+msgid "Group Missing"
+msgstr "不明群组"
+
+#: efb_wechat_slave/chats.py:36
+msgid "Chat Missing"
+msgstr "会话未找到"
+
 #. TRANSLATORS: This part of text must be formatted in a monospaced font and no line shall exceed the width of a 70-cell-wide terminal.
 #: efb_wechat_slave/wizard.py:48
 msgid "# ===========================================\n"
@@ -497,19 +562,19 @@ msgstr "EWS 不需要任何配置，你只需要在启动 EH Forwarder Bot�
 msgid "Do you want to config experimental features? "
 msgstr "您想要配置实验功能吗？"
 
-#: efb_wechat_slave/wizard.py:215
+#: efb_wechat_slave/wizard.py:216
 msgid "Skipped."
 msgstr "已跳过。"
 
-#: efb_wechat_slave/wizard.py:217
+#: efb_wechat_slave/wizard.py:218
 msgid "Saving configurations..."
 msgstr "正在保存配置..."
 
-#: efb_wechat_slave/wizard.py:219
+#: efb_wechat_slave/wizard.py:220
 msgid "OK"
 msgstr "OK"
 
-#: efb_wechat_slave/wizard.py:226
+#: efb_wechat_slave/wizard.py:227
 msgid "=====================================\n"
 "EFB WeChat Slave Channel Setup Wizard\n"
 "=====================================\n"
@@ -517,72 +582,7 @@ msgstr "===========================\n"
 "EFB 微信从端（EWS）设置向导\n"
 "===========================\n"
 
-#: efb_wechat_slave/wizard.py:239
+#: efb_wechat_slave/wizard.py:240
 msgid "Congratulations! You have finished the setup wizard for EFB WeChat Slave channel."
 msgstr "恭喜！您已完成了 EFB 微信从端的设置向导。"
-
-#: efb_wechat_slave/slave_message.py:164
-msgid "[Incoming audio/video call, please check your phone.]"
-msgstr "[视音频来电，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:302
-msgid "[Unsupported message, please check your phone.]"
-msgstr "[消息类型不支持，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:309 efb_wechat_slave/slave_message.py:320
-#, python-brace-format
-msgid "Via {source}"
-msgstr "发送自 {source}"
-
-#: efb_wechat_slave/slave_message.py:405
-msgid "[Failed to download the picture, please check your phone.]"
-msgstr "[图片无法接收，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:425
-msgid "[Failed to download the sticker, please check your phone.]"
-msgstr "[表情图片无法接收，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:438
-#, python-brace-format
-msgid "{file_name} sent via {app_name}"
-msgstr "{file_name} 通过 {app_name} 发送"
-
-#: efb_wechat_slave/slave_message.py:443
-msgid "[Failed to download the file, please check your phone.]"
-msgstr "[文件无法接收，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:454
-msgid "[Failed to download the voice message, please check your phone.]"
-msgstr "[语音无法接收，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:468
-msgid "[Failed to download the video message, please check your phone.]"
-msgstr "[视频无法接收，请转到手机微信查看]"
-
-#: efb_wechat_slave/slave_message.py:472
-msgid "M"
-msgstr "男"
-
-#: efb_wechat_slave/slave_message.py:472
-msgid "F"
-msgstr "女"
-
-#: efb_wechat_slave/slave_message.py:473
-#, python-brace-format
-msgid "Card: {user.nick_name}\n"
-"From: {user.province}, {user.city}\n"
-"Bio: {user.signature}\n"
-"Gender: {gender}"
-msgstr "名片: {user.nick_name}\n"
-"来自: {user.province}, {user.city}\n"
-"签名: {user.signature}\n"
-"性别: {gender}"
-
-#: efb_wechat_slave/slave_message.py:489
-msgid "Send friend request"
-msgstr "发送好友请求"
-
-#: efb_wechat_slave/slave_message.py:505
-msgid "Accept friend request"
-msgstr "接受好友请求"
 
