@@ -25,10 +25,17 @@ Removed
 
 Fixed
 -----
-- Following the latest Bullet API change which caused setup wizard to crash
 
 Known issue
 -----------
+
+2.0.4_ - 2020-12-22
+===================
+
+Fixed
+-----
+- Following the latest Bullet API change which caused setup wizard to crash
+
 
 2.0.3_ - 2020-11-23
 ===================
