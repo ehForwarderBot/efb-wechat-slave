@@ -4,9 +4,9 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
 .. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg
    :alt: PyPI 发布
    :target: https://pypi.org/project/efb-wechat-slave/
-.. image:: https://github.com/blueset/efb-wechat-slave/workflows/Tests/badge.svg
+.. image:: https://github.com/ehForwarderBot/efb-wechat-slave/workflows/Tests/badge.svg
    :alt: 测试状态
-   :target: https://github.com/blueset/efb-wechat-slave/actions
+   :target: https://github.com/ehForwarderBot/efb-wechat-slave/actions
 .. image:: https://pepy.tech/badge/efb-wechat-slave/month
    :alt: 每月下载量
    :target: https://pepy.tech/project/efb-wechat-slave
@@ -14,7 +14,7 @@ EFB WeChat Slave Channel：EFB 微信从端 (EWS)
    :alt: Translate this project
    :target: https://crowdin.com/project/ehforwarderbot/
 
-.. image:: https://github.com/blueset/efb-wechat-slave/raw/master/banner.png
+.. image:: https://github.com/ehForwarderBot/efb-wechat-slave/raw/master/banner.png
    :alt: 头图
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -53,7 +53,7 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微�
 如果你对网页版登录有要求的话，请慎用此信道。详细的相关信息请参见 `issue #7`_\ 。
 
 .. _微信网页版: https://web.wechat.com/
-.. _issue #7: https://github.com/blueset/efb-wechat-slave/issues/7
+.. _issue #7: https://github.com/ehForwarderBot/efb-wechat-slave/issues/7
 
 软件依赖
 --------

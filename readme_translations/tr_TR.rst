@@ -6,8 +6,8 @@ EFB WeChat Slave Channel
    :target: https://pypi.org/project/efb-wechat-slave/
    :alt: PyPI release
 
-.. image:: https://github.com/blueset/efb-wechat-slave/workflows/Tests/badge.svg
-   :target: https://github.com/blueset/efb-wechat-slave/actions
+.. image:: https://github.com/ehForwarderBot/efb-wechat-slave/workflows/Tests/badge.svg
+   :target: https://github.com/ehForwarderBot/efb-wechat-slave/actions
    :alt: Tests status
 
 .. image:: https://pepy.tech/badge/efb-wechat-slave/month
@@ -18,7 +18,7 @@ EFB WeChat Slave Channel
    :target: https://crowdin.com/project/ehforwarderbot/
    :alt: Translate this project
 
-.. image:: https://github.com/blueset/efb-wechat-slave/raw/master/banner.png
+.. image:: https://github.com/ehForwarderBot/efb-wechat-slave/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -57,7 +57,7 @@ such ban is not clear.
 
 Please proceed with caution, and avoid using this Channel if you have
 special need of Web WeChat access. More details are available in
-`issue #7 <https://github.com/blueset/efb-wechat-slave/issues/7>`_.
+`issue #7 <https://github.com/ehForwarderBot/efb-wechat-slave/issues/7>`_.
 
 
 Dependencies

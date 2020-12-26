@@ -6,8 +6,8 @@ EFB 微信从端
    :target: https://pypi.org/project/efb-wechat-slave/
    :alt: PyPI release
 
-.. image:: https://github.com/blueset/efb-wechat-slave/workflows/Tests/badge.svg
-   :target: https://github.com/blueset/efb-wechat-slave/actions
+.. image:: https://github.com/ehForwarderBot/efb-wechat-slave/workflows/Tests/badge.svg
+   :target: https://github.com/ehForwarderBot/efb-wechat-slave/actions
    :alt: Tests status
 
 .. image:: https://pepy.tech/badge/efb-wechat-slave/month
@@ -18,7 +18,7 @@ EFB 微信从端
    :target: https://crowdin.com/project/ehforwarderbot/
    :alt: Translate this project
 
-.. image:: https://github.com/blueset/efb-wechat-slave/raw/master/banner.png
+.. image:: https://github.com/ehForwarderBot/efb-wechat-slave/raw/master/banner.png
    :alt: Banner
 
 .. image:: https://i.imgur.com/dCZfh14.png
@@ -47,7 +47,7 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网�
 该封禁不影响其他客户端的登录。目前封禁的原因尚不明确。
 
 请谨慎使用，如果您对微信网页版有着特殊需要，请慎用此信道。详细信息请参见 `issue #7
-<https://github.com/blueset/efb-wechat-slave/issues/7>`_ 。
+<https://github.com/ehForwarderBot/efb-wechat-slave/issues/7>`_ 。
 
 
 依赖

@@ -89,4 +89,4 @@ First release.
 .. _2.0.2: https://ews.1a23.studio/compare/v2.0.1...v2.0.2
 .. _2.0.3: https://ews.1a23.studio/compare/v2.0.2...v2.0.3
 .. _2.0.4: https://ews.1a23.studio/compare/v2.0.3...v2.0.4
-.. _#108: https://github.com/blueset/efb-wechat-slave/issues/108
+.. _#108: https://github.com/ehForwarderBot/efb-wechat-slave/issues/108
