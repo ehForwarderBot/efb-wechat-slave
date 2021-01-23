@@ -22,6 +22,7 @@ Changed
 
 Removed
 -------
+- Remove itchat from dependencies as we have already vendor-ed it
 
 Fixed
 -----
