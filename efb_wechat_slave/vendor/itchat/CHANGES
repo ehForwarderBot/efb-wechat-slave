@@ -7,8 +7,10 @@ Changes from other authors
   修复bug: 状态码为408或者400, 需要重新扫码; 隔一秒再检查登录状态
 - [huodongdong/0c56f1d] == [littlecodersh#769]
   fix upload_chuck_file fileName quote
-- [wolfsilver/7a1919d]
+- [wolfsilver/7a1919d] == [littlecodersh#792]
   Fix 不能获取公众号头像
+- [oneonion/60947ad]
+  Fix 导入itchat的时候会打印黑色字符
 
 
 Changes from Eana Hufwe
@@ -29,5 +31,7 @@ Changes from Eana Hufwe
 [huodongdong/0c56f1d]: https://github.com/littlecodersh/ItChat/commit/0c56f1d314f643c3504e30a404e42945cf7df66f
 [littlecodersh#769]: https://github.com/littlecodersh/ItChat/pull/769
 [wolfsilver/7a1919d]: https://github.com/littlecodersh/ItChat/commit/7a1919d59d961d3a6a8ca84e7973dd97356800eb
+[oneonion/60947ad]: https://github.com/ONEONION/ItChat/commit/60947adc1a7493f1a113d130d02d4a51f9cc54c5
+[littlecodersh#769]: https://github.com/littlecodersh/ItChat/pull/797
 [ews#30]: https://ews.1a23.studio/issues/30
 [ews#50]: https://ews.1a23.studio/issues/50

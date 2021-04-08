@@ -17,14 +17,23 @@ logger = logging.getLogger('itchat')
 
 emojiRegex = re.compile(r'<span class="emoji emoji(.{1,10})"></span>')
 
-try:
-    b = u'\u2588'
-    sys.stdout.write(b + '\r')
-    sys.stdout.flush()
-except UnicodeEncodeError:
-    BLOCK = 'MM'
-else:
-    BLOCK = b
+BLOCK = None
+
+
+def get_block():
+    global BLOCK
+    if BLOCK is not None:
+        return BLOCK
+    try:
+        b = u'\u2588'
+        sys.stdout.write(b + '\r')
+        sys.stdout.flush()
+    except UnicodeEncodeError:
+        BLOCK = 'MM'
+    else:
+        BLOCK = b
+    return BLOCK
+
 friendInfoTemplate: Dict[str, Union[int, str, list]] = {}
 for k in ('UserName', 'City', 'DisplayName', 'PYQuanPin', 'RemarkPYInitial', 'Province',
           'KeyWord', 'RemarkName', 'PYInitial', 'EncryChatRoomId', 'Alias', 'Signature',
@@ -103,7 +112,9 @@ def print_qr(fileDir):
         os.startfile(fileDir)
 
 
-def print_cmd_qr(qrText, white=BLOCK, black='  ', enableCmdQR=True):
+def print_cmd_qr(qrText, white=None, black='  ', enableCmdQR=True):
+    if white is None:
+        white = get_block()
     blockCount = int(enableCmdQR)
     if abs(blockCount) == 0:
         blockCount = 1
