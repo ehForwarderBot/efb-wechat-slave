@@ -9,8 +9,10 @@ Changes from other authors
   fix upload_chuck_file fileName quote
 - [wolfsilver/7a1919d] == [littlecodersh#792]
   Fix 不能获取公众号头像
-- [oneonion/60947ad]
+- [oneonion/60947ad] == [littlecodersh#797]
   Fix 导入itchat的时候会打印黑色字符
+- [luvletter2333/9c49b4a] == [littlecodersh#935]
+  UOS patch
 
 
 Changes from Eana Hufwe
@@ -32,6 +34,8 @@ Changes from Eana Hufwe
 [littlecodersh#769]: https://github.com/littlecodersh/ItChat/pull/769
 [wolfsilver/7a1919d]: https://github.com/littlecodersh/ItChat/commit/7a1919d59d961d3a6a8ca84e7973dd97356800eb
 [oneonion/60947ad]: https://github.com/ONEONION/ItChat/commit/60947adc1a7493f1a113d130d02d4a51f9cc54c5
-[littlecodersh#769]: https://github.com/littlecodersh/ItChat/pull/797
+[littlecodersh#797]: https://github.com/littlecodersh/ItChat/pull/797
+[luvletter2333/9c49b4a]: https://github.com/luvletter2333/ItChat/commit/9c49b4a5c36842003a48097694bcb3bd13f6e96d
+[littlecodersh#935]: https://github.com/littlecodersh/ItChat/pull/935
 [ews#30]: https://ews.1a23.studio/issues/30
 [ews#50]: https://ews.1a23.studio/issues/50
