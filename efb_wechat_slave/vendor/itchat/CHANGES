@@ -25,6 +25,7 @@ Changes from Eana Hufwe
 - Add type hints (partially)
 - Remove Python 2 compatibility code
 - Safely overwrite session file to mitigate loss of data caused by improper termination
+- Refactor error detection for UOS patch
 
 
 [jjkkoo/ea0704f]: https://github.com/littlecodersh/ItChat/commit/ea0704ffbd814f888fbe48109bd764541807e523

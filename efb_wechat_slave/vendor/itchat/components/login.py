@@ -188,6 +188,12 @@ def process_login_info(core, loginContent):
     core.loginInfo['logintime'] = int(time.time() * 1e3)
     core.loginInfo['BaseRequest'] = {}
     cookies = core.s.cookies.get_dict()
+
+    if not all([key in cookies for key in ('wxsid', 'wxuin', 'deviceid')]):
+        logger.error('Your wechat account may be LIMITED to log in WEB wechat, error info:\n%s' % r.text)
+        core.isLogging = False
+        return False
+
     core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = ""
     core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = cookies["wxsid"]
     core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = cookies["wxuin"]
@@ -205,10 +211,6 @@ def process_login_info(core, loginContent):
     #         core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = node.childNodes[0].data
     #     elif node.nodeName == 'pass_ticket':
     #         core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = node.childNodes[0].data
-    if not all([key in core.loginInfo for key in ('skey', 'wxsid', 'wxuin', 'pass_ticket')]):
-        logger.error('Your wechat account may be LIMITED to log in WEB wechat, error info:\n%s' % r.text)
-        core.isLogging = False
-        return False
     return True
 
 
