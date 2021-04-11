@@ -19,6 +19,7 @@ Added
 
 Changed
 -------
+- Include UOS patch to itchat
 
 Removed
 -------
@@ -26,6 +27,7 @@ Removed
 
 Fixed
 -----
+- Allow cases when ``flags`` in config file is set to null
 
 Known issue
 -----------
