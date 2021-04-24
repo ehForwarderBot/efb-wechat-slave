@@ -189,10 +189,16 @@ def process_login_info(core, loginContent):
     core.loginInfo['BaseRequest'] = {}
     cookies = core.s.cookies.get_dict()
 
-    if not all([key in cookies for key in ('wxsid', 'wxuin', 'deviceid')]):
-        logger.error('Your wechat account may be LIMITED to log in WEB wechat, error info:\n%s' % r.text)
-        core.isLogging = False
-        return False
+    # UOS PATCH By luvletter2333, Sun Feb 28 10:00 PM
+    for node in xml.dom.minidom.parseString(r.text).documentElement.childNodes:
+        # if node.nodeName == 'skey':
+        #     core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = node.childNodes[0].data
+        if node.nodeName == 'wxsid':
+            core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = node.childNodes[0].data
+        elif node.nodeName == 'wxuin':
+            core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = node.childNodes[0].data
+        elif node.nodeName == 'pass_ticket':
+            core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = node.childNodes[0].data
 
     core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = ""
     core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = cookies["wxsid"]
@@ -201,16 +207,10 @@ def process_login_info(core, loginContent):
     # A question : why pass_ticket == DeviceID ?
     #               deviceID is only a randomly generated number
 
-    # UOS PATCH By luvletter2333, Sun Feb 28 10:00 PM
-    # for node in xml.dom.minidom.parseString(r.text).documentElement.childNodes:
-    #     if node.nodeName == 'skey':
-    #         core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = node.childNodes[0].data
-    #     elif node.nodeName == 'wxsid':
-    #         core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = node.childNodes[0].data
-    #     elif node.nodeName == 'wxuin':
-    #         core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = node.childNodes[0].data
-    #     elif node.nodeName == 'pass_ticket':
-    #         core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = node.childNodes[0].data
+    if not all([key in core.loginInfo for key in ('wxsid', 'wxuin', 'deviceid')]):
+        logger.error('Your wechat account may be LIMITED to log in WEB wechat, error info:\n%s' % r.text)
+        core.isLogging = False
+        return False
     return True
 
 
