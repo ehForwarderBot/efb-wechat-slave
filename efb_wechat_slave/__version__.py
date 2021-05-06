@@ -1,3 +1,3 @@
 # coding: utf-8
 
-__version__ = "2.0.5.dev5"
+__version__ = "2.0.5.dev6"

@@ -201,9 +201,9 @@ def process_login_info(core, loginContent):
             core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = node.childNodes[0].data
 
     core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = ""
-    core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = cookies["wxsid"]
-    core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = cookies["wxuin"]
-    core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = core.loginInfo['deviceid']
+    core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = cookies.get("wxsid", "")
+    core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = cookies.get("wxuin", "")
+    core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = core.loginInfo.get("deviceid", "")
     # A question : why pass_ticket == DeviceID ?
     #               deviceID is only a randomly generated number
 
