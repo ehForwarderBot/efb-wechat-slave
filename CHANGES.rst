@@ -19,7 +19,22 @@ Added
 
 Changed
 -------
-- Include UOS patch to itchat
+
+Removed
+-------
+
+Fixed
+-----
+
+Known issue
+-----------
+
+2.0.5_ - 2021-05-22
+===================
+
+Changed
+-------
+- Include UOS patch to ``itchat``
 
 Removed
 -------
@@ -28,9 +43,6 @@ Removed
 Fixed
 -----
 - Allow cases when ``flags`` in config file is set to null
-
-Known issue
------------
 
 2.0.4_ - 2020-12-22
 ===================
@@ -92,4 +104,5 @@ First release.
 .. _2.0.2: https://ews.1a23.studio/compare/v2.0.1...v2.0.2
 .. _2.0.3: https://ews.1a23.studio/compare/v2.0.2...v2.0.3
 .. _2.0.4: https://ews.1a23.studio/compare/v2.0.3...v2.0.4
+.. _2.0.5: https://ews.1a23.studio/compare/v2.0.4...v2.0.5
 .. _#108: https://github.com/ehForwarderBot/efb-wechat-slave/issues/108
