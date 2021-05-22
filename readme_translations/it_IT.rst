@@ -57,7 +57,8 @@ such ban is not clear.
 
 Please proceed with caution, and avoid using this Channel if you have
 special need of Web WeChat access. More details are available in
-`issue #7 <https://github.com/ehForwarderBot/efb-wechat-slave/issues/7>`_.
+`issue #7
+<https://github.com/ehForwarderBot/efb-wechat-slave/issues/7>`_.
 
 
 Dependencies
