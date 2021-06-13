@@ -559,4 +559,5 @@ class Bot(object):
             self.stop()
         if self.alive and self.core.useHotReload:
             self.dump_login_status()
+            self.alive = False
         self.temp_dir.cleanup()

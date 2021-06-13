@@ -25,6 +25,8 @@ Removed
 
 Fixed
 -----
+- Attempt to prevent thread blocking upon exit during long polling (wxpy)
+
 
 Known issue
 -----------
