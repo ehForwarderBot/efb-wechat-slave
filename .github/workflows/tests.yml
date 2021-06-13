@@ -29,6 +29,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install '.[tests]'
+        echo y | mypy --install-types
     - name: Install binary dependencies
       run: |
         sudo apt update
