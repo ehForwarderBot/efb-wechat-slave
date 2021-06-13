@@ -4,6 +4,7 @@ import io
 import json
 import logging
 import tempfile
+import time
 import threading
 from gettext import translation
 from json import JSONDecodeError
@@ -642,6 +643,11 @@ class WeChatChannel(SlaveChannel):
     # region [Command functions]
 
     def reauth(self, command=False):
+        # Remove wxpy.pkl if last edited earlier than 5 minutes ago.
+        last_session = efb_utils.get_data_path(self.channel_id) / "wxpy.pkl"
+        if (time.time() - last_session.stat().st_mtime) < (5 * 60):
+            last_session.unlink()
+
         msg = self._("Preparing to log in...")
         qr_reload = self.flag("qr_reload")
         if command and qr_reload == "console_qr_code":

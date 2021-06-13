@@ -16,6 +16,7 @@ Unreleased
 
 Added
 -----
+- Remove log in session file before reauth attempts if the file is older than 5 minutes.
 
 Changed
 -------
@@ -26,7 +27,6 @@ Removed
 Fixed
 -----
 - Attempt to prevent thread blocking upon exit during long polling (wxpy)
-
 
 Known issue
 -----------
