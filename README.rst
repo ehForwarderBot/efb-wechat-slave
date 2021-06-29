@@ -113,6 +113,7 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存�
         option_one: 10
         option_two: false
         option_three: "foobar"
+        option_four: {"招商银行", "中国电信营业厅"}
 
 常见问题
 --------
@@ -228,6 +229,10 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存�
 - ``text_post_processing`` *(bool)* [默认值: ``true``]
 
   调整是否在从微信收到消息后对消息文本进行后处理步骤。
+
+- ``ignore_chats`` *(dict)* [默认值: ``{}``]
+
+  过滤来自指定用户（们）的消息。
 
 ``vendor_specific``
 -------------------

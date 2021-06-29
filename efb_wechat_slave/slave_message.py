@@ -97,6 +97,11 @@ class SlaveMessageManager:
 
                 logger.debug("[%s] Chat: %s, Author: %s", efb_msg.uid, efb_msg.chat, efb_msg.author)
 
+                # Filter message by author
+                if efb_msg.author.long_name in self.channel.flag('ignore_chats'):
+                    logger.debug("[%s] msg dropped, Chat: %s, Author: %s", efb_msg.uid, efb_msg.chat, efb_msg.author)
+                    return
+
                 coordinator.send_message(efb_msg)
                 if efb_msg.file:
                     efb_msg.file.close()
