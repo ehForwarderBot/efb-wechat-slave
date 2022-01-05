@@ -17,6 +17,7 @@ Unreleased
 Added
 -----
 - Remove log in session file before reauth attempts if the file is older than 5 minutes.
+- Add support to App Message type 4
 
 Changed
 -------

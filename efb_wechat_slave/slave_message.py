@@ -267,7 +267,7 @@ class SlaveMessageManager:
                     source = self.get_node_text(xml, './appinfo/appname', "")
                     if appmsg_type == '2':  # Image
                         return self.wechat_shared_image_msg(msg, source)
-                    elif appmsg_type in ('3', '5'):
+                    elif appmsg_type in ('3', '4', '5'):
                         title = self.get_node_text(xml, './appmsg/title', "")
                         des = self.get_node_text(xml, './appmsg/des', "")
                         url = self.get_node_text(xml, './appmsg/url', "")
