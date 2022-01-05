@@ -23,6 +23,7 @@ Changed
 
 Removed
 -------
+- UOS Patch removed due to deprecation.
 
 Fixed
 -----
