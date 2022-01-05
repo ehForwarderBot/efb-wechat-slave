@@ -28,6 +28,7 @@ Removed
 Fixed
 -----
 - Attempt to prevent thread blocking upon exit during long polling (wxpy)
+- Log response when account token fetched is not a valid JSON (itchat)
 
 Known issue
 -----------

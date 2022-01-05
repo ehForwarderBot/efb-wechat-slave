@@ -92,7 +92,13 @@ def push_login(core):
         url = '%s/cgi-bin/mmwebwx-bin/webwxpushloginurl?uin=%s' % (
             config.BASE_URL, cookiesDict['wxuin'])
         headers = {'User-Agent': core.user_agent}
-        r = core.s.get(url, headers=headers).json()
+        resp = core.s.get(url, headers=headers)
+        try:
+            r = resp.json()
+        except Exception as e:
+            logger.error(f"Login info token is not a valid JSON: "
+                         f"{resp.content}")
+            raise
         if 'uuid' in r and r.get('ret') in (0, '0'):
             core.uuid = r['uuid']
             return r['uuid']

@@ -11,8 +11,8 @@ Changes from other authors
   Fix 不能获取公众号头像
 - [oneonion/60947ad] == [littlecodersh#797]
   Fix 导入itchat的时候会打印黑色字符
-- [luvletter2333/9c49b4a] == [littlecodersh#935]
-  UOS patch
+- ~~[luvletter2333/9c49b4a] == [littlecodersh#935]~~
+  ~~UOS patch~~
 
 
 Changes from Eana Hufwe
@@ -25,7 +25,8 @@ Changes from Eana Hufwe
 - Add type hints (partially)
 - Remove Python 2 compatibility code
 - Safely overwrite session file to mitigate loss of data caused by improper termination
-- Refactor error detection for UOS patch
+- ~~Refactor error detection for UOS patch~~
+- Log response when account token fetched is not a valid JSON
 
 
 [jjkkoo/ea0704f]: https://github.com/littlecodersh/ItChat/commit/ea0704ffbd814f888fbe48109bd764541807e523
