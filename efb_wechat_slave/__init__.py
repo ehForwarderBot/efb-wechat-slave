@@ -137,6 +137,8 @@ class WeChatChannel(SlaveChannel):
     MEDIA_MSG_TYPES: Final = {MsgType.Voice, MsgType.Video, MsgType.Animation,
                               MsgType.Image, MsgType.Sticker, MsgType.File}
 
+    QUOTE_DIVIDER = "- - - - - - - - - - - - - - -"
+
     def __init__(self, instance_id: InstanceID = None):
         """
         Initialize the channel
@@ -384,6 +386,8 @@ class WeChatChannel(SlaveChannel):
                 max_length = self.flag("max_quote_length")
                 if max_length != 0:
                     qt_txt = msg.target.text or msg.target.type.name
+                    if self.QUOTE_DIVIDER in qt_txt:
+                        qt_txt = qt_txt.split(self.QUOTE_DIVIDER)[-1]
                     if max_length > 0:
                         if len(qt_txt) >= max_length:
                             tgt_text = qt_txt[:max_length]
@@ -396,7 +400,7 @@ class WeChatChannel(SlaveChannel):
                         tgt_alias = "@%s\u2005：" % msg.target.author.display_name
                     else:
                         tgt_alias = ""
-                    msg.text = f"「{tgt_alias}{tgt_text}」\n- - - - - - - - - - - - - - -\n{msg.text}"
+                    msg.text = f"「{tgt_alias}{tgt_text}」\n{self.QUOTE_DIVIDER}\n{msg.text}"
             r.append(self._bot_send_msg(chat, msg.text))
             self.logger.debug(
                 '[%s] Sent as a text message. %s', msg.uid, msg.text)
