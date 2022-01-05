@@ -20,6 +20,7 @@ Added
 - Add support to App Message type 4
 - Avoid including repetitive quotations (`#122`_)
 - Add Web WC error message prompt for ID 3 (`#113`_)
+- 5 more emoji conversions
 
 Changed
 -------
