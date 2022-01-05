@@ -27,6 +27,7 @@ Changes from Eana Hufwe
 - Safely overwrite session file to mitigate loss of data caused by improper termination
 - ~~Refactor error detection for UOS patch~~
 - Log response when account token fetched is not a valid JSON
+- Fail hot reload early by inspecting sync status upfront
 
 
 [jjkkoo/ea0704f]: https://github.com/littlecodersh/ItChat/commit/ea0704ffbd814f888fbe48109bd764541807e523

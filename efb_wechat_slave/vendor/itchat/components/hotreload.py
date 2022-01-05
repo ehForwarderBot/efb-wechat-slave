@@ -86,7 +86,11 @@ def load_login_status(self, fileDir,
         msg_list, contact_list = self.get_msg()
     except:
         msg_list = contact_list = None
-    if (msg_list or contact_list) is None:
+    try:
+        sync_check_result = self.sync_check()
+    except:
+        sync_check_result = None
+    if msg_list is None or contact_list is None or sync_check_result is None:
         self.logout()
         load_last_login_status(self.s, j['cookies'])
         logger.debug('server refused, loading login status failed.')

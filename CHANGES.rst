@@ -29,6 +29,7 @@ Fixed
 -----
 - Attempt to prevent thread blocking upon exit during long polling (wxpy)
 - Log response when account token fetched is not a valid JSON (itchat)
+- Fail hot reload early by inspecting sync status upfront (itchat)
 
 Known issue
 -----------
