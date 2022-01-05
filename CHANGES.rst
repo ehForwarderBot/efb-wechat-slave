@@ -19,6 +19,7 @@ Added
 - Remove log in session file before reauth attempts if the file is older than 5 minutes.
 - Add support to App Message type 4
 - Avoid including repetitive quotations (`#122`_)
+- Add Web WC error message prompt for ID 3 (`#113`_)
 
 Changed
 -------
@@ -114,3 +115,4 @@ First release.
 .. _2.0.5: https://ews.1a23.studio/compare/v2.0.4...v2.0.5
 .. _#108: https://github.com/ehForwarderBot/efb-wechat-slave/issues/108
 .. _#122: https://github.com/ehForwarderBot/efb-wechat-slave/issues/122
+.. _#123: https://github.com/ehForwarderBot/efb-wechat-slave/issues/123

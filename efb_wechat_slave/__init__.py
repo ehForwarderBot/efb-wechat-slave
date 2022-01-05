@@ -770,6 +770,9 @@ class WeChatChannel(SlaveChannel):
             elif err.err_code == 1205:
                 err.err_msg = self._("You might have sent your messages too fast. Please try to slow down "
                                      "and retry after a while.")
+            elif err.err_code == 3:
+                err.err_msg = self._("Your mobile WeChat client is offline for too long. Please ensure your mobile"
+                                     "WeChat client is always online.")
             else:
                 err.err_msg = self._("This is an unknown error from Web WeChat which we know nothing about why this "
                                      "is happening. If you have seen a pattern or if you happen to know the reason "
