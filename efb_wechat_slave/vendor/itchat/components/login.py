@@ -26,7 +26,9 @@ def load_login(core):
     core.get_QRuuid = get_QRuuid
     core.get_QR = get_QR
     core.check_login = check_login
+    core.sync_check = sync_check
     core.web_init = web_init
+    core.verify_login = verify_login
     core.show_mobile_login = show_mobile_login
     core.start_receiving = start_receiving
     core.get_msg = get_msg
@@ -72,6 +74,7 @@ def login(self, enableCmdQR=False, picDir=None, qrCallback=None,
     else:
         return  # log in process is stopped by user
     logger.info('Loading the contact, this may take a little while.')
+    self.verify_login()
     self.web_init()
     self.show_mobile_login()
     self.get_contact(True)
@@ -86,6 +89,23 @@ def login(self, enableCmdQR=False, picDir=None, qrCallback=None,
     self.isLogging = False
 
 
+def verify_login(self):
+    try:
+        msg_list, contact_list = self.get_msg()
+    except:
+        logger.exception('msg list retrieve failed', exc_info=True)
+        msg_list = contact_list = None
+    try:
+        sync_check_result = self.sync_check()
+    except:
+        logger.error('sync check result failed', exc_info=True)
+        sync_check_result = None
+    if msg_list is None or contact_list is None or sync_check_result is None:
+        self.logout()
+        logger.debug('server refused, loading login status failed.')
+        raise Exception('server refused, loading login status failed.')
+
+
 def push_login(core):
     cookiesDict = core.s.cookies.get_dict()
     if 'wxuin' in cookiesDict:
@@ -95,10 +115,10 @@ def push_login(core):
         resp = core.s.get(url, headers=headers)
         try:
             r = resp.json()
-        except Exception as e:
+        except Exception:
             logger.error(f"Login info token is not a valid JSON: "
                          f"{resp.content}")
-            raise
+            return False
         if 'uuid' in r and r.get('ret') in (0, '0'):
             core.uuid = r['uuid']
             return r['uuid']
