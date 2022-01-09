@@ -1,5 +1,5 @@
 
-EFB 微信从端
+EFB 微信從端
 ************
 
 .. image:: https://img.shields.io/pypi/v/efb-wechat-slave.svg
@@ -24,33 +24,33 @@ EFB 微信从端
 .. image:: https://i.imgur.com/dCZfh14.png
    :alt: This project proudly supports #SayNoToWeChat campaign.
 
-`其他语言的 README <.>`_.
+`其他語言的 README <.>`_.
 
-**信道 ID**: ``blueset.wechat``
+**頻道 ID**: ``blueset.wechat``
 
-EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网页版、修改版 ``wxpy`` 和 ``ItChat``。
+EWS 是相容 EH Forwarder Bot 的微信從端，基於逆向工程的微信網頁版、修改版 ``wxpy`` 和 ``ItChat``。
 
-本项目的部分代码修改自 `youfou/wxpy
+本項目的部分程式碼修改自 `youfou/wxpy
 <https://github.com/youfou/wxpy>`_、`littlecodersh/ItChat
 <https://github.com/littlecodersh/ItChat/>`_。
 
 
-使用前阅读
+使用前閱讀
 ==========
 
 自 2017
-年中旬以来，陆续有用户报告称其微信的网页端被封禁。多数用户在 1 天至 3 个月内被解封。当被封禁的用户尝试登陆网页端时，会弹出提示称「当前登录环境异常。为了你的账号安全，暂时不能登录网页版微信。你可以通过手机客户端或 Windows 微信登录」。据观察，只有不到一成的用户在使用期间被禁止使用网页版微信。
+年中旬以來，陸續有使用者報告稱其微信的網頁端被封禁。多數使用者在 1 天至 3 個月內被解封。當被封禁的使用者嘗試登入網頁端時，會彈出提示稱「目前登入環境異常。為了你的帳號安全，暫時不能登入網頁版微信。你可以透過手機用戶端或 Windows 微信登入」。據觀察，只有不到一成的使用者在使用期間被禁止使用網頁版微信。
 
-另外，有报告称，在 2017 年年中之后注册的微信帐户 “出于安全原因” 无法使用网页版微信。在设置 EWS
-之前，请确认您的账号是否可以使用 `网页版微信 <https://web.wechat.com/>`_ 。
+另外，有報告稱，在 2017 年年中之後註冊的微信帳戶 「出於安全原因」 無法使用網頁版微信。在設定 EWS
+之前，請確認您的帳號是否可以使用 `網頁版微信 <https://web.wechat.com/>`_ 。
 
-该封禁不影响其他客户端的登录。目前封禁的原因尚不明确。
+該封禁不影響其他用戶端的登入。目前封禁的原因尚不明確。
 
-请谨慎使用，如果您对微信网页版有着特殊需要，请慎用此信道。详细信息请参见 `issue #7
+請謹慎使用，如果您對微信網頁版有著特殊需要，請慎用此頻道。詳細訊息請參見 `issue #7
 <https://github.com/ehForwarderBot/efb-wechat-slave/issues/7>`_ 。
 
 
-依赖
+依賴
 ====
 
 * Python >= 3.6
@@ -64,45 +64,45 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微信网�
 * pillow
 
 
-安装并启用
+安裝並啟用
 ==========
 
-1. 安装所需的依赖
+1. 安裝所需的依賴
 
-2. 安装从端
+2. 安裝從端
 
     ::
        pip3 install efb-wechat-slave
 
-3. 使用 *EFB 配置向导* 或当前配置档案的 ``config.yaml`` 启用 EWS。
+3. 使用 *EFB 配置嚮導* 或目前配置檔案的 ``config.yaml`` 啟用 EWS。
 
-    当前配置文件夹的位置会根据用户的设定而改变。
+    目前配置檔案夾的位置會根據使用者的設定而改變。
 
-    **(在 EFB 2 中，默认的配置文件夹位于** ``~/.ehforwarderbot/profiles/default``
+    **(在 EFB 2 中，預設的配置檔案夾位於** ``~/.ehforwarderbot/profiles/default``
     **）**
 
 
-其他安装方式
+其他安裝方式
 ------------
 
-社区也贡献了其他的 ETM 安装方式，包括：
+社群也貢獻了其他的 ETM 安裝方式，包括：
 
-* `KeLiu <https://github.com/specter119>`_ 维护的 `AUR 软件包
+* `KeLiu <https://github.com/specter119>`_ 維護的 `AUR 套裝軟體
   <https://aur.archlinux.org/packages/python-efb-telegram-master-git>`_
   (``python-efb-telegram-master-git``)
 
-* 其他\ `安装脚本和容器（Docker 等）
+* 其他\ `安裝腳本和容器（Docker 等）
   <https://efb-modules.1a23.studio#scripts-and-containers-eg-docker>`_
 
 
-可选配置
+可選配置
 ========
 
-EWS 支持使用可选的配置文件来启用实验功能。配置文件存储于 \
-``<当前配置档案文件夹>/blueset.wechat/config.yaml``。
+EWS 支援使用可選的配置檔案來啟用實驗功能。配置檔案儲存於 \
+``<目前配置檔案資料夾>/blueset.wechat/config.yaml``。
 
 
-示例配置
+範例配置
 --------
 
 ::
@@ -117,128 +117,128 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存储�
        option_three: "foobar"
 
 
-常见问题
+常見問題
 ========
 
-* **如何切换已登录的微信账号？** 请登出当前的账号，并使用其他的微信手机登录。
+* **如何切換已登入的微信帳號？** 請登出目前的帳號，並使用其他的微信手機登入。
 
-* **如何登录两个微信账号？** 请在 EFB 配置档案中指定不同的实例 ID。
+* **如何登入兩個微信帳號？** 請在 EFB 配置檔案中指定不同的實例 ID。
 
-* **EWS 稳定吗？** EWS 依赖于上游项目 `ItChat
-  <https://github.com/littlecodersh/ItChat>`_ 以及微信网页版的协议。根据 `ItChat
+* **EWS 穩定嗎？** EWS 依賴於上游項目 `ItChat
+  <https://github.com/littlecodersh/ItChat>`_ 以及微信網頁版的協議。根據 `ItChat
   FAQ <https://itchat.readthedocs.io/zh/latest/FAQ/>`_
-  的说明，在满足以下情况的条件下，微信登录能够保持数个月稳定登录:
+  的說明，在滿足以下情況的條件下，微信登入能夠保持數個月穩定登入:
 
-  * 服务器有稳定的网络连接，并且
+  * 伺服器有穩定的網路連接，並且
 
-  * **保持手机客户端长期在线。**
+  * **保持手機用戶端長期線上。**
 
 
-已知问题
+已知問題
 ========
 
-* 就于微信网页版的工作原理，目前对于没有名称的会话、以及重名的会话支持较差，可能会有消息传递错误等问题。
+* 就於微信網頁版的工作原理，目前對於沒有名稱的對話、以及重名的對話支援較差，可能會有消息傳遞錯誤等問題。
 
-* 同理，部分情况下变更名称的会话会被视为全新的会话，而「旧会话」随即消失。
+* 同理，部分情況下變更名稱的對話會被視為全新的對話，而「舊對話」隨即消失。
 
-* EWS 只支持网页版微信所支持的功能。这意味着：- 没有“朋友圈”功能 - 没有转账功能 - 不能发送语音消息 - 不能发送定位 等等。
+* EWS 只支援網頁版微信所支援的功能。這意味著：- 沒有「朋友圈」功能 - 沒有轉帳功能 - 不能發送語音消息 - 不能發送定位 等等。
 
-* 部分文件、图片、表情等多媒体文件会被网页版微信截断，即收不到任何数据，尤以表情为甚。因此造成的偶发现象，会提醒用户使用移动客户端查看。
+* 部分文件、圖片、表情等多媒體檔案會被網頁版微信截斷，即收不到任何資料，尤以表情為甚。因此造成的偶發現像，會提醒使用者使用移動用戶端查看。
 
 
-实验性功能
+實驗性功能
 ==========
 
-以下的实验性功能随时可能被更改或被删除，请自行承担相关风险。
+以下的實驗性功能隨時可能被更改或被刪除，請自行承擔相關風險。
 
-* ``refresh_friends`` *(bool)* [默认: ``false``]
+* ``refresh_friends`` *(bool)* [預設: ``false``]
 
-  每次查询时强制刷新整个聊天列表。
+  每次查詢時強制重新整理整個聊天列表。
 
-* ``first_link_only`` *(bool)* [默认: ``false``]
+* ``first_link_only`` *(bool)* [預設: ``false``]
 
-  当消息包含多个文章时，仅发送第一篇文章的链接。
+  當消息包含多個文章時，僅發送第一篇文章的連結。
 
-* ``max_quote_length`` *(int)* [默认: ``-1``]
+* ``max_quote_length`` *(int)* [預設: ``-1``]
 
-  引用消息的长度限制。设置为 ``0`` 以禁用报价。设置为 ``-1`` 以包含全部引用的消息
+  引用消息的長度限制。設定為 ``0`` 以禁用報價。設定為 ``-1`` 以包含全部引用的消息
 
-* ``qr_reload`` *(str)* [默认: ``"master_qr_code"``]
+* ``qr_reload`` *(str)* [預設: ``"master_qr_code"``]
 
-  重新登录时使用的登录方式。选项：
+  重新登入時使用的登入方式。選項：
 
-  * 将二维码和提示输出到系统标准输出（``stdout``）。
+  * 將二維碼和提示輸出到系統標準輸出（``stdout``）。
 
-  * 将二维码和提示发送到主端。 **注意** 登录时二维码会频繁刷新，请注意二维码可能会导致刷屏。
+  * 將二維碼和提示發送到主端。 **注意** 登入時二維碼會頻繁重新整理，請注意二維碼可能會導致洗版。
 
-* ``on_log_out`` *(str)* [默认: ``"command"``]
+* ``on_log_out`` *(str)* [預設: ``"command"``]
 
-  微信服务器将用户登出时的操作。选项：
+  微信伺服器將使用者登出時的操作。選項：
 
-  * ``"idle"``：仅通知用户。
+  * ``"idle"``：僅通知使用者。
 
-  * ``"reauth"``：通知用户，并立即开始重新登录。
+  * ``"reauth"``：通知使用者，並立即開始重新登入。
 
-  * ``"command"``：通知用户，并等待用户启动重新登录过程。
+  * ``"command"``：通知使用者，並等待使用者啟動重新登入過程。
 
-* ``imgcat_qr`` *(bool)* [默认: ``false``]
+* ``imgcat_qr`` *(bool)* [預設: ``false``]
 
-  使用 `iTerm2 图像协议 <https://www.iterm2.com/documentation-images.html>`_
-  显示二维码。本功能只适用于 iTerm2 用户。
+  使用 `iTerm2 圖像協議 <https://www.iterm2.com/documentation-images.html>`_
+  顯示二維碼。本功能只適用於 iTerm2 使用者。
 
-* ``delete_on_edit`` *(bool)* [默认: ``false``]
+* ``delete_on_edit`` *(bool)* [預設: ``false``]
 
-  以撤回并重新发送的方式代替编辑消息。默认禁止编辑消息。
+  以撤回並重新髮送的方式代替編輯消息。預設禁止編輯消息。
 
-* ``app_shared_link_mode`` *(str)* [默认：``"ignore"``]
+* ``app_shared_link_mode`` *(str)* [預設：``"ignore"``]
 
-  在收到第三方合作应用分享给微信的链接时，其附带的预览图以何种形式发送。
+  在收到第三方合作應用分享給微信的連結時，其附帶的預覽圖以何種形式發送。
 
-  * ``"ignore"``：忽略略缩图
+  * ``"ignore"``：忽縮圖
 
-  * ``"upload"``：将缩略图上传到公开图床（https://sm.ms），并在日志中输出图片的删除链接。
+  * ``"upload"``：將縮圖上傳到公開圖床（https://sm.ms），並在日誌中輸出圖片的刪除連結。
 
-  * ``"image"``：将消息以图片形式发送（不推荐）
+  * ``"image"``：將消息以圖片形式發送（不推薦）
 
-* ``puid_logs`` *(str)* [默认：``null``]
+* ``puid_logs`` *(str)* [預設：``null``]
 
-  输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据会话数量和消息吞吐量而占用大量存储空间。
+  輸出 PUID 相關日誌到指定日誌路徑。請使用絕對路徑。PUID 日誌可能會根據對話數量和消息吞吐量而占用大量儲存空間。
 
-* ``send_image_as_file`` *(bool)* [默认：``false``]
+* ``send_image_as_file`` *(bool)* [預設：``false``]
 
-  以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。详见 `#48
+  以 JPEG 圖片方式發送自訂表情和 GIF，用於臨時繞過微信網頁版的自訂表情限制。詳見 `#48
   <https://ews.1a23.studio/issues/48>`_。
 
-* ``system_chats_to_include`` *(list of str)** [默认: ``[filehelper]``]
+* ``system_chats_to_include`` *(list of str)** [預設: ``[filehelper]``]
 
-  在默认会话列表中显示的特殊系统会话。其内容仅能为
-  ``filehelper``（文件传输助手）、``fmessage``（朋友推荐消息）、``newsapp``（腾讯新闻）、``weixin``（微信团队）其中零到四个选项。
+  在預設對話列表中顯示的特殊系統對話。其內容僅能為
+  ``filehelper``（文件傳輸助手）、``fmessage``（朋友推薦消息）、``newsapp``（騰訊新聞）、``weixin``（微信團隊）其中零到四個選項。
 
-* ``user_agent`` *(str)* [默认值: ``null``]
+* ``user_agent`` *(str)* [預設值: ``null``]
 
-  指定访问网页版微信时使用的用户代理（user agent）字符串。不指定时则使用 ``itchat`` 提供的默认值。
+  指定瀏覽網頁版微信時使用的使用者代理（user agent）字串。不指定時則使用 ``itchat`` 提供的預設值。
 
-* ``text_post_processing`` *(bool)* [默认值：``true``]
+* ``text_post_processing`` *(bool)* [預設值：``true``]
 
-  是否对从微信接收到的消息进行后处理。
+  是否對從微信接收到的消息進行後處理。
 
 
-供应商特定选项（``vendor_specific``）
+供應商特定選項（``vendor_specific``）
 =====================================
 
-EWS 中的 ``Chat`` 提供了以下 ``vendor_specific`` 数据：
+EWS 中的 ``Chat`` 提供了以下 ``vendor_specific`` 資料：
 
-* ``is_mp`` *(bool)* 该会话是否为公众号。
+* ``is_mp`` *(bool)* 該對話是否為公眾號。
 
 * ``is_contact`` *(bool)* 不明。提取自 API。
 
-* ``is_blacklist_contact`` *(bool)* 该用户是否被加入黑名单。
+* ``is_blacklist_contact`` *(bool)* 該使用者是否被加入黑名單。
 
 * ``is_conversation_contact`` *(bool)* 不明。提取自 API。
 
 * ``is_room_contact_del`` *(bool)* 不明。提取自 API。
 
-* ``is_room_owner`` *(bool)* 该用户是否为群组创建者。
+* ``is_room_owner`` *(bool)* 該使用者是否為群組建立者。
 
 * ``is_brand_contact`` *(bool)* 不明。提取自 API。
 
@@ -246,18 +246,18 @@ EWS 中的 ``Chat`` 提供了以下 ``vendor_specific`` 数据：
 
 * ``is_shield_user`` *(bool)* 不明。提取自 API。
 
-* ``is_muted`` *(bool)* 该会话是否在微信中开启免打扰。
+* ``is_muted`` *(bool)* 該對話是否在微信中開啟免打擾。
 
-* ``is_top`` *(bool)* 该会话是否在微信中被置顶。
+* ``is_top`` *(bool)* 該對話是否在微信中被置頂。
 
 * ``has_photo_album`` *(bool)* 不明。提取自 API。
 
 
-许可协议
+許可協議
 ========
 
 EWS 使用了 `GNU Affero General Public License 3.0
-<https://www.gnu.org/licenses/agpl-3.0.txt>`_ 或更新版本作为其开源许可:
+<https://www.gnu.org/licenses/agpl-3.0.txt>`_ 或更新版本作為其開源許可:
 
 ::
 
@@ -279,12 +279,12 @@ EWS 使用了 `GNU Affero General Public License 3.0
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-翻译支持
+翻譯支援
 ========
 
-EWS 支持了界面本地化翻译。您可以将语言环境变量（``LANGUAGE``、``LC_ALL``、``LC_MESSAGES`` 或
-``LANG``）设为一种\ `已支持的语言
-<https://crowdin.com/project/ehforwarderbot/>`_。同时，您也可以在我们的 `Crowdin
-页面 <https://crowdin.com/project/ehforwarderbot/>`_\ 里将 EWS 翻译为您的语言。
+EWS 支援了介面本地化翻譯。您可以將語言環境變數（``LANGUAGE``、``LC_ALL``、``LC_MESSAGES`` 或
+``LANG``）設為一種\ `已支援的語言
+<https://crowdin.com/project/ehforwarderbot/>`_。同時，您也可以在我們的 `Crowdin
+頁面 <https://crowdin.com/project/ehforwarderbot/>`_\ 裡將 EWS 翻譯為您的語言。
 
-備註: 如果您使用源代码安装，您需要手动编译翻译字符串文件（``.mo``）才可启用翻译后的界面。
+備註: 如果您使用原始碼安裝，您需要手動編譯翻譯字串文件（``.mo``）才可啟用翻譯後的介面。
