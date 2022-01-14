@@ -16,14 +16,29 @@ Unreleased
 
 Added
 -----
+
+Changed
+-------
+
+Removed
+-------
+
+Fixed
+-----
+
+Known issue
+-----------
+
+2.0.6_ - 2022-01-13
+===================
+
+Added
+-----
 - Remove log in session file before reauth attempts if the file is older than 5 minutes.
 - Add support to App Message type 4
 - Avoid including repetitive quotations (`#122`_)
 - Add Web WC error message prompt for ID 3 (`#113`_)
 - 5 more emoji conversions
-
-Changed
--------
 
 Removed
 -------
@@ -34,9 +49,6 @@ Fixed
 - Attempt to prevent thread blocking upon exit during long polling (wxpy)
 - Log response when account token fetched is not a valid JSON (itchat)
 - Fail hot reload early by inspecting sync status upfront (itchat)
-
-Known issue
------------
 
 2.0.5_ - 2021-05-22
 ===================
@@ -114,6 +126,7 @@ First release.
 .. _2.0.3: https://ews.1a23.studio/compare/v2.0.2...v2.0.3
 .. _2.0.4: https://ews.1a23.studio/compare/v2.0.3...v2.0.4
 .. _2.0.5: https://ews.1a23.studio/compare/v2.0.4...v2.0.5
+.. _2.0.6: https://ews.1a23.studio/compare/v2.0.5...v2.0.6
 .. _#108: https://github.com/ehForwarderBot/efb-wechat-slave/issues/108
 .. _#122: https://github.com/ehForwarderBot/efb-wechat-slave/issues/122
 .. _#123: https://github.com/ehForwarderBot/efb-wechat-slave/issues/123
