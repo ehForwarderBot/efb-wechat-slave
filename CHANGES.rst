@@ -29,6 +29,13 @@ Fixed
 Known issue
 -----------
 
+2.0.7_ - 2022-01-16
+===================
+
+Fixed
+-----
+- Fixed order of login verification
+
 2.0.6_ - 2022-01-13
 ===================
 
@@ -127,6 +134,7 @@ First release.
 .. _2.0.4: https://ews.1a23.studio/compare/v2.0.3...v2.0.4
 .. _2.0.5: https://ews.1a23.studio/compare/v2.0.4...v2.0.5
 .. _2.0.6: https://ews.1a23.studio/compare/v2.0.5...v2.0.6
+.. _2.0.7: https://ews.1a23.studio/compare/v2.0.7...v2.0.7
 .. _#108: https://github.com/ehForwarderBot/efb-wechat-slave/issues/108
 .. _#122: https://github.com/ehForwarderBot/efb-wechat-slave/issues/122
 .. _#123: https://github.com/ehForwarderBot/efb-wechat-slave/issues/123

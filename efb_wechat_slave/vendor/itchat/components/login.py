@@ -74,10 +74,10 @@ def login(self, enableCmdQR=False, picDir=None, qrCallback=None,
     else:
         return  # log in process is stopped by user
     logger.info('Loading the contact, this may take a little while.')
-    self.verify_login()
     self.web_init()
     self.show_mobile_login()
     self.get_contact(True)
+    self.verify_login()
     if hasattr(loginCallback, '__call__'):
         r = loginCallback()
     else:
