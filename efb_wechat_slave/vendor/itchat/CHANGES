@@ -13,6 +13,8 @@ Changes from other authors
   Fix 导入itchat的时候会打印黑色字符
 - ~~[luvletter2333/9c49b4a] == [littlecodersh#935]~~
   ~~UOS patch~~
+- [shejialuo] == [efb-wechat-slave#136]
+  add UOS weixin desktop patch
 
 
 Changes from Eana Hufwe
