@@ -16,6 +16,7 @@ Unreleased
 
 Added
 -----
+- Add UOS weixin desktop patch
 
 Changed
 -------

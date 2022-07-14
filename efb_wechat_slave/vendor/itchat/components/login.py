@@ -129,7 +129,10 @@ def get_QRuuid(self):
     url = '%s/jslogin' % config.BASE_URL
     params = {
         'appid': 'wx782c26e4c19acffb',
-        'fun': 'new', }
+        'fun': 'new',
+        'redirect_uri': 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxnewloginpage?mod=desktop',
+        'lang': 'zh_CN'
+    }
     headers = {'User-Agent': self.user_agent}
     r = self.s.get(url, params=params, headers=headers)
     regx = r'window.QRLogin.code = (\d+); window.QRLogin.uuid = "(\S+?)";'
@@ -186,7 +189,12 @@ def process_login_info(core, loginContent):
     """
     regx = r'window.redirect_uri="(\S+)";'
     core.loginInfo['url'] = re.search(regx, loginContent).group(1)
-    headers = {'User-Agent': core.user_agent}
+    headers = {
+        'User-Agent': core.user_agent,
+        'client-version': config.UOS_PATCH_CLIENT_VERSION,
+        'extspam': config.UOS_PATCH_EXTSPAM,
+        'referer': 'https://wx.qq.com/?&lang=zh_CN&target=t'
+    }
     r = core.s.get(core.loginInfo['url'], headers=headers, allow_redirects=False)
     core.loginInfo['url'] = core.loginInfo['url'][:core.loginInfo['url'].rfind('/')]
     for indexUrl, detailedUrl in (
@@ -205,23 +213,15 @@ def process_login_info(core, loginContent):
     core.loginInfo['deviceid'] = 'e' + repr(random.random())[2:17]
     core.loginInfo['logintime'] = int(time.time() * 1e3)
     core.loginInfo['BaseRequest'] = {}
+
     cookies = core.s.cookies.get_dict()
+    skey = re.findall('<skey>(.*?)</skey>',r.text,re.S)[0]
+    pass_ticket = re.findall('<pass_ticket>(.*?)</pass_ticket>',r.text,re.S)[0]
+    core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = skey
+    core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = cookies["wxsid"]
+    core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = cookies["wxuin"]
+    core.loginInfo['pass_ticket'] = pass_ticket
 
-    # UOS PATCH By luvletter2333, Sun Feb 28 10:00 PM
-    for node in xml.dom.minidom.parseString(r.text).documentElement.childNodes:
-        # if node.nodeName == 'skey':
-        #     core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = node.childNodes[0].data
-        if node.nodeName == 'wxsid':
-            core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = node.childNodes[0].data
-        elif node.nodeName == 'wxuin':
-            core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = node.childNodes[0].data
-        elif node.nodeName == 'pass_ticket':
-            core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = node.childNodes[0].data
-
-    core.loginInfo['skey'] = core.loginInfo['BaseRequest']['Skey'] = ""
-    core.loginInfo['wxsid'] = core.loginInfo['BaseRequest']['Sid'] = cookies.get("wxsid", "")
-    core.loginInfo['wxuin'] = core.loginInfo['BaseRequest']['Uin'] = cookies.get("wxuin", "")
-    core.loginInfo['pass_ticket'] = core.loginInfo['BaseRequest']['DeviceID'] = core.loginInfo.get("deviceid", "")
     # A question : why pass_ticket == DeviceID ?
     #               deviceID is only a randomly generated number
 
@@ -376,6 +376,7 @@ def sync_check(self):
 
 
 def get_msg(self):
+    self.loginInfo['deviceid'] = 'e' + str(random.randint(0, 1e15-1)).rjust(15, '0')
     url = '%s/webwxsync?sid=%s&skey=%s&pass_ticket=%s' % (
         self.loginInfo['url'], self.loginInfo['wxsid'],
         self.loginInfo['skey'], self.loginInfo['pass_ticket'])
