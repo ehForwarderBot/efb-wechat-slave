@@ -150,7 +150,7 @@ class ExperimentalFlagsManager:
         return self.config[flag_key]
 
 
-def wechat_string_unescape(content: str) -> str:
+def wechat_string_unescape(content: str, replace_emoticon: bool = True) -> str:
     """
     Unescape a WeChat HTML string.
 
@@ -164,8 +164,9 @@ def wechat_string_unescape(content: str) -> str:
         return ""
     d: Dict[str, Any] = {"Content": content}
     itchat_utils.msg_formatter(d, "Content")
-    for i in WC_EMOTICON_CONVERSION:
-        d['Content'] = d['Content'].replace(i, WC_EMOTICON_CONVERSION[i])
+    if replace_emoticon:
+        for i in WC_EMOTICON_CONVERSION:
+            d['Content'] = d['Content'].replace(i, WC_EMOTICON_CONVERSION[i])
     return d['Content']
 
 
