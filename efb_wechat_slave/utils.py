@@ -138,6 +138,7 @@ class ExperimentalFlagsManager:
         'system_chats_to_include': ['filehelper'],
         'user_agent': None,
         'text_post_processing': True,
+        'replace_emoticon': True,
     }
 
     def __init__(self, channel: 'WeChatChannel'):
