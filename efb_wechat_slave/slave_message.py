@@ -134,7 +134,7 @@ class SlaveMessageManager:
             return self.wechat_location_msg(msg)
         chat, author = self.get_chat_and_author(msg)
         if self.channel.flag("text_post_processing"):
-            text = ews_utils.wechat_string_unescape(msg.text)
+            text = ews_utils.wechat_string_unescape(msg.text, self.channel.flag("replace_emoticon"))
         else:
             text = msg.text or ""
         efb_msg = Message(
