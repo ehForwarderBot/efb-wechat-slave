@@ -228,6 +228,10 @@ EWS 支持使用可选的配置文件来启用实验功能。配置文件存�
 - ``text_post_processing`` *(bool)* [默认值: ``true``]
 
   调整是否在从微信收到消息后对消息文本进行后处理步骤。
+  
+- ``replace_emoticon`` *(bool)* [默认值: ``true``]
+
+  是否将微信表情替换为emoji。
 
 ``vendor_specific``
 -------------------

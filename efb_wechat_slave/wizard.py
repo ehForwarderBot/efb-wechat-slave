@@ -149,6 +149,11 @@ flags_settings = {
          _('Determine whether to post-process text of messages received from '
            'WeChat.'
            )),
+    "replace_emoticon":
+        (True, 'bool', None,
+         _('Replace the emoticon in WeChat to emoji. If disabled, the '
+           'emoticon will be shown as text in square brackets. Enabled by default.'
+           )),
 }
 
 
