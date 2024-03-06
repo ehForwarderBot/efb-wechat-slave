@@ -18,6 +18,7 @@ Added
 -----
 - Add UOS weixin desktop patch
 - Add 'replace_emoticon' flag, disable this flag to stop emoticon conversion
+- Add compression for gif files to avoid 1 MB limit
 
 Changed
 -------

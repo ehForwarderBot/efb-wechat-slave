@@ -33,7 +33,7 @@ from . import utils as ews_utils
 from .__version__ import __version__
 from .chats import ChatManager
 from .slave_message import SlaveMessageManager
-from .utils import ExperimentalFlagsManager
+from .utils import ExperimentalFlagsManager, gif_conversion
 from .vendor import wxpy
 from .vendor.wxpy import ResponseError
 from .vendor.wxpy.utils import PuidMap
@@ -436,9 +436,6 @@ class WeChatChannel(SlaveChannel):
                         self.logger.debug(
                             '[%s] Image converted from %s to GIF', msg.uid, msg.mime)
                         file.close()
-                        if f.seek(0, 2) > self.MAX_FILE_SIZE:
-                            raise EFBMessageError(
-                                self._("Image size is too large. (IS02)"))
                         f.seek(0)
                         r.append(self._bot_send_image(chat, f.name, f))
                     finally:
@@ -464,6 +461,8 @@ class WeChatChannel(SlaveChannel):
                         if not file.closed:
                             file.close()
             else:
+                if msg.mime == "image/gif" and file.seek(0, 2) > 1048576:
+                    file = gif_conversion(file)
                 try:
                     if file.seek(0, 2) > self.MAX_FILE_SIZE:
                         raise EFBMessageError(

@@ -2,8 +2,11 @@
 import base64
 import io
 import os
+import subprocess
 import json
-from typing import Dict, Any, TYPE_CHECKING, List
+from tempfile import NamedTemporaryFile
+from typing import Dict, Any, TYPE_CHECKING, List, IO
+
 
 from ehforwarderbot.types import MessageID
 from .vendor.itchat import utils as itchat_utils
@@ -221,3 +224,65 @@ def imgcat(file: io.BytesIO, filename: str) -> str:
     res += base64.b64encode(file.getvalue()).decode()
     res += print_st()
     return res
+
+
+if os.name == "nt":
+    # Workaround for Windows which cannot open the same file as "read" twice.
+    # Using stdin/stdout pipe for IO with ffmpeg.
+    # Said to be only working with a few encodings. It seems that Telegram GIF
+    # (MP4, h264, soundless) luckily felt in that range.
+    #
+    # See: https://etm.1a23.studio/issues/90
+
+    def gif_conversion(file: IO[bytes]) -> IO[bytes]:
+        """Convert Telegram GIF to real GIF, the NT way."""
+        file.seek(0)
+        new_file_size = os.path.getsize(file.name)
+        print(f"file_size: {new_file_size/1024}KB")
+        if new_file_size > 1024 * 1024:
+            # try to use gifsicle lossy compression
+            compress_file = NamedTemporaryFile(suffix='.gif')
+            subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
+            new_file_size = os.path.getsize(compress_file.name)
+            if new_file_size > 1024 * 1024:
+                scales = [512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
+                for scale in scales:
+                    subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
+                    new_file_size = os.path.getsize(compress_file.name)
+                    print(f"new_file_size: {new_file_size/1024}KB after resize to {scale}x{scale}")
+                    if new_file_size < 1024 * 1024:
+                        break
+            file.close()
+            file = compress_file
+        if new_file_size > 1024 * 1024:
+            raise EFBMessageError(
+                self._("Image size is too large. (IS02)"))
+        file.seek(0)
+        return file
+
+else:
+    def gif_conversion(file: IO[bytes]) -> IO[bytes]:
+        """Convert Telegram GIF to real GIF, the non-NT way."""
+        file.seek(0)
+        new_file_size = os.path.getsize(file.name)
+        print(f"file_size: {new_file_size/1024}KB")
+        if new_file_size > 1024 * 1024:
+            # try to use gifsicle lossy compression
+            compress_file = NamedTemporaryFile(suffix='.gif')
+            subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
+            new_file_size = os.path.getsize(compress_file.name)
+            if new_file_size > 1024 * 1024:
+                scales = [512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
+                for scale in scales:
+                    subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
+                    new_file_size = os.path.getsize(compress_file.name)
+                    print(f"new_file_size: {new_file_size/1024}KB after resize to {scale}x{scale}")
+                    if new_file_size < 1024 * 1024:
+                        break
+            file.close()
+            file = compress_file
+        if new_file_size > 1024 * 1024:
+            raise EFBMessageError(
+                self._("Image size is too large. (IS02)"))
+        file.seek(0)
+        return file
