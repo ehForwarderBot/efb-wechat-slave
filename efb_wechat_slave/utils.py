@@ -3,14 +3,10 @@ import base64
 import io
 import os
 import subprocess
-import sys
 import json
-from shutil import copyfileobj
 from tempfile import NamedTemporaryFile
 from typing import Dict, Any, TYPE_CHECKING, List, IO
 
-import ffmpeg
-from ffmpeg._utils import convert_kwargs_to_cmd_line_args
 
 from ehforwarderbot.types import MessageID
 from .vendor.itchat import utils as itchat_utils
