@@ -245,9 +245,7 @@ if os.name == "nt":
             subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
             new_file_size = os.path.getsize(compress_file.name)
             if new_file_size > 1024 * 1024:
-                scales = [600, 512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
-                scales = [scale for scale in scales if scale < metadata['streams'][0]['width']]
-                scales = sorted(scales, reverse=True)
+                scales = [512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
                 for scale in scales:
                     subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
                     new_file_size = os.path.getsize(compress_file.name)
@@ -271,9 +269,7 @@ else:
             subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
             new_file_size = os.path.getsize(compress_file.name)
             if new_file_size > 1024 * 1024:
-                scales = [600, 512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
-                scales = [scale for scale in scales if scale < metadata['streams'][0]['width']]
-                scales = sorted(scales, reverse=True)
+                scales = [512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
                 for scale in scales:
                     subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
                     new_file_size = os.path.getsize(compress_file.name)
