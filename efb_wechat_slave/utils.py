@@ -254,6 +254,9 @@ if os.name == "nt":
                         break
             file.close()
             file = compress_file
+        if new_file_size > 1024 * 1024:
+            raise EFBMessageError(
+                self._("Image size is too large. (IS02)"))
         file.seek(0)
         return file
 
@@ -278,5 +281,8 @@ else:
                         break
             file.close()
             file = compress_file
+        if new_file_size > 1024 * 1024:
+            raise EFBMessageError(
+                self._("Image size is too large. (IS02)"))
         file.seek(0)
         return file
