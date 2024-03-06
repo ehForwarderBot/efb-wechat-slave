@@ -238,90 +238,30 @@ if os.name == "nt":
     #
     # See: https://etm.1a23.studio/issues/90
 
-    def ffprobe(stream: IO[bytes], cmd='ffprobe', **kwargs):
-        """Run ffprobe on an input stream and return a JSON representation of the output.
-
-        Code adopted from ffmpeg-python by Karl Kroening (Apache License 2.0).
-        Copyright 2017 Karl Kroening
-
-        Raises:
-            :class:`ffmpeg.Error`: if ffprobe returns a non-zero exit code,
-                an :class:`Error` is returned with a generic error message.
-                The stderr output can be retrieved by accessing the
-                ``stderr`` property of the exception.
-        """
-        args = [cmd, '-show_format', '-show_streams', '-of', 'json']
-        args += convert_kwargs_to_cmd_line_args(kwargs)
-        args += ["-"]
-
-        p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-        assert p.stdin
-        copyfileobj(p.stdin, stream)
-        out, err = p.communicate()
-        if p.returncode != 0:
-            raise ffmpeg.Error('ffprobe', out, err)
-        return json.loads(out.decode('utf-8'))
-
-
     def gif_conversion(file: IO[bytes]) -> IO[bytes]:
         """Convert Telegram GIF to real GIF, the NT way."""
-        gif_file = NamedTemporaryFile(suffix='.gif')
         file.seek(0)
-
-        # Use custom ffprobe command to read from stream
-        metadata = ffprobe(file)
-
-        # Set input/output of ffmpeg to stream
-        stream = ffmpeg.input("pipe:")
-        if metadata['streams'][0]['codec_name'] == 'vp9':
-            stream = ffmpeg.input(file.name, vcodec='libvpx-vp9')
-        if metadata.get('width', 0) > 600:
-            stream = stream.filter("scale", 600, -2)
-        if metadata.get('fps', 0) > 12:
-            stream = stream.filter("fps", 12, round='up')
-        split = (
-            stream
-            .split()
-        )
-        stream_paletteuse = (
-            ffmpeg
-            .filter(
-                [
-                    split[0],
-                    split[1]
-                    .filter(
-                        filter_name='palettegen', 
-                        reserve_transparent='on',
-                    )
-                ],
-                filter_name='paletteuse',
-            )
-        )
-        # Need to specify file format here as no extension hint presents.
-        args = stream_paletteuse.output("pipe:", format="gif").compile()
+        new_file_size = os.path.getsize(file.name)
+        print(f"file_size: {new_file_size/1024}KB")
+        if new_file_size > 1024 * 1024:
+            # try to use gifsicle lossy compression
+            compress_file = NamedTemporaryFile(suffix='.gif')
+            subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
+            new_file_size = os.path.getsize(compress_file.name)
+            if new_file_size > 1024 * 1024:
+                scales = [600, 512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
+                scales = [scale for scale in scales if scale < metadata['streams'][0]['width']]
+                scales = sorted(scales, reverse=True)
+                for scale in scales:
+                    subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
+                    new_file_size = os.path.getsize(compress_file.name)
+                    print(f"new_file_size: {new_file_size/1024}KB after resize to {scale}x{scale}")
+                    if new_file_size < 1024 * 1024:
+                        break
+            file.close()
+            file = compress_file
         file.seek(0)
-
-        # subprocess.Popen would still try to access the file handle instead of
-        # using standard IO interface. Not sure if that would work on Windows.
-        # Using the most classic buffer and copy via IO interface just to play
-        # safe.
-        p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        assert p.stdin
-        copyfileobj(file, p.stdin)
-        p.stdin.close()
-
-        # Raise exception if error occurs, just like ffmpeg-python.
-        if p.returncode != 0 and p.stderr:
-            err = p.stderr.read().decode()
-            print(err, file=sys.stderr)
-            raise ffmpeg.Error('ffmpeg', "", err)
-
-        assert p.stdout
-        copyfileobj(p.stdout, gif_file)
-        file.close()
-        gif_file.seek(0)
-        return gif_file
+        return file
 
 else:
     def gif_conversion(file: IO[bytes]) -> IO[bytes]:
