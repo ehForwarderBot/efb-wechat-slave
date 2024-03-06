@@ -326,55 +326,25 @@ if os.name == "nt":
 else:
     def gif_conversion(file: IO[bytes]) -> IO[bytes]:
         """Convert Telegram GIF to real GIF, the non-NT way."""
-        gif_file = NamedTemporaryFile(suffix='.gif')
         file.seek(0)
-        metadata = ffmpeg.probe(file.name)
-        stream = ffmpeg.input(file.name)
-        # 检查视频编码类型是否为VP9
-        if metadata['streams'][0]['codec_name'] == 'vp9':
-            stream = ffmpeg.input(file.name, vcodec='libvpx-vp9') # 只有这个能保持透明背景
-        if metadata.get('fps', 0) > 12:
-            stream = stream.filter("fps", 12, round='up') # 限制帧率
-        if metadata.get('width', 0) > 600:
-            stream = stream.filter("scale", 600, -2) # 限制宽度
-        split = (
-            stream
-            .split()
-        )
-        stream_paletteuse = (
-            ffmpeg
-            .filter(
-                [
-                    split[0],
-                    split[1]
-                    .filter(
-                        filter_name='palettegen', 
-                        reserve_transparent='on',
-                    )
-                ],
-                filter_name='paletteuse',
-            )
-        )
-        stream_paletteuse.output(gif_file.name).overwrite_output().run() 
-        new_file_size = os.path.getsize(gif_file.name)
+        new_file_size = os.path.getsize(file.name)
         print(f"file_size: {new_file_size/1024}KB")
         if new_file_size > 1024 * 1024:
             # try to use gifsicle lossy compression
             compress_file = NamedTemporaryFile(suffix='.gif')
-            subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, gif_file.name], check=True)
+            subprocess.run(["gifsicle", "--resize-method=catrom", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
             new_file_size = os.path.getsize(compress_file.name)
             if new_file_size > 1024 * 1024:
                 scales = [600, 512, 480, 400, 360, 300, 256, 250, 200, 150, 100]
                 scales = [scale for scale in scales if scale < metadata['streams'][0]['width']]
                 scales = sorted(scales, reverse=True)
                 for scale in scales:
-                    subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, gif_file.name], check=True)
+                    subprocess.run(["gifsicle", "--resize-method=catrom",  "--resize-fit", f"{scale}x{scale}", "--lossy=100", "-O2", "-o", compress_file.name, file.name], check=True)
                     new_file_size = os.path.getsize(compress_file.name)
                     print(f"new_file_size: {new_file_size/1024}KB after resize to {scale}x{scale}")
                     if new_file_size < 1024 * 1024:
                         break
-            gif_file.close()
-            gif_file = compress_file
-        file.close()
-        gif_file.seek(0)
-        return gif_file
+            file.close()
+            file = compress_file
+        file.seek(0)
+        return file
