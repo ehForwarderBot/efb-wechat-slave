@@ -6,7 +6,6 @@ import logging
 import tempfile
 import time
 import threading
-import subprocess
 from gettext import translation
 from json import JSONDecodeError
 from pathlib import Path
