@@ -63,6 +63,7 @@ EWS 是兼容 EH Forwarder Bot 的微信从端，基于逆向工程的微�
 -  ffmpeg
 -  libmagic
 -  pillow
+-  gifsicle
 
 安装与启用
 ----------
